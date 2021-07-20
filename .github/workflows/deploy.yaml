@@ -60,7 +60,7 @@ jobs:
           fi
           docker build \
           -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ steps.build_vars.outputs.IMAGE_NAME }}:${{ steps.build_vars.outputs.SHORT_SHA }} \
-          -f ${dockerfile} .
+          -f ${{ steps.build_vars.outputs.DOCKERFILE }} .
         shell: bash
 
       - name: Push image
