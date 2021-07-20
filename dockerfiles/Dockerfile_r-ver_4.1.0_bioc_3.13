@@ -1,0 +1,34 @@
+# Build arguments
+ARG ORIGIN=rocker
+ARG DISTRIBUTION=r-ver
+ARG R_VERSION=4.1.0
+
+# Fetch base image
+FROM ${ORIGIN}/${DISTRIBUTION}:${R_VERSION}
+
+# Reset args in build context
+ARG DISTRIBUTION=r-ver
+ARG BIOC_VERSION=3.13
+
+# Set image metadata
+LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
+    org.opencontainers.image.source="https://github.com/insightsengineering/ci-images" \
+    org.opencontainers.image.vendor="Insights Engineering" \
+    org.opencontainers.image.authors="Insights Engineering <insightsengineering@example.com>"
+
+# Copy installation scripts
+COPY scripts /workspace
+
+# Set working directory
+WORKDIR /workspace
+
+# Install dependencies
+RUN ./install_sysdeps.sh ${DISTRIBUTION} && \
+    ./install_cran_pkgs.R ${DISTRIBUTION} && \
+    ./install_bioc.R ${BIOC_VERSION} && \
+    ./install_bioc_pkgs.R ${DISTRIBUTION} && \
+    ./install_gh_pkgs.R ${DISTRIBUTION} && \
+    rm -rf *
+
+# Run R
+CMD ["R"]

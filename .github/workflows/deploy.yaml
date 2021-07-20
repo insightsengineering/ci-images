@@ -1,0 +1,68 @@
+name: Deploy images to GHCR
+
+env:
+  REGISTRY: ghcr.io
+
+on:
+  workflow_dispatch:
+    inputs:
+      distribution:
+        description: Rocker Distro Name. Eg. tidyverse
+        required: true
+      r_version:
+        description: R Version
+        required: true
+      bioc_version:
+        description: BioConductor Release
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & Deploy ${{ github.event.inputs.distribution }} - ${{ github.event.inputs.r_version }} | BioC - ${{ github.event.inputs.bioc_version }}
+
+    # Token permissions
+    permissions:
+      contents: read
+      packages: write
+
+    # Build steps
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set build variables
+        id: build_vars
+        run: |
+          image_name="${{ github.event.inputs.distribution }}_${{ github.event.inputs.r_version }}_bioc_${{ github.event.inputs.bioc_version }}"
+          echo '::set-output name=IMAGE_NAME::${image_name}'
+          dockerfile="Dockerfile_${image_name}"
+          echo '::set-output name=DOCKERFILE::${dockerfile}'
+          short_sha=$(echo ${GITHUB_SHA} | cut -c1-8)
+          echo '::set-output name=SHORT_SHA::${short_sha}'
+
+      - name: Build image
+        run: |
+          cd dockerfiles  
+          if [ ! -f "${{ steps.build_vars.outputs.DOCKERFILE }}" ]
+          then {
+            echo "No such Dockerfile: ${{ steps.build_vars.outputs.DOCKERFILE }}!"
+            echo "Check your inputs or create the Dockerfile"
+            exit 1
+          }
+          fi
+          docker build \
+          -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ steps.build_vars.outputs.IMAGE_NAME }}:${{ steps.build_vars.outputs.SHORT_SHA }} \
+          -f ${dockerfile} .
+        shell: bash
+
+      - name: Push image
+        run: docker push ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ steps.build_vars.outputs.IMAGE_NAME }}:${{ steps.build_vars.outputs.SHORT_SHA }}
+        shell: bash      

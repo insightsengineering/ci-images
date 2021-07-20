@@ -1,0 +1,28 @@
+name: SuperLinter
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: SuperLinter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo during PR
+        uses: actions/checkout@v2
+
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          VALIDATE_DOCKERFILE: true
+          VALIDATE_BASH: true
+          VALIDATE_YAML: true
+          VALIDATE_MARKDOWN: true
+          LOG_LEVEL: WARN
+          VALIDATE_R: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
