@@ -1,14 +1,14 @@
 # Build arguments
 ARG ORIGIN=rocker
-ARG DISTRIBUTION=rstudio
+ARG DISTRIBUTION=verse
 ARG R_VERSION=4.1.0
 
 # Fetch base image
 FROM ${ORIGIN}/${DISTRIBUTION}:${R_VERSION}
 
 # Reset args in build context
-ARG DISTRIBUTION=rstudio
-ARG BIOC_VERSION=3.13
+ARG DISTRIBUTION=verse
+ARG BIOC_VERSION="3.13"
 
 # Set image metadata
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \

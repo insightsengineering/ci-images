@@ -10,13 +10,16 @@ distribution="$1"
 declare -A pkgs_to_install
 
 # Deps for r-ver
-pkgs_to_install["r-ver"]="git qpdf"
+pkgs_to_install["r-ver"]="git qpdf unattended-upgrades"
 
 # Deps for rstudio
-pkgs_to_install["rstudio"]="qpdf libcairo2-dev libxml2 libxt-dev"
+pkgs_to_install["rstudio"]="qpdf libcairo2-dev libxml2 libxt-dev unattended-upgrades"
 
 # Deps for tidyverse
-pkgs_to_install["tidyverse"]="qpdf"
+pkgs_to_install["tidyverse"]="qpdf unattended-upgrades"
+
+# Deps for verse
+pkgs_to_install["verse"]="unattended-upgrades"
 
 # Set env vars
 export DEBIAN_FRONTEND=noninteractive
@@ -28,8 +31,6 @@ apt-get update -y
 apt-get install -q -y ${pkgs_to_install["${distribution}"]}
 
 # Install security patches
-apt-get upgrade -y
-apt-get install -y unattended-upgrades
 unattended-upgrade -v
 
 # Clean up

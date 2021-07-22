@@ -1,4 +1,4 @@
-name: Deploy images to GHCR
+name: Deploy image to GHCR
 
 env:
   REGISTRY: ghcr.io
@@ -15,11 +15,15 @@ on:
       bioc_version:
         description: BioConductor Release
         required: true
+      tag:
+        description: Image Tag/Version
+        required: false
+        default: ""
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build & Deploy ${{ github.event.inputs.distribution }} - ${{ github.event.inputs.r_version }} | BioC - ${{ github.event.inputs.bioc_version }}
+    name: Build & Deploy 🚀 ${{ github.event.inputs.distribution }} - ${{ github.event.inputs.r_version }} | BioC - ${{ github.event.inputs.bioc_version }}
 
     # Token permissions
     permissions:
@@ -28,29 +32,43 @@ jobs:
 
     # Build steps
     steps:
-      - name: Checkout repository
+      - name: Checkout repository 💳
         uses: actions/checkout@v2
 
-      - name: Log in to the Container registry
+      - name: Log in to the Container registry 🗝
         uses: docker/login-action@v1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set build variables
+      - name: Set build variables 📐
         id: build_vars
         run: |
+          # Infer Image name
           image_name="${{ github.event.inputs.distribution }}_${{ github.event.inputs.r_version }}_bioc_${{ github.event.inputs.bioc_version }}"
-          echo "::set-output name=IMAGE_NAME::${image_name}"
+
+          # Infer Dockerfile name
           dockerfile="Dockerfile_${image_name}"
           echo "::set-output name=DOCKERFILE::${dockerfile}"
-          short_sha="$(echo ${GITHUB_SHA} | cut -c1-8)"
-          echo "::set-output name=SHORT_SHA::${short_sha}"
 
-      - name: Build image
+          # Set default tag as short SHA if it isn't set
+          tag="${{ github.event.inputs.tag }}"
+          if [ "${tag}" == "" ]
+          then {
+            tag="$(echo ${GITHUB_SHA} | cut -c1-8)"
+          }
+          fi
+
+          # Set full image name
+          full_name="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
+          echo "::set-output name=FULL_IMAGE_NAME::${full_name}"
+
+      - name: Build image 🏗
         run: |
-          cd dockerfiles  
+          cd dockerfiles
+
+          # Catch bad inputs
           if [ ! -f "${{ steps.build_vars.outputs.DOCKERFILE }}" ]
           then {
             echo "No such Dockerfile: ${{ steps.build_vars.outputs.DOCKERFILE }}!"
@@ -58,11 +76,13 @@ jobs:
             exit 1
           }
           fi
+
+          # Build the image
           docker build \
-          -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ steps.build_vars.outputs.IMAGE_NAME }}:${{ steps.build_vars.outputs.SHORT_SHA }} \
-          -f ${{ steps.build_vars.outputs.DOCKERFILE }} .
+            -t ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }} \
+            -f ${{ steps.build_vars.outputs.DOCKERFILE }} .
         shell: bash
 
-      - name: Push image
-        run: docker push ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ steps.build_vars.outputs.IMAGE_NAME }}:${{ steps.build_vars.outputs.SHORT_SHA }}
+      - name: Push image 🪂
+        run: docker push ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
         shell: bash      

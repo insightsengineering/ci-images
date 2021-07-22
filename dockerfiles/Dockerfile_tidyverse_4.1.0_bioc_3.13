@@ -4,7 +4,7 @@ ARG DISTRIBUTION=tidyverse
 ARG R_VERSION=4.1.0
 
 # Fetch base image
-FROM $ORIGIN/$DISTRIBUTION:$R_VERSION
+FROM ${ORIGIN}/${DISTRIBUTION}:${R_VERSION}
 
 # Reset args in build context
 ARG DISTRIBUTION=tidyverse
@@ -23,11 +23,11 @@ COPY scripts /workspace
 WORKDIR /workspace
 
 # Install dependencies
-RUN ./install_sysdeps.sh $DISTRIBUTION && \
-    ./install_cran_pkgs.R $DISTRIBUTION && \
-    ./install_bioc.R $BIOC_VERSION && \
-    ./install_bioc_pkgs.R $DISTRIBUTION && \
-    ./install_gh_pkgs.R $DISTRIBUTION && \
+RUN ./install_sysdeps.sh ${DISTRIBUTION} && \
+    ./install_cran_pkgs.R ${DISTRIBUTION} && \
+    ./install_bioc.R ${BIOC_VERSION} && \
+    ./install_bioc_pkgs.R ${DISTRIBUTION} && \
+    ./install_gh_pkgs.R ${DISTRIBUTION} && \
     rm -rf *
 
 # Run R

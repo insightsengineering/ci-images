@@ -21,7 +21,8 @@ bioc_pkgs <- list(
         'GenomicRanges'
     ),
     tidyverse = c(),
-    `r-ver` = c()
+    `r-ver` = c(),
+    verse = c()
 )
 
 # Get diff of installed and uninstalled packages for
@@ -29,4 +30,4 @@ bioc_pkgs <- list(
 new_pkgs <- bioc_pkgs[[distribution]][!(bioc_pkgs[[distribution]] %in% installed.packages()[,"Package"])]
 
 # Install only uninstalled packages
-if(length(new_pkgs)) BiocManager::install(new_pkgs, Ncpus=parallel::detectCores())
+if(length(new_pkgs)) BiocManager::install(new_pkgs, Ncpus=parallel::detectCores(), upgrade = "never")

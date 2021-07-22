@@ -9,7 +9,8 @@ distribution <- args[1]
 cran_pkgs <- list(
     tidyverse = c(),
     rstudio = c("devtools"),
-    `r-ver` = c()
+    `r-ver` = c(),
+    verse = c()
 )
 
 # Get diff of installed and uninstalled packages for
@@ -17,4 +18,4 @@ cran_pkgs <- list(
 new_pkgs <- cran_pkgs[[distribution]][!(cran_pkgs[[distribution]] %in% installed.packages()[,"Package"])]
 
 # Install only uninstalled packages
-if(length(new_pkgs)) install.packages(new_pkgs, Ncpus=parallel::detectCores())
+if(length(new_pkgs)) install.packages(new_pkgs, Ncpus=parallel::detectCores(), upgrade = "never")

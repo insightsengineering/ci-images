@@ -13,7 +13,12 @@ gh_pkgs <- list(
     tidyverse = c(
         "openpharma/staged.dependencies"
     ),
-    `r-ver` = c()
+    `r-ver` = c(
+        "openpharma/staged.dependencies"
+    ),
+    verse = c(
+        "openpharma/staged.dependencies"
+    )
 )
 
 # Get diff of installed and uninstalled packages for
