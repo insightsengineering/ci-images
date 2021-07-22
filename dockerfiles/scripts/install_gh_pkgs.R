@@ -7,10 +7,10 @@ distribution <- args[1]
 
 # Packages to install
 gh_pkgs <- list(
-  rstudio = c("openpharma/staged.dependencies"),
-  tidyverse = c("openpharma/staged.dependencies"),
-  `r-ver` = c("openpharma/staged.dependencies"),
-  verse = c("openpharma/staged.dependencies")
+  rstudio = c(),
+  tidyverse = c(),
+  `r-ver` = c(),
+  verse = c()
 )
 
 # Get diff of installed and uninstalled packages for

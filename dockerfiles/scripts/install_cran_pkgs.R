@@ -170,5 +170,4 @@ new_pkgs <-
 # Install only uninstalled packages
 if (length(new_pkgs))
   install.packages(new_pkgs,
-                   Ncpus = parallel::detectCores(),
-                   upgrade = "never")
+                   Ncpus = parallel::detectCores())
