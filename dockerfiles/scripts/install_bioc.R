@@ -7,5 +7,5 @@ bioc_version <- args[1]
 
 # Install Bioc Installer
 if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install(version = bioc_version, Ncpus=parallel::detectCores())
+  install.packages("BiocManager")
+BiocManager::install(version = bioc_version, Ncpus = parallel::detectCores())
