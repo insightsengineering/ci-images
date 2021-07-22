@@ -43,7 +43,8 @@ cran_pkgs <- list(
     "circlize",
     "Rdpack",
     "pkgdown",
-    "ggfortify"
+    "ggfortify",
+    "git2r"
   ),
   rstudio = c(
     "callr",
@@ -121,7 +122,7 @@ cran_pkgs <- list(
     "remotes",
     "pkgdown",
     "ggfortify",
-    "BiocManager"
+    "git2r"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -158,7 +159,8 @@ cran_pkgs <- list(
     "circlize",
     "Rdpack",
     "pkgdown",
-    "ggfortify"
+    "ggfortify",
+    "git2r"
   )
 )
 
