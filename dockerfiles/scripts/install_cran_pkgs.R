@@ -44,7 +44,13 @@ cran_pkgs <- list(
     "Rdpack",
     "pkgdown",
     "ggfortify",
-    "git2r"
+    "vroom",
+    "tzdb",
+    "Rcpp",
+    "cli",
+    "stringi",
+    "git2r",
+    "rcmdcheck"
   ),
   rstudio = c(
     "callr",
@@ -122,7 +128,13 @@ cran_pkgs <- list(
     "remotes",
     "pkgdown",
     "ggfortify",
-    "git2r"
+    "vroom",
+    "tzdb",
+    "Rcpp",
+    "cli",
+    "stringi",
+    "git2r",
+    "rcmdcheck"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -160,7 +172,13 @@ cran_pkgs <- list(
     "Rdpack",
     "pkgdown",
     "ggfortify",
-    "git2r"
+    "vroom",
+    "tzdb",
+    "Rcpp",
+    "cli",
+    "stringi",
+    "git2r",
+    "rcmdcheck"
   )
 )
 
