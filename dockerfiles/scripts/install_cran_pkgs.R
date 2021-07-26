@@ -191,3 +191,8 @@ new_pkgs <-
 if (length(new_pkgs))
   install.packages(new_pkgs,
                    Ncpus = parallel::detectCores())
+
+# Conditionally install phantonJS
+if (require("shinytest")) {
+  shinytest::installDependencies()
+}
