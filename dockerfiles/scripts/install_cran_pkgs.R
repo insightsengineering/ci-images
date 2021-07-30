@@ -5,7 +5,7 @@
 args <- commandArgs(trailing = TRUE)
 distribution <- args[1]
 
-# Bioc packages to install
+# CRAN packages to install
 cran_pkgs <- list(
   tidyverse = c(
     "lintr",
@@ -50,7 +50,10 @@ cran_pkgs <- list(
     "cli",
     "stringi",
     "git2r",
-    "rcmdcheck"
+    "rcmdcheck",
+    "tinytest",
+    "igraph",
+    "dm"
   ),
   rstudio = c(
     "callr",
@@ -134,7 +137,10 @@ cran_pkgs <- list(
     "cli",
     "stringi",
     "git2r",
-    "rcmdcheck"
+    "rcmdcheck",
+    "tinytest",
+    "igraph",
+    "dm"
   ),
   `r-ver` = c("devtools"),
   verse = c(
