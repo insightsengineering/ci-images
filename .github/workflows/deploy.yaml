@@ -107,3 +107,4 @@ jobs:
       - name: Push image 🪂
         run: docker push ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
         shell: bash      
+        if: github.ref == 'refs/heads/main'
