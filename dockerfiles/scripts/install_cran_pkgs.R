@@ -53,7 +53,9 @@ cran_pkgs <- list(
     "rcmdcheck",
     "tinytest",
     "igraph",
-    "dm"
+    "dm",
+    "glmmTMB",
+    "rstan"
   ),
   rstudio = c(
     "callr",
@@ -140,7 +142,9 @@ cran_pkgs <- list(
     "rcmdcheck",
     "tinytest",
     "igraph",
-    "dm"
+    "dm",
+    "glmmTMB",
+    "rstan"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -184,7 +188,9 @@ cran_pkgs <- list(
     "cli",
     "stringi",
     "git2r",
-    "rcmdcheck"
+    "rcmdcheck",
+    "glmmTMB",
+    "rstan"
   )
 )
 
