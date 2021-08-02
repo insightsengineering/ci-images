@@ -61,7 +61,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Set build variables 📐
         id: build_vars
         run: |
@@ -84,7 +83,13 @@ jobs:
           full_name="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
           echo "::set-output name=FULL_IMAGE_NAME::${full_name}"
 
-      - name: Build image 🏗
+          # Set push if branch is main
+          if [ "${{ github.ref }}" == 'refs/heads/main']; then
+            echo "::set-output name=DOCKER_PUSH::true"
+          else
+            echo "::set-output name=DOCKER_PUSH::false"
+          fi
+      - name: Sanity checks
         run: |
           cd dockerfiles
 
@@ -96,15 +101,18 @@ jobs:
             exit 1
           }
           fi
-
-          # Build the image
-          docker build \
-            --cache-from type=local,src=/tmp/.buildx-cache \
-            -t ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }} \
-            -f ${{ steps.build_vars.outputs.DOCKERFILE }} .
         shell: bash
 
-      - name: Push image 🪂
-        run: docker push ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
-        shell: bash      
-        if: github.ref == 'refs/heads/main'
+      - name: Build image 🏗
+        uses: docker/build-push-action@v2
+        with:
+          context: dockerfiles
+          file: ${{ steps.build_vars.outputs.DOCKERFILE }}
+          push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
+          tags: ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
