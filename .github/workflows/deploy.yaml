@@ -35,6 +35,31 @@ jobs:
       - name: Checkout repository 💳
         uses: actions/checkout@v2
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
+
+      - name: Cache Docker layers ♻️
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-${{ github.event.inputs.bioc_version }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-${{ github.event.inputs.bioc_version }}
+            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-
+            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-
+            ${{ runner.os }}-buildx-
+
+      - name: Inspect builder 🔍️
+        run: |
+          echo "Name:      ${{ steps.buildx.outputs.name }}"
+          echo "Endpoint:  ${{ steps.buildx.outputs.endpoint }}"
+          echo "Status:    ${{ steps.buildx.outputs.status }}"
+          echo "Flags:     ${{ steps.buildx.outputs.flags }}"
+          echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
+
       - name: Log in to the Container registry 🗝
         uses: docker/login-action@v1
         with:
@@ -49,7 +74,7 @@ jobs:
           image_name="${{ github.event.inputs.distribution }}_${{ github.event.inputs.r_version }}_bioc_${{ github.event.inputs.bioc_version }}"
 
           # Infer Dockerfile name
-          dockerfile="Dockerfile_${image_name}"
+          dockerfile="dockerfiles/Dockerfile_${image_name}"
           echo "::set-output name=DOCKERFILE::${dockerfile}"
 
           # Set default tag as short SHA if it isn't set
@@ -64,10 +89,15 @@ jobs:
           full_name="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
           echo "::set-output name=FULL_IMAGE_NAME::${full_name}"
 
-      - name: Build image 🏗
-        run: |
-          cd dockerfiles
+          # Set push if branch is main
+          if [ "${{ github.ref }}" == 'refs/heads/main']; then
+            echo "::set-output name=DOCKER_PUSH::true"
+          else
+            echo "::set-output name=DOCKER_PUSH::false"
+          fi
 
+      - name: Sanity checks ✅
+        run: |
           # Catch bad inputs
           if [ ! -f "${{ steps.build_vars.outputs.DOCKERFILE }}" ]
           then {
@@ -76,13 +106,19 @@ jobs:
             exit 1
           }
           fi
-
-          # Build the image
-          docker build \
-            -t ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }} \
-            -f ${{ steps.build_vars.outputs.DOCKERFILE }} .
         shell: bash
 
-      - name: Push image 🪂
-        run: docker push ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
-        shell: bash      
+      - name: Build and push image 🚀
+        uses: docker/build-push-action@v2
+        with:
+          context: ./dockerfiles
+          file: ${{ steps.build_vars.outputs.DOCKERFILE }}
+          push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
+          tags: ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+
+      - name: Move cache ♻️
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
