@@ -92,7 +92,7 @@ jobs:
       - name: Sanity checks
         run: |
           # Catch bad inputs
-          if [ ! -f "dockerfiles/${{ steps.build_vars.outputs.DOCKERFILE }}" ]
+          if [ ! -f "${{ steps.build_vars.outputs.DOCKERFILE }}" ]
           then {
             echo "No such Dockerfile: ${{ steps.build_vars.outputs.DOCKERFILE }}!"
             echo "Check your inputs or create the Dockerfile"
