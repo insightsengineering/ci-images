@@ -44,8 +44,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-${{ github.event.inputs.bioc_version }}
           restore-keys: |
+            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-${{ github.event.inputs.bioc_version }}
+            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-
+            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-
             ${{ runner.os }}-buildx-
       - name: Inspect builder
         run: |
