@@ -91,10 +91,8 @@ jobs:
           fi
       - name: Sanity checks
         run: |
-          cd dockerfiles
-
           # Catch bad inputs
-          if [ ! -f "${{ steps.build_vars.outputs.DOCKERFILE }}" ]
+          if [ ! -f "dockerfiles/${{ steps.build_vars.outputs.DOCKERFILE }}" ]
           then {
             echo "No such Dockerfile: ${{ steps.build_vars.outputs.DOCKERFILE }}!"
             echo "Check your inputs or create the Dockerfile"
@@ -106,7 +104,7 @@ jobs:
       - name: Build image 🏗
         uses: docker/build-push-action@v2
         with:
-          context: dockerfiles
+          context: ./dockerfiles
           file: ${{ steps.build_vars.outputs.DOCKERFILE }}
           push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
           tags: ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
