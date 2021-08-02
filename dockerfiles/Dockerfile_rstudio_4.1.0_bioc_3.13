@@ -30,5 +30,5 @@ RUN ./install_sysdeps.sh ${DISTRIBUTION} && \
     ./install_gh_pkgs.R ${DISTRIBUTION} && \
     rm -rf *
 
-# Run R
-CMD ["R"]
+# Run RStudio
+CMD ["/init"]
