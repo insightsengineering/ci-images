@@ -66,6 +66,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set build variables 📐
         id: build_vars
         run: |
@@ -94,6 +95,7 @@ jobs:
           else
             echo "::set-output name=DOCKER_PUSH::false"
           fi
+
       - name: Sanity checks ✅
         run: |
           # Catch bad inputs
@@ -106,7 +108,7 @@ jobs:
           fi
         shell: bash
 
-      - name: Build and push image 🏗
+      - name: Build and push image 🚀
         uses: docker/build-push-action@v2
         with:
           context: ./dockerfiles
