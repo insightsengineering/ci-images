@@ -40,7 +40,8 @@ jobs:
         id: buildx
         with:
           install: true
-      - name: Cache Docker layers
+
+      - name: Cache Docker layers ♻️
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
@@ -50,7 +51,8 @@ jobs:
             ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-
             ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-
             ${{ runner.os }}-buildx-
-      - name: Inspect builder
+
+      - name: Inspect builder 🔍️
         run: |
           echo "Name:      ${{ steps.buildx.outputs.name }}"
           echo "Endpoint:  ${{ steps.buildx.outputs.endpoint }}"
@@ -92,7 +94,7 @@ jobs:
           else
             echo "::set-output name=DOCKER_PUSH::false"
           fi
-      - name: Sanity checks
+      - name: Sanity checks ✅
         run: |
           # Catch bad inputs
           if [ ! -f "${{ steps.build_vars.outputs.DOCKERFILE }}" ]
@@ -104,7 +106,7 @@ jobs:
           fi
         shell: bash
 
-      - name: Build image 🏗
+      - name: Build and push image 🏗
         uses: docker/build-push-action@v2
         with:
           context: ./dockerfiles
@@ -113,7 +115,8 @@ jobs:
           tags: ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-      - name: Move cache
+
+      - name: Move cache ♻️
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
