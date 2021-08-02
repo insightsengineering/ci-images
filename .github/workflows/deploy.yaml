@@ -68,7 +68,7 @@ jobs:
           image_name="${{ github.event.inputs.distribution }}_${{ github.event.inputs.r_version }}_bioc_${{ github.event.inputs.bioc_version }}"
 
           # Infer Dockerfile name
-          dockerfile="Dockerfile_${image_name}"
+          dockerfile="dockerfiles/Dockerfile_${image_name}"
           echo "::set-output name=DOCKERFILE::${dockerfile}"
 
           # Set default tag as short SHA if it isn't set
