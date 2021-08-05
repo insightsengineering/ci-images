@@ -55,7 +55,9 @@ cran_pkgs <- list(
     "igraph",
     "dm",
     "glmmTMB",
-    "rstan"
+    "rstan",
+    "rtables",
+    "pillar"
   ),
   rstudio = c(
     "callr",
@@ -144,7 +146,9 @@ cran_pkgs <- list(
     "igraph",
     "dm",
     "glmmTMB",
-    "rstan"
+    "rstan",
+    "rtables",
+    "pillar"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -190,7 +194,9 @@ cran_pkgs <- list(
     "git2r",
     "rcmdcheck",
     "glmmTMB",
-    "rstan"
+    "rstan",
+    "rtables",
+    "pillar"
   )
 )
 
