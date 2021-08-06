@@ -89,11 +89,14 @@ jobs:
           full_name="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
           echo "::set-output name=FULL_IMAGE_NAME::${full_name}"
 
+          echo "github.ref = ${{ github.ref }}"
           # Set push if branch is main
           if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
             echo "::set-output name=DOCKER_PUSH::true"
+            echo "DOCKER_PUSH = true"
           else
             echo "::set-output name=DOCKER_PUSH::false"
+            echo "DOCKER_PUSH = false"
           fi
 
       - name: Sanity checks ✅
@@ -106,6 +109,9 @@ jobs:
             exit 1
           }
           fi
+          echo "DOCKERFILE = ${{ steps.build_vars.outputs.DOCKERFILE }}"
+          echo "DOCKER_PUSH = ${{ steps.build_vars.outputs.DOCKER_PUSH }}"
+          echo "FULL_IMAGE_NAME = ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}"
         shell: bash
 
       - name: Build and push image 🚀
