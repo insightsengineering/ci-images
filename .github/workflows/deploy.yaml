@@ -109,7 +109,9 @@ jobs:
             exit 1
           }
           fi
+          echo "DOCKERFILE = ${{ steps.build_vars.outputs.DOCKERFILE }}"
           echo "DOCKER_PUSH = ${{ steps.build_vars.outputs.DOCKER_PUSH }}"
+          echo "FULL_IMAGE_NAME = ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}"
         shell: bash
 
       - name: Build and push image 🚀
