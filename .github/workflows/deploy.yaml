@@ -91,7 +91,7 @@ jobs:
 
           echo "github.ref = ${{ github.ref }}"
           # Set push if branch is main
-          if [ "${{ github.ref }}" == 'refs/heads/main' ] || [ "${{ github.ref }}" == 'refs/heads/fix-push-operation' ] ; then
+          if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
             echo "::set-output name=DOCKER_PUSH::true"
             echo "DOCKER_PUSH = true"
           else
