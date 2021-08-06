@@ -91,7 +91,7 @@ jobs:
 
           echo "github.ref = ${{ github.ref }}"
           # Set push if branch is main
-          if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
+          if [ "${{ github.ref }}" == 'refs/heads/main' ] || [ "${{ github.ref }}" == 'refs/heads/fix-push-operation' ] ; then
             echo "::set-output name=DOCKER_PUSH::true"
             echo "DOCKER_PUSH = true"
           else
@@ -109,6 +109,7 @@ jobs:
             exit 1
           }
           fi
+          echo "DOCKER_PUSH = ${{ steps.build_vars.outputs.DOCKER_PUSH }}"
         shell: bash
 
       - name: Build and push image 🚀
