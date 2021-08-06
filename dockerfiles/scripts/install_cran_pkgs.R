@@ -213,5 +213,5 @@ if (length(new_pkgs))
 # Conditionally install phantonJS
 if (require("shinytest")) {
   shinytest::installDependencies()
-  file.copy("~/bin/phantomjs", "/usr/local/bin/phantomjs")
+  file.copy(shinytest:::find_phantom(), "/usr/local/bin/phantomjs")
 }
