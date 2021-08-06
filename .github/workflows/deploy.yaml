@@ -90,7 +90,7 @@ jobs:
           echo "::set-output name=FULL_IMAGE_NAME::${full_name}"
 
           # Set push if branch is main
-          if [ "${{ github.ref }}" == 'refs/heads/main']; then
+          if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
             echo "::set-output name=DOCKER_PUSH::true"
           else
             echo "::set-output name=DOCKER_PUSH::false"
