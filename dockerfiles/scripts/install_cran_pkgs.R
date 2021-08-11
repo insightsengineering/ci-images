@@ -248,7 +248,9 @@ cran_pkgs <- list(
     "pillar",
     "xfun",
     "globals",
-    "checkmate"
+    "checkmate",
+    "diffviewer",
+    "languageserver"
   ),
   `r-ver` = c("devtools"),
   verse = c(
