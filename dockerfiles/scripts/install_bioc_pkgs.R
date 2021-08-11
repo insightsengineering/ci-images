@@ -20,6 +20,19 @@ bioc_pkgs <- list(
     'BiocGenerics',
     'GenomicRanges'
   ),
+  `rstudio-local` = c(
+    'MultiAssayExperiment',
+    'SummarizedExperiment',
+    'ComplexHeatmap',
+    'DESeq2',
+    'edgeR',
+    'S4Vectors',
+    'limma',
+    'biomaRt',
+    'Biobase',
+    'BiocGenerics',
+    'GenomicRanges'
+  ),
   tidyverse = c(),
   `r-ver` = c(),
   verse = c()

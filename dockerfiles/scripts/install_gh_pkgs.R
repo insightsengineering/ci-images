@@ -10,7 +10,8 @@ gh_pkgs <- list(
   rstudio = c(),
   tidyverse = c(),
   `r-ver` = c(),
-  verse = c()
+  verse = c(),
+  `rstudio-local` = c("openpharma/staged.dependencies")
 )
 
 # Get diff of installed and uninstalled packages for

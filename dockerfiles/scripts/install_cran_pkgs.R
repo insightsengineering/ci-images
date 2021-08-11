@@ -57,7 +57,10 @@ cran_pkgs <- list(
     "glmmTMB",
     "rstan",
     "rtables",
-    "pillar"
+    "pillar",
+    "xfun",
+    "globals",
+    "checkmate"
   ),
   rstudio = c(
     "callr",
@@ -148,7 +151,104 @@ cran_pkgs <- list(
     "glmmTMB",
     "rstan",
     "rtables",
-    "pillar"
+    "pillar",
+    "xfun",
+    "globals",
+    "checkmate"
+  ),
+  `rstudio-local` = c(
+    "callr",
+    "devtools",
+    "lintr",
+    "magrittr",
+    "spelling",
+    "testthat",
+    "withr",
+    "glue",
+    "dplyr",
+    "magrittr",
+    "rlang",
+    "tibble",
+    "knitr",
+    "ggplot2",
+    "gridExtra",
+    "scales",
+    "htmltools",
+    "tidyr",
+    "xml2",
+    "rmarkdown",
+    "optimx",
+    "assertthat",
+    "gtable",
+    "purrr",
+    "forcats",
+    "car",
+    "emmeans",
+    "labeling",
+    "lme4",
+    "lmerTest",
+    "dfoptim",
+    "viridisLite",
+    "broom",
+    "tidyselect",
+    "shiny",
+    "digest",
+    "lifecycle",
+    "R6",
+    "shinyjs",
+    "shinyWidgets",
+    "yaml",
+    "covr",
+    "pkgdown",
+    "DBI",
+    "httr",
+    "nomnoml",
+    "odbc",
+    "readr",
+    "crayon",
+    "styler",
+    "rvest",
+    "shinytest",
+    "ggmosaic",
+    "colourpicker",
+    "DT",
+    "ggExtra",
+    "ggpmisc",
+    "jsonlite",
+    "sparkline",
+    "vistime",
+    "ggrepel",
+    "kableExtra",
+    "cowplot",
+    "mcr",
+    "DescTools",
+    "fs",
+    "gh",
+    "png",
+    "rvest",
+    "webshot",
+    "circlize",
+    "Rdpack",
+    "remotes",
+    "pkgdown",
+    "ggfortify",
+    "vroom",
+    "tzdb",
+    "Rcpp",
+    "cli",
+    "stringi",
+    "git2r",
+    "rcmdcheck",
+    "tinytest",
+    "igraph",
+    "dm",
+    "glmmTMB",
+    "rstan",
+    "rtables",
+    "pillar",
+    "xfun",
+    "globals",
+    "checkmate"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -196,7 +296,10 @@ cran_pkgs <- list(
     "glmmTMB",
     "rstan",
     "rtables",
-    "pillar"
+    "pillar",
+    "xfun",
+    "globals",
+    "checkmate"
   )
 )
 
@@ -215,3 +318,14 @@ if (require("shinytest")) {
   shinytest::installDependencies()
   file.copy(shinytest:::find_phantom(), "/usr/local/bin/phantomjs")
 }
+
+# Conditionally install TinyTex
+if (require("tinytex")) {
+  tinytex::install_tinytex()
+  # There are symlinks created for the Tex bins,
+  # which we will move to a central location
+  system("mv ~/bin/* /usr/local/bin/")
+  # Remove the bin directory
+  unlink("~/bin", recursive = TRUE)
+}
+
