@@ -323,11 +323,21 @@ if (require("shinytest")) {
 
 # Conditionally install TinyTex
 if (require("tinytex")) {
-  tinytex::install_tinytex()
-  # There are symlinks created for the Tex bins,
-  # which we will move to a central location
-  system("mv ~/bin/* /usr/local/bin/")
-  # Remove the bin directory
-  unlink("~/bin", recursive = TRUE)
+  tinytex_installer <- '
+wget -qO- "https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh" | sh -s - --admin --no-path
+mv ~/.TinyTeX /opt/TinyTeX
+/opt/TinyTeX/bin/*/tlmgr path add
+tlmgr install metafont mfware inconsolata tex ae parskip listings xcolor epstopdf-pkg pdftexcmds kvoptions texlive-scripts grfext
+tlmgr path add
+'
+  system(tinytex_installer)
+  tinytex::r_texmf()
+  permission_update <- '
+chown -R root:staff /opt/TinyTeX
+chmod -R g+w /opt/TinyTeX
+chmod -R g+wx /opt/TinyTeX/bin
+export PATH=/opt/TinyTeX/bin:${PATH}
+echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
+'
+  system(permission_update)
 }
-
