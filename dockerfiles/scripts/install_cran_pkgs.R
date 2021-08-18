@@ -60,7 +60,13 @@ cran_pkgs <- list(
     "pillar",
     "xfun",
     "globals",
-    "checkmate"
+    "checkmate",
+    "nortest",
+    "statmod",
+    "gert",
+    "Envstats",
+    "goftest",
+    "GGally"
   ),
   rstudio = c(
     "callr",
@@ -154,7 +160,13 @@ cran_pkgs <- list(
     "pillar",
     "xfun",
     "globals",
-    "checkmate"
+    "checkmate",
+    "nortest",
+    "statmod",
+    "gert",
+    "Envstats",
+    "goftest",
+    "GGally"
   ),
   `rstudio-local` = c(
     "callr",
@@ -250,7 +262,13 @@ cran_pkgs <- list(
     "globals",
     "checkmate",
     "diffviewer",
-    "languageserver"
+    "languageserver",
+    "nortest",
+    "statmod",
+    "gert",
+    "Envstats",
+    "goftest",
+    "GGally"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -301,7 +319,13 @@ cran_pkgs <- list(
     "pillar",
     "xfun",
     "globals",
-    "checkmate"
+    "checkmate",
+    "nortest",
+    "statmod",
+    "gert",
+    "Envstats",
+    "goftest",
+    "GGally"
   )
 )
 
