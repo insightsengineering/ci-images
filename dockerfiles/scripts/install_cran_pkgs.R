@@ -64,7 +64,7 @@ cran_pkgs <- list(
     "nortest",
     "statmod",
     "gert",
-    "Envstats",
+    "EnvStats",
     "goftest",
     "GGally",
     "mockery"
@@ -165,7 +165,7 @@ cran_pkgs <- list(
     "nortest",
     "statmod",
     "gert",
-    "Envstats",
+    "EnvStats",
     "goftest",
     "GGally",
     "mockery"
@@ -268,7 +268,7 @@ cran_pkgs <- list(
     "nortest",
     "statmod",
     "gert",
-    "Envstats",
+    "EnvStats",
     "goftest",
     "GGally",
     "mockery"
@@ -326,7 +326,7 @@ cran_pkgs <- list(
     "nortest",
     "statmod",
     "gert",
-    "Envstats",
+    "EnvStats",
     "goftest",
     "GGally",
     "mockery"
