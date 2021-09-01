@@ -67,7 +67,8 @@ cran_pkgs <- list(
     "EnvStats",
     "goftest",
     "GGally",
-    "mockery"
+    "mockery",
+    "renv"
   ),
   rstudio = c(
     "callr",
@@ -168,7 +169,8 @@ cran_pkgs <- list(
     "EnvStats",
     "goftest",
     "GGally",
-    "mockery"
+    "mockery",
+    "renv"
   ),
   `rstudio-local` = c(
     "callr",
@@ -271,7 +273,8 @@ cran_pkgs <- list(
     "EnvStats",
     "goftest",
     "GGally",
-    "mockery"
+    "mockery",
+    "renv"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -329,7 +332,8 @@ cran_pkgs <- list(
     "EnvStats",
     "goftest",
     "GGally",
-    "mockery"
+    "mockery",
+    "renv"
   )
 )
 
