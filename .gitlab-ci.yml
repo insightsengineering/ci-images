@@ -25,8 +25,8 @@ build:
       "${CI_REGISTRY}"
   script:
     - docker build \
-      -f Dockerfile_${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}
-      -t ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest
+      -f Dockerfile_${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION} \
+      -t ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest \
       ./dockerfiles
     - docker push ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest
   parallel:
