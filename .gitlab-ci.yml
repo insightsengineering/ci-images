@@ -28,7 +28,7 @@ build:
       -f Dockerfile_${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}
       -t ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest
       ./dockerfiles
-    #- docker push ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest
+    - docker push ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest
   parallel:
     matrix:
       - R_ENVIRONMENT: ["r-ver", "rstudio", "rstudio-local", "tidyverse", "verse"]
