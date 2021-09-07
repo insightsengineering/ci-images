@@ -24,10 +24,12 @@ build:
       --password-stdin \
       "${CI_REGISTRY}"
   script:
-    - docker build \
-      -f Dockerfile_${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION} \
-      -t ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest \
-      ./dockerfiles
+    - cd dockerfiles
+    - |
+      docker build \
+        -f Dockerfile_${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION} \
+        -t ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest \
+        .
     - docker push ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest
   parallel:
     matrix:
@@ -38,3 +40,4 @@ build:
     - if: $CI_COMMIT_TAG
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_PIPELINE_SOURCE == "schedule"
+
