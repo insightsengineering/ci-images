@@ -5,6 +5,9 @@
 args <- commandArgs(trailing = TRUE)
 distribution <- args[1]
 
+# Set official mirror for CRAN
+options(repos = c("https://cloud.r-project.org/"))
+
 # CRAN packages to install
 cran_pkgs <- list(
   tidyverse = c(
@@ -377,3 +380,6 @@ echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 '
   system(permission_update)
 }
+
+# Update all packages
+update.packages(ask=FALSE)
