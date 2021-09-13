@@ -1,22 +1,12 @@
 ---
 
-variables:
-  DOCKER_DRIVER: overlay2
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
-
 build:
   stage: build
-  image: docker:19.03.15
+  image: docker:stable
   tags:
-    - linux
+    - Linux
     - docker
-    - amd64
-    - cloud
-    - docker-machine
-  services:
-    - name: docker:19.03.15-dind
-      command: ["--experimental"]
+    - x86_64
   before_script:
     - |
       echo "${CI_JOB_TOKEN}" | docker login \
@@ -36,6 +26,7 @@ build:
       - R_ENVIRONMENT: ["r-ver", "rstudio", "rstudio-local", "tidyverse", "verse"]
         R_VERSION: ["4.1.0", "4.1.1"]
         BIOC_VERSION: ["3.13"]
+  timeout: 2 hours
   rules:
     - if: $CI_COMMIT_TAG
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
