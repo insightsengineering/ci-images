@@ -31,6 +31,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update -y
 
 # Install packages
+# expected word splitting - list of packages require it
 # shellcheck disable=SC2086
 apt-get install -q -y ${pkgs_to_install["${distribution}"]}
 
