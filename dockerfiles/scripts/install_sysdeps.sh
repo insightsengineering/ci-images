@@ -31,6 +31,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update -y
 
 # Install packages
+# shellcheck disable=SC2086
 apt-get install -q -y ${pkgs_to_install["${distribution}"]}
 
 # Install security patches
