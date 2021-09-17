@@ -9,6 +9,9 @@ build:
     - x86_64
   before_script:
     - |
+      echo "${DOCKERHUB_ACCESS_TOKEN}" | docker login \
+      --username ${DOCKERHUB_USERNAME} \
+      --password-stdin
       echo "${CI_JOB_TOKEN}" | docker login \
       --username gitlab-ci-token \
       --password-stdin \
