@@ -72,7 +72,8 @@ cran_pkgs <- list(
     "GGally",
     "mockery",
     "renv",
-    "oysteR"
+    "oysteR",
+    "markdown"
   ),
   rstudio = c(
     "callr",
@@ -175,7 +176,8 @@ cran_pkgs <- list(
     "GGally",
     "mockery",
     "renv",
-    "oysteR"
+    "oysteR",
+    "markdown"
   ),
   `rstudio-local` = c(
     "callr",
@@ -280,7 +282,8 @@ cran_pkgs <- list(
     "GGally",
     "mockery",
     "renv",
-    "oysteR"
+    "oysteR",
+    "markdown"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -340,7 +343,8 @@ cran_pkgs <- list(
     "GGally",
     "mockery",
     "renv",
-    "oysteR"
+    "oysteR",
+    "markdown"
   )
 )
 
