@@ -74,7 +74,8 @@ cran_pkgs <- list(
     "renv",
     "oysteR",
     "markdown",
-    "tinytex"
+    "tinytex",
+    "shinyTree"
   ),
   rstudio = c(
     "callr",
@@ -179,7 +180,8 @@ cran_pkgs <- list(
     "renv",
     "oysteR",
     "markdown",
-    "tinytex"
+    "tinytex",
+    "shinyTree"
   ),
   `rstudio-local` = c(
     "callr",
@@ -286,7 +288,8 @@ cran_pkgs <- list(
     "renv",
     "oysteR",
     "markdown",
-    "tinytex"
+    "tinytex",
+    "shinyTree"
   ),
   `r-ver` = c("devtools"),
   verse = c(
@@ -348,7 +351,8 @@ cran_pkgs <- list(
     "renv",
     "oysteR",
     "markdown",
-    "tinytex"
+    "tinytex",
+    "shinyTree"
   )
 )
 
