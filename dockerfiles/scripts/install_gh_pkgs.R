@@ -8,16 +8,14 @@ distribution <- args[1]
 # Packages to install
 gh_pkgs <- list(
   rstudio = c(),
-  tidyverse = c(),
-  `r-ver` = c(),
-  verse = c(),
   `rstudio-local` = c()
 )
 
 # Get diff of installed and uninstalled packages for
 # idempotent package installation
-new_pkgs <-
-  gh_pkgs[[distribution]][!(gh_pkgs[[distribution]] %in% installed.packages()[, "Package"])]
+new_pkgs <- gh_pkgs[[distribution]][
+  !(gh_pkgs[[distribution]] %in% installed.packages()[, "Package"])
+]
 
 # Install only uninstalled packages
 if (length(new_pkgs))
