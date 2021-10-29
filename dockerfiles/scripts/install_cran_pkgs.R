@@ -291,4 +291,11 @@ echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 }
 
 # Update all packages
-update.packages(ask = FALSE)
+tryCatch(
+  expr = {
+    update.packages(ask = FALSE)
+  },
+  error = function(e) {
+    print(e)
+  }
+)
