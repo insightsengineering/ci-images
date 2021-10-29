@@ -10,77 +10,6 @@ options(repos = c("https://cloud.r-project.org/"))
 
 # CRAN packages to install
 cran_pkgs <- list(
-  tidyverse = c(
-    "lintr",
-    "spelling",
-    "gridExtra",
-    "optimx",
-    "car",
-    "emmeans",
-    "lme4",
-    "lmerTest",
-    "dfoptim",
-    "shiny",
-    "shinyjs",
-    "shinyWidgets",
-    "covr",
-    "pkgdown",
-    "nomnoml",
-    "odbc",
-    "styler",
-    "shinytest",
-    "ggmosaic",
-    "colourpicker",
-    "DT",
-    "ggExtra",
-    "ggpmisc",
-    "sparkline",
-    "vistime",
-    "ggrepel",
-    "kableExtra",
-    "cowplot",
-    "mcr",
-    "DescTools",
-    "png",
-    "webshot",
-    "circlize",
-    "Rdpack",
-    "pkgdown",
-    "ggfortify",
-    "vroom",
-    "tzdb",
-    "Rcpp",
-    "cli",
-    "stringi",
-    "git2r",
-    "rcmdcheck",
-    "tinytest",
-    "igraph",
-    "dm",
-    "glmmTMB",
-    "rstan",
-    "rtables",
-    "pillar",
-    "xfun",
-    "globals",
-    "checkmate",
-    "nortest",
-    "statmod",
-    "gert",
-    "EnvStats",
-    "goftest",
-    "GGally",
-    "mockery",
-    "renv",
-    "oysteR",
-    "markdown",
-    "tinytex",
-    "shinyTree",
-    "uuid",
-    "gdtools",
-    "officer",
-    "flextable"
-  ),
   rstudio = c(
     "callr",
     "devtools",
@@ -189,7 +118,13 @@ cran_pkgs <- list(
     "uuid",
     "gdtools",
     "officer",
-    "flextable"
+    "flextable",
+    "shinyRadioMatrix",
+    "reticulate",
+    "here",
+    "vdiffr",
+    "logger",
+    "mockery"
   ),
   `rstudio-local` = c(
     "callr",
@@ -298,84 +233,24 @@ cran_pkgs <- list(
     "markdown",
     "tinytex",
     "shinyTree",
-     "uuid",
-    "gdtools",
-    "officer",
-    "flextable"
-  ),
-  `r-ver` = c("devtools"),
-  verse = c(
-    "lintr",
-    "spelling",
-    "gridExtra",
-    "optimx",
-    "car",
-    "emmeans",
-    "lme4",
-    "lmerTest",
-    "dfoptim",
-    "shinyjs",
-    "shinyWidgets",
-    "covr",
-    "pkgdown",
-    "nomnoml",
-    "odbc",
-    "styler",
-    "shinytest",
-    "ggmosaic",
-    "colourpicker",
-    "DT",
-    "ggExtra",
-    "ggpmisc",
-    "sparkline",
-    "vistime",
-    "ggrepel",
-    "kableExtra",
-    "cowplot",
-    "mcr",
-    "DescTools",
-    "png",
-    "circlize",
-    "Rdpack",
-    "pkgdown",
-    "ggfortify",
-    "vroom",
-    "tzdb",
-    "Rcpp",
-    "cli",
-    "stringi",
-    "git2r",
-    "rcmdcheck",
-    "glmmTMB",
-    "rstan",
-    "rtables",
-    "pillar",
-    "xfun",
-    "globals",
-    "checkmate",
-    "nortest",
-    "statmod",
-    "gert",
-    "EnvStats",
-    "goftest",
-    "GGally",
-    "mockery",
-    "renv",
-    "oysteR",
-    "markdown",
-    "tinytex",
-    "shinyTree",
     "uuid",
     "gdtools",
     "officer",
-    "flextable"
+    "flextable",
+    "shinyRadioMatrix",
+    "reticulate",
+    "here",
+    "vdiffr",
+    "logger",
+    "mockery"
   )
 )
 
 # Get diff of installed and uninstalled packages for
 # idempotent package installation
-new_pkgs <-
-  cran_pkgs[[distribution]][!(cran_pkgs[[distribution]] %in% installed.packages()[, "Package"])]
+new_pkgs <- cran_pkgs[[distribution]][
+  !(cran_pkgs[[distribution]] %in% installed.packages()[, "Package"])
+]
 
 # Install only uninstalled packages
 if (length(new_pkgs))
@@ -390,6 +265,7 @@ if (require("shinytest")) {
 
 # Conditionally install TinyTex
 if (require("tinytex")) {
+  # nolint start
   tinytex_installer <- '
 wget -qO- "https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh" | sh -s - --admin --no-path
 mv ~/.TinyTeX /opt/TinyTeX
@@ -397,6 +273,7 @@ mv ~/.TinyTeX /opt/TinyTeX
 tlmgr install makeindex metafont mfware inconsolata tex ae parskip listings xcolor epstopdf-pkg pdftexcmds kvoptions texlive-scripts grfext
 tlmgr path add
 '
+  # nolint end
   system(tinytex_installer)
   tinytex::r_texmf()
   permission_update <- '
@@ -410,4 +287,4 @@ echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 }
 
 # Update all packages
-update.packages(ask=FALSE)
+update.packages(ask = FALSE)
