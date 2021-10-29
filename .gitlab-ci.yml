@@ -26,9 +26,9 @@ build:
     - docker push ${CI_REGISTRY_IMAGE}/${R_ENVIRONMENT}_${R_VERSION}_bioc_${BIOC_VERSION}:latest
   parallel:
     matrix:
-      - R_ENVIRONMENT: ["r-ver", "rstudio", "rstudio-local", "tidyverse", "verse"]
+      - R_ENVIRONMENT: ["rstudio", "rstudio-local"]
         R_VERSION: ["4.1.0", "4.1.1"]
-        BIOC_VERSION: ["3.13"]
+        BIOC_VERSION: ["3.13", "3.14"]
   timeout: 2 hours
   rules:
     - if: $CI_COMMIT_TAG
