@@ -274,7 +274,7 @@ if (require("tinytex")) {
 wget -qO- "https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh" | sh -s - --admin --no-path
 mv ~/.TinyTeX /opt/TinyTeX
 /opt/TinyTeX/bin/*/tlmgr path add
-tlmgr install makeindex metafont mfware inconsolata tex ae parskip listings xcolor epstopdf-pkg pdftexcmds kvoptions texlive-scripts grfext
+tlmgr install makeindex metafont mfware inconsolata tex ae parskip listings xcolor epstopdf-pkg pdftexcmds kvoptions texlive-scripts grfext soul todonotes koma-script subfig bookmark babel-english caption
 tlmgr path add
 '
   # nolint end
