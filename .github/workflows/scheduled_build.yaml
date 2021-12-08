@@ -1,0 +1,29 @@
+on:
+  schedule:
+    # Runs 7 and 12 day of month at 19:44 (7:44 p.m.)
+    - cron:  '44 19 7,21 * *'
+  workflow_dispatch:
+
+jobs:
+  start_all_builds:
+    runs-on: ubuntu-latest
+    name: Build & Deploy 🚀 predefined images
+
+  # Trigger steps
+  steps:
+    - name: Checkout repository 💳
+      uses: actions/checkout@v2
+
+    - name: Trigger all builds ▶️
+      run: |
+        FILES="dockerfiles/Dockerfile*"
+        TAG=$(date +%Y%m%d)
+        for f in $FILES
+        do
+          echo "Processing $f file..."
+          DISTRIBUTION="$(cut -d'_' -f2 <<<"$f")"
+          R_VERSION="$(cut -d'_' -f3 <<<"$f")"
+          BIOC_VERSION="$(cut -d'_' -f5 <<<"$f")"
+          echo curl -X POST -H "Accept: application/vnd.github.v3+json" -H "authorization: Bearer ${{ secrets.REPO_GITHUB_TOKEN }}" https://api.github.com/repos/insightsengineering/ci-images/actions/workflows/11445494/dispatches -d '{"inputs":{"distribution":"'$DISTRIBUTION'","r_version":"'$R_VERSION'","bioc_version":"'$BIOC_VERSION'","tag":"'$TAG'","tag_latest":"true"},"ref":"170_scheduled_builds"}'
+        done
+
