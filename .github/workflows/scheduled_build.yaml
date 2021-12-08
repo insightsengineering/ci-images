@@ -1,7 +1,7 @@
 on:
-  schedule:
-    # Runs 7 and 12 day of month at 19:44 (7:44 p.m.)
-    - cron:  '44 19 7,21 * *'
+  # schedule:
+  #   # Runs 7 and 12 day of month at 19:44 (7:44 p.m.)
+  #   - cron:  '44 19 7,21 * *'
   workflow_dispatch:
 
 jobs:
