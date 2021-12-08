@@ -19,6 +19,10 @@ on:
         description: Image Tag/Version
         required: false
         default: ""
+      tag_latest:
+        description: Tag image as latest
+        required: false
+        default: false
 
 jobs:
   build:
@@ -85,8 +89,14 @@ jobs:
           }
           fi
 
+          tag_latest="${{ github.event.inputs.tag_latest }}"
+
           # Set full image name
           full_name="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
+          if [ "${tag_latest}" == "true" ]
+          then
+            full_name="$full_name,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
+          fi
           echo "::set-output name=FULL_IMAGE_NAME::${full_name}"
 
           echo "github.ref = ${{ github.ref }}"
