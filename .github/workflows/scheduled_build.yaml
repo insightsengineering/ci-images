@@ -1,3 +1,5 @@
+name: Trigger deployments
+
 on:
   # schedule:
   #   # Runs 7 and 12 day of month at 19:44 (7:44 p.m.)
