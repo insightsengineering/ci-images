@@ -22,7 +22,7 @@ on:
       tag_latest:
         description: Tag image as latest
         required: false
-        default: false
+        default: "false"
 
 jobs:
   build:
