@@ -26,6 +26,6 @@ jobs:
             DISTRIBUTION="$(cut -d'_' -f2 <<<"$f")"
             R_VERSION="$(cut -d'_' -f3 <<<"$f")"
             BIOC_VERSION="$(cut -d'_' -f5 <<<"$f")"
-            curl -sfX POST -H "Accept: application/vnd.github.v3+json" -H "authorization: Bearer ${{ secrets.REPO_GITHUB_TOKEN }}" https://api.github.com/repos/insightsengineering/ci-images/actions/workflows/11445494/dispatches -d '{"inputs":{"distribution":"'$DISTRIBUTION'","r_version":"'$R_VERSION'","bioc_version":"'$BIOC_VERSION'","tag":"'$TAG'","tag_latest":"true"},"ref":"170_scheduled_builds"}'
+            curl -sfX POST -H "Accept: application/vnd.github.v3+json" -H "authorization: Bearer ${{ secrets.REPO_GITHUB_TOKEN }}" https://api.github.com/repos/insightsengineering/ci-images/actions/workflows/11445494/dispatches -d '{"inputs":{"distribution":"'$DISTRIBUTION'","r_version":"'$R_VERSION'","bioc_version":"'$BIOC_VERSION'","tag":"'$TAG'","tag_latest":"true"},"ref":"main"}'
           done
 
