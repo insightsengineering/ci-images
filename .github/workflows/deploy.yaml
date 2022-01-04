@@ -28,9 +28,44 @@ on:
         default: "false"
 
 jobs:
+  normalize-inputs:
+    name: Normalize inputs 🧹
+    runs-on: ubuntu-latest
+    steps:
+      - name: Normalize 🧽
+        id: normalizer
+        run: |
+          function normalize() {
+            local var=$1
+            if [ "$var" == "" ]
+            then {
+              var=$2
+            }
+            fi
+            echo ${var}
+          }
+          DISTRIBUTION=$(normalize ${{ github.event.inputs.distribution }} ${{ github.event.client_payload.distribution }})
+          R_VERSION=$(normalize ${{ github.event.inputs.r_version }} ${{ github.event.client_payload.r_version }})
+          BIOC_VERSION=$(normalize ${{ github.event.inputs.bioc_version }} ${{ github.event.client_payload.bioc_version }})
+          TAG=$(normalize ${{ github.event.inputs.tag }} ${{ github.event.client_payload.tag }})
+          TAG_LATEST=$(normalize ${{ github.event.inputs.tag_latest }} ${{ github.event.client_payload.tag_latest }})
+          echo "::set-output name=DISTRIBUTION::$DISTRIBUTION"
+          echo "::set-output name=R_VERSION::$R_VERSION"
+          echo "::set-output name=BIOC_VERSION::$BIOC_VERSION"
+          echo "::set-output name=TAG::$TAG"
+          echo "::set-output name=TAG_LATEST::$TAG_LATEST"
+        shell: bash
+    outputs:
+      distribution: ${{ steps.normalizer.outputs.DISTRIBUTION }}
+      r_version: ${{ steps.normalizer.outputs.R_VERSION }}
+      bioc_version: ${{ steps.normalizer.outputs.BIOC_VERSION }}
+      tag: ${{ steps.normalizer.outputs.TAG }}
+      tag_latest: ${{ steps.normalizer.outputs.TAG_LATEST }}
+
   build:
     runs-on: ubuntu-latest
-    name: Build & Deploy 🚀 ${{ github.event.inputs.distribution }} - ${{ github.event.inputs.r_version }} | BioC - ${{ github.event.inputs.bioc_version }}
+    needs: normalize-inputs
+    name: Build & Deploy 🚀 ${{ needs.normalize-inputs.outputs.distribution }} - ${{ needs.normalize-inputs.outputs.r_version }} | BioC - ${{ needs.normalize-inputs.outputs.bioc_version }}
 
     # Token permissions
     permissions:
@@ -52,11 +87,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-${{ github.event.inputs.bioc_version }}
+          key: ${{ runner.os }}-buildx-${{ needs.normalize-inputs.outputs.distribution }}-${{ needs.normalize-inputs.outputs.r_version }}-${{ needs.normalize-inputs.outputs.bioc_version }}
           restore-keys: |
-            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-${{ github.event.inputs.bioc_version }}
-            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-${{ github.event.inputs.r_version }}-
-            ${{ runner.os }}-buildx-${{ github.event.inputs.distribution }}-
+            ${{ runner.os }}-buildx-${{ needs.normalize-inputs.outputs.distribution }}-${{ needs.normalize-inputs.outputs.r_version }}-${{ needs.normalize-inputs.outputs.bioc_version }}
+            ${{ runner.os }}-buildx-${{ needs.normalize-inputs.outputs.distribution }}-${{ needs.normalize-inputs.outputs.r_version }}-
+            ${{ runner.os }}-buildx-${{ needs.normalize-inputs.outputs.distribution }}-
             ${{ runner.os }}-buildx-
 
       - name: Inspect builder 🔍️
@@ -78,21 +113,21 @@ jobs:
         id: build_vars
         run: |
           # Infer Image name
-          image_name="${{ github.event.inputs.distribution }}_${{ github.event.inputs.r_version }}_bioc_${{ github.event.inputs.bioc_version }}"
+          image_name="${{ needs.normalize-inputs.outputs.distribution }}_${{ needs.normalize-inputs.outputs.r_version }}_bioc_${{ needs.normalize-inputs.outputs.bioc_version }}"
 
           # Infer Dockerfile name
           dockerfile="dockerfiles/Dockerfile_${image_name}"
           echo "::set-output name=DOCKERFILE::${dockerfile}"
 
           # Set default tag as short SHA if it isn't set
-          tag="${{ github.event.inputs.tag }}"
+          tag="${{ needs.normalize-inputs.outputs.tag }}"
           if [ "${tag}" == "" ]
           then {
             tag="$(echo ${GITHUB_SHA} | cut -c1-8)"
           }
           fi
 
-          tag_latest="${{ github.event.inputs.tag_latest }}"
+          tag_latest="${{ needs.normalize-inputs.outputs.tag_latest }}"
 
           # Set full image name
           full_name="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
