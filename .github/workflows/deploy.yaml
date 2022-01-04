@@ -4,10 +4,13 @@ env:
   REGISTRY: ghcr.io
 
 on:
+  repository_dispatch:
+    types:
+      - scheduled
   workflow_dispatch:
     inputs:
       distribution:
-        description: Rocker Distro Name. Eg. tidyverse
+        description: Rocker Distro Name. Eg. rstudio
         required: true
       r_version:
         description: R Version

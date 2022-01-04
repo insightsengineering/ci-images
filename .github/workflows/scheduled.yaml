@@ -1,0 +1,37 @@
+name: Scheduled Deployments
+
+on:
+  schedule:
+    - cron: '44 19 7,21 * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & Deploy 🚀
+
+    # Trigger steps
+    steps:
+      - name: Checkout repository 💳
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Trigger all builds ▶️
+        run: |
+          FILES="dockerfiles/Dockerfile*"
+          TAG=$(date +%Y.%m.%d)
+          for f in $FILES
+          do {
+            echo "Processing $f file..."
+            DISTRIBUTION="$(cut -d'_' -f2 <<<"$f")"
+            R_VERSION="$(cut -d'_' -f3 <<<"$f")"
+            BIOC_VERSION="$(cut -d'_' -f5 <<<"$f")"
+            curl -sfX POST \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "authorization: Bearer ${{ secrets.REPO_GITHUB_TOKEN }}" \
+              ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/dispatches \
+              -d '{"client_payload": {"distribution": "'$DISTRIBUTION'", "r_version": "'$R_VERSION'", "bioc_version": "'$BIOC_VERSION'","tag": "'$TAG'", "tag_latest": "true"}, "event_type": "scheduled"}'
+          }
+          done
+        shell: bash
