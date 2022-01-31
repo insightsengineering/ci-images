@@ -10,7 +10,7 @@ distribution="$1"
 declare -A pkgs_to_install
 
 # Deps for rstudio
-pkgs_to_install["rstudio"]="libxml2-dev pandoc libicu-dev libgit2-dev zlib1g-dev libfontconfig1-dev libfreetype6-dev libjpeg-dev libpng-dev libtiff-dev libfribidi-dev libharfbuzz-dev imagemagick libmagick++-dev unixodbc-dev curl qpdf unattended-upgrades ssh libmysqlclient-dev libsodium-dev default-jdk cmake"
+pkgs_to_install["rstudio"]="libxml2-dev pandoc libicu-dev libgit2-dev zlib1g-dev libfontconfig1-dev libfreetype6-dev libjpeg-dev libpng-dev libtiff-dev libfribidi-dev libharfbuzz-dev imagemagick libmagick++-dev unixodbc-dev curl qpdf unattended-upgrades ssh libmysqlclient-dev libsodium-dev default-jdk cmake jags"
 
 # Deps for rstudio-local
 pkgs_to_install["rstudio-local"]="libxml2-dev pandoc libicu-dev libgit2-dev zlib1g-dev libfontconfig1-dev libfreetype6-dev libjpeg-dev libpng-dev libtiff-dev libfribidi-dev libharfbuzz-dev imagemagick libmagick++-dev unixodbc-dev curl qpdf unattended-upgrades less ssh libmysqlclient-dev libsodium-dev default-jdk vim cmake"
