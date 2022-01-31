@@ -127,7 +127,9 @@ cran_pkgs <- list(
     "logger",
     "mockery",
     "rJava",
-    "RJDBC"
+    "RJDBC",
+    "pbkrtest",
+    "nloptr"
   ),
   `rstudio-local` = c(
     "callr",
@@ -248,7 +250,9 @@ cran_pkgs <- list(
     "logger",
     "mockery",
     "rJava",
-    "RJDBC"
+    "RJDBC",
+    "pbkrtest",
+    "nloptr"
   )
 )
 
