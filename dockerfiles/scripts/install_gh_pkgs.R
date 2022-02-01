@@ -7,7 +7,9 @@ distribution <- args[1]
 
 # Packages to install
 gh_pkgs <- list(
-  rstudio = c(),
+  rstudio = c(
+    "tlverse/sl3@v1.4.4"
+  ),
   `rstudio-local` = c()
 )
 

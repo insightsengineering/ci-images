@@ -129,7 +129,8 @@ cran_pkgs <- list(
     "rJava",
     "RJDBC",
     "pbkrtest",
-    "nloptr"
+    "nloptr",
+    "rjags"
   ),
   `rstudio-local` = c(
     "callr",
