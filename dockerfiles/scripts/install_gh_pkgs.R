@@ -10,7 +10,9 @@ gh_pkgs <- list(
   rstudio = c(
     "tlverse/sl3@v1.4.4"
   ),
-  `rstudio-local` = c()
+  `rstudio-local` = c(
+    "r-lib/styler"
+  )
 )
 
 # Get diff of installed and uninstalled packages for
