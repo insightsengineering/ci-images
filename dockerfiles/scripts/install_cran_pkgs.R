@@ -253,7 +253,8 @@ cran_pkgs <- list(
     "rJava",
     "RJDBC",
     "pbkrtest",
-    "nloptr"
+    "nloptr", 
+    "diffdf"
   )
 )
 
