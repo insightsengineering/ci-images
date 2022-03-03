@@ -8,7 +8,9 @@ distribution <- args[1]
 # Packages to install
 gh_pkgs <- list(
   rstudio = c(
-    "tlverse/sl3@v1.4.4"
+    "tlverse/sl3@v1.4.4",
+    "r-lib/styler",
+    "insightsengineering/nesttemplate"
   ),
   `rstudio-local` = c(
     "r-lib/styler"
