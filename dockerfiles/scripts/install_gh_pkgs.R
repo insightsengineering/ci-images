@@ -10,10 +10,14 @@ gh_pkgs <- list(
   rstudio = c(
     "tlverse/sl3@v1.4.4",
     "r-lib/styler",
-    "insightsengineering/nesttemplate"
+    "insightsengineering/nesttemplate",
+    "eliocamp/ggnewscale@*release"
   ),
   `rstudio-local` = c(
-    "r-lib/styler"
+    "tlverse/sl3@v1.4.4",
+    "r-lib/styler",
+    "insightsengineering/nesttemplate",
+    "eliocamp/ggnewscale@*release"
   )
 )
 
