@@ -130,7 +130,11 @@ cran_pkgs <- list(
     "RJDBC",
     "pbkrtest",
     "nloptr",
-    "rjags"
+    "rjags",
+    "rsvg",
+    "ggiraph",
+    "rbmi",
+    "ggnewscale"
   ),
   `rstudio-local` = c(
     "callr",
@@ -253,8 +257,12 @@ cran_pkgs <- list(
     "rJava",
     "RJDBC",
     "pbkrtest",
-    "nloptr", 
-    "diffdf"
+    "nloptr",
+    "diffdf",
+    "rsvg",
+    "ggiraph",
+    "rbmi",
+    "ggnewscale"
   )
 )
 
