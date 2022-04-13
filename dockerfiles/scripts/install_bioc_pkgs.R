@@ -18,7 +18,10 @@ bioc_pkgs <- list(
     "biomaRt",
     "Biobase",
     "BiocGenerics",
-    "GenomicRanges"
+    "GenomicRanges",
+    "BiocCheck",
+    "Rhtslib",
+    "Gviz"
   ),
   `rstudio-local` = c(
     "MultiAssayExperiment",
@@ -31,7 +34,10 @@ bioc_pkgs <- list(
     "biomaRt",
     "Biobase",
     "BiocGenerics",
-    "GenomicRanges"
+    "GenomicRanges",
+    "BiocCheck",
+    "Rhtslib",
+    "Gviz"
   )
 )
 

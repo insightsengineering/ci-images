@@ -11,13 +11,13 @@ gh_pkgs <- list(
     "tlverse/sl3@v1.4.4",
     "r-lib/styler",
     "insightsengineering/nesttemplate",
-    "eliocamp/ggnewscale@*release"
+    "openpharma/staged.dependencies@*release"
   ),
   `rstudio-local` = c(
     "tlverse/sl3@v1.4.4",
     "r-lib/styler",
     "insightsengineering/nesttemplate",
-    "eliocamp/ggnewscale@*release"
+    "openpharma/staged.dependencies@*release"
   )
 )
 
