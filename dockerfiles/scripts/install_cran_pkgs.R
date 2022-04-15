@@ -134,6 +134,7 @@ cran_pkgs <- list(
     "rsvg",
     "ggiraph",
     "rbmi",
+    "TMB",
     "ggnewscale"
   ),
   `rstudio-local` = c(
@@ -262,6 +263,7 @@ cran_pkgs <- list(
     "rsvg",
     "ggiraph",
     "rbmi",
+    "TMB",
     "ggnewscale"
   )
 )
