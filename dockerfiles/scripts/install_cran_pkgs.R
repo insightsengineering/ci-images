@@ -134,7 +134,6 @@ cran_pkgs <- list(
     "rsvg",
     "ggiraph",
     "rbmi",
-    "TMB",
     "ggnewscale"
   ),
   `rstudio-local` = c(
@@ -263,7 +262,6 @@ cran_pkgs <- list(
     "rsvg",
     "ggiraph",
     "rbmi",
-    "TMB",
     "ggnewscale"
   )
 )
@@ -278,6 +276,9 @@ new_pkgs <- cran_pkgs[[distribution]][
 if (length(new_pkgs))
   install.packages(new_pkgs,
                    Ncpus = parallel::detectCores())
+
+# Needs to recompile TMB from source, due to Matrix package version mismatch
+install.packages('TMB', type = 'source')
 
 # Conditionally install phantonJS
 if (require("shinytest")) {
