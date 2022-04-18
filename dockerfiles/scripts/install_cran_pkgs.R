@@ -8,21 +8,25 @@ distribution <- args[1]
 # Set official mirror for CRAN
 options(repos = c("https://cloud.r-project.org/"))
 
-# CRAN packages to install
+# Packages that are already in the image
+# but must be reinstalled to the latest versions
 must_reinstall_with_newer_version <- c(
   "Matrix"
 )
 
+# Shared packages that must be installed from source
+# for compatability purposes
 shared_pkgs_install_from_src <- c(
   "TMB"
 )
 
+# CRAN packages to install from source, per distro
 cran_pkgs_from_src <- list(
   rstudio = shared_pkgs_install_from_src,
   `rstudio-local` = shared_pkgs_install_from_src
 )
 
-
+# Regular CRAN packages to install
 shared_pkgs <- c(
   "callr",
   "devtools",
@@ -160,6 +164,7 @@ cran_pkgs <- list(
   )
 )
 
+# Re-install packages with newer versions
 install.packages(must_reinstall_with_newer_version, type = 'source',
                  Ncpus = parallel::detectCores())
 
@@ -169,7 +174,7 @@ new_pkgs_from_src <- cran_pkgs_from_src[[distribution]][
   !(cran_pkgs_from_src[[distribution]] %in% installed.packages()[, "Package"])
 ]
 
-# Install only uninstalled packages
+# Install "source only" packages from source
 if (length(new_pkgs_from_src))
   install.packages(new_pkgs_from_src, type = 'source',
                    Ncpus = parallel::detectCores())
@@ -181,7 +186,7 @@ new_pkgs <- cran_pkgs[[distribution]][
   !(cran_pkgs[[distribution]] %in% installed.packages()[, "Package"])
 ]
 
-# Install only uninstalled packages
+# Install all other packages, only if they are uninstalled on the image
 if (length(new_pkgs))
   install.packages(new_pkgs,
                    Ncpus = parallel::detectCores())
