@@ -1,4 +1,4 @@
-name: Scheduled Deployments
+name: Scheduled Deployments ⏲
 
 on:
   schedule:
@@ -7,8 +7,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     name: Build & Deploy 🚀
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        image:
+          - r: '4.1.2'
+            bioc: '3.14'
+            distro: rstudio
+          - r: '4.1.2'
+            bioc: '3.14'
+            distro: rstudio-local
 
     # Trigger steps
     steps:
@@ -18,20 +27,15 @@ jobs:
           ref: main
 
       - name: Trigger all builds ▶️
-        run: |
-          FILES="dockerfiles/Dockerfile*"
-          TAG=$(date +%Y.%m.%d)
-          for f in $FILES
-          do {
-            echo "Processing $f file..."
-            DISTRIBUTION="$(cut -d'_' -f2 <<<"$f")"
-            R_VERSION="$(cut -d'_' -f3 <<<"$f")"
-            BIOC_VERSION="$(cut -d'_' -f5 <<<"$f")"
-            curl -sfX POST \
-              -H "Accept: application/vnd.github.v3+json" \
-              -H "authorization: Bearer ${{ secrets.REPO_GITHUB_TOKEN }}" \
-              ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/dispatches \
-              -d '{"client_payload": {"distribution": "'$DISTRIBUTION'", "r_version": "'$R_VERSION'", "bioc_version": "'$BIOC_VERSION'","tag": "'$TAG'", "tag_latest": "true"}, "event_type": "scheduled"}'
-          }
-          done
-        shell: bash
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          event-type: scheduled
+          client-payload: >
+            '{
+              "distribution": "${{ matrix.image.distro }}",
+              "r_version": "${{ matrix.image.r }}",
+              "bioc_version": "${{ matrix.image.bioc }}",
+              "tag": "",
+              "tag_latest": "true"
+            }'
