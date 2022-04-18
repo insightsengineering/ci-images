@@ -32,4 +32,4 @@ Pull the images by:
     docker run --rm -p 8787:8787 -e PASSWORD=test ghcr.io/insightsengineering/rstudio-local_4.1.2_bioc_3.14:latest
     ```
 
-1. Log in to RStudio Server locally by accessing http://localhost:8787 and using `rstudio` as the username and `test` as the password
+1. Log in to RStudio Server locally by accessing [http://localhost:8787](http://localhost:8787) and using `rstudio` as the username and `test` as the password
