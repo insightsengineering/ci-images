@@ -1,4 +1,4 @@
-name: Deploy image to GHCR
+name: Deploy image to GHCR 🪂
 
 env:
   REGISTRY: ghcr.io
@@ -12,20 +12,37 @@ on:
       distribution:
         description: Rocker Distro Name. Eg. rstudio
         required: true
+        type: choice
+        default: rstudio
+        options:
+          - rstudio
+          - rstudio-local
       r_version:
         description: R Version
         required: true
+        type: choice
+        default: "4.1.2"
+        options:
+          - "4.1.0"
+          - "4.1.1"
+          - "4.1.2"
       bioc_version:
         description: BioConductor Release
         required: true
+        type: choice
+        default: "3.14"
+        options:
+          - "3.13"
+          - "3.14"
       tag:
-        description: Image Tag/Version
+        description: |
+          Custom Image Tag/Version. Defaults to current date in the `YYYY.MM.DD` format if unspecified.
         required: false
         default: ""
       tag_latest:
-        description: Tag image as latest
-        required: false
-        default: "false"
+        description: Tag image as `latest`
+        default: false
+        type: boolean
 
 jobs:
   normalize-inputs:
@@ -94,14 +111,6 @@ jobs:
             ${{ runner.os }}-buildx-${{ needs.normalize-inputs.outputs.distribution }}-
             ${{ runner.os }}-buildx-
 
-      - name: Inspect builder 🔍️
-        run: |
-          echo "Name:      ${{ steps.buildx.outputs.name }}"
-          echo "Endpoint:  ${{ steps.buildx.outputs.endpoint }}"
-          echo "Status:    ${{ steps.buildx.outputs.status }}"
-          echo "Flags:     ${{ steps.buildx.outputs.flags }}"
-          echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
-
       - name: Log in to the Container registry 🗝
         uses: docker/login-action@v1
         with:
@@ -112,30 +121,26 @@ jobs:
       - name: Set build variables 📐
         id: build_vars
         run: |
-          # Infer Image name
+          # Set Image name
           image_name="${{ needs.normalize-inputs.outputs.distribution }}_${{ needs.normalize-inputs.outputs.r_version }}_bioc_${{ needs.normalize-inputs.outputs.bioc_version }}"
 
-          # Infer Dockerfile name
-          dockerfile="dockerfiles/Dockerfile_${image_name}"
-          echo "::set-output name=DOCKERFILE::${dockerfile}"
-
-          # Set default tag as short SHA if it isn't set
+          # Set default tag as 'YYYY.MM.DD' date if it isn't set
           tag="${{ needs.normalize-inputs.outputs.tag }}"
           if [ "${tag}" == "" ]
           then {
-            tag="$(echo ${GITHUB_SHA} | cut -c1-8)"
+            tag=$(date +%Y.%m.%d)
           }
           fi
 
           tag_latest="${{ needs.normalize-inputs.outputs.tag_latest }}"
 
           # Set full image name
-          full_name="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
+          full_names="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
           if [ "${tag_latest}" == "true" ]
           then
-            full_name="$full_name,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
+            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
           fi
-          echo "::set-output name=FULL_IMAGE_NAME::${full_name}"
+          echo "::set-output name=FULL_NAMES::${full_names}"
 
           echo "github.ref = ${{ github.ref }}"
           # Set push if branch is main
@@ -147,30 +152,19 @@ jobs:
             echo "DOCKER_PUSH = false"
           fi
 
-      - name: Sanity checks ✅
-        run: |
-          # Catch bad inputs
-          if [ ! -f "${{ steps.build_vars.outputs.DOCKERFILE }}" ]
-          then {
-            echo "No such Dockerfile: ${{ steps.build_vars.outputs.DOCKERFILE }}!"
-            echo "Check your inputs or create the Dockerfile"
-            exit 1
-          }
-          fi
-          echo "DOCKERFILE = ${{ steps.build_vars.outputs.DOCKERFILE }}"
-          echo "DOCKER_PUSH = ${{ steps.build_vars.outputs.DOCKER_PUSH }}"
-          echo "FULL_IMAGE_NAME = ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}"
-        shell: bash
-
-      - name: Build and push image 🚀
+      - name: Build and push image 🏗
         uses: docker/build-push-action@v2
         with:
-          context: ./dockerfiles
-          file: ${{ steps.build_vars.outputs.DOCKERFILE }}
+          context: ./
+          file: Dockerfile
           push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
-          tags: ${{ steps.build_vars.outputs.FULL_IMAGE_NAME }}
+          tags: ${{ steps.build_vars.outputs.FULL_NAMES }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
+          build-args: |
+            DISTRIBUTION=${{ needs.normalize-inputs.outputs.distribution }}
+            R_VERSION=${{ needs.normalize-inputs.outputs.r_version }}
+            BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}
 
       - name: Move cache ♻️
         run: |

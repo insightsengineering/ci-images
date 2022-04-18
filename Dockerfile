@@ -1,14 +1,14 @@
 # Build arguments
 ARG ORIGIN=rocker
-ARG DISTRIBUTION=rstudio
-ARG R_VERSION=4.1.0
+ARG ORIGIN_DISTRIBUTION=rstudio
+ARG R_VERSION=4.1.2
 
 # Fetch base image
-FROM ${ORIGIN}/${DISTRIBUTION}:${R_VERSION}
+FROM ${ORIGIN}/${ORIGIN_DISTRIBUTION}:${R_VERSION}
 
 # Reset args in build context
 ARG DISTRIBUTION=rstudio-local
-ARG BIOC_VERSION=3.13
+ARG BIOC_VERSION=3.14
 
 # Set image metadata
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
@@ -20,7 +20,7 @@ LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
 WORKDIR /workspace
 
 # Copy installation scripts
-COPY scripts/install_sysdeps.sh  ./
+COPY scripts/install_sysdeps.sh ./
 
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
 
