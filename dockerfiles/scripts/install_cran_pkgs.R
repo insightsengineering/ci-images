@@ -9,8 +9,12 @@ distribution <- args[1]
 options(repos = c("https://cloud.r-project.org/"))
 
 # CRAN packages to install
+must_reinstall_with_newer_version <- c(
+  "Matrix"
+)
+
 shared_pkgs_install_from_src <- c(
-  "Matrix", "TMB"
+  "TMB"
 )
 
 cran_pkgs_from_src <- list(
@@ -156,6 +160,8 @@ cran_pkgs <- list(
   )
 )
 
+install.packages(must_reinstall_with_newer_version, type = 'source',
+                 Ncpus = parallel::detectCores())
 
 # Get diff of installed and uninstalled packages for
 # idempotent package installation
@@ -165,7 +171,7 @@ new_pkgs_from_src <- cran_pkgs_from_src[[distribution]][
 
 # Install only uninstalled packages
 if (length(new_pkgs_from_src))
-  install.packages(new_pkgs_from_src,
+  install.packages(new_pkgs_from_src, type = 'source',
                    Ncpus = parallel::detectCores())
 
 
