@@ -20,13 +20,12 @@ LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
 WORKDIR /workspace
 
 # Copy installation scripts
-COPY scripts/install_sysdeps.sh ./
+COPY --chmod=0755 ["scripts/install_sysdeps.sh", "scripts/install_cran_pkgs.R", "scripts/install_bioc.R", "scripts/install_bioc_pkgs.R", "scripts/install_gh_pkgs.R", "./"]
 
+# Install syspdes
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
 
-COPY ["scripts/install_cran_pkgs.R", "scripts/install_bioc.R", "scripts/install_bioc_pkgs.R", "scripts/install_gh_pkgs.R", "./"]
-
-# Install dependencies
+# Install R packages
 RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
     ./install_bioc.R ${BIOC_VERSION} && \
     ./install_bioc_pkgs.R ${DISTRIBUTION} && \
