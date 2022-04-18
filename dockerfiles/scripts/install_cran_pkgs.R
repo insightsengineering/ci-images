@@ -10,7 +10,7 @@ options(repos = c("https://cloud.r-project.org/"))
 
 # CRAN packages to install
 shared_pkgs_install_from_src <- c(
-  "TMB"
+  "Matrix", "TMB"
 )
 
 cran_pkgs_from_src <- list(
