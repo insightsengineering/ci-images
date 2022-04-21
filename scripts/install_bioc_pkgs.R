@@ -5,40 +5,29 @@
 args <- commandArgs(trailing = TRUE)
 distribution <- args[1]
 
-# Bioc packages to install
+# Shared BioC packages to install
+shared_pkgs <- c(
+  "MultiAssayExperiment",
+  "SummarizedExperiment",
+  "ComplexHeatmap",
+  "DESeq2",
+  "edgeR",
+  "S4Vectors",
+  "limma",
+  "biomaRt",
+  "Biobase",
+  "BiocGenerics",
+  "GenomicRanges",
+  "BiocCheck",
+  "Rhtslib",
+  "Gviz",
+  "BiocStyle"
+)
+
+# Per distro BioC packages to install
 bioc_pkgs <- list(
-  rstudio = c(
-    "MultiAssayExperiment",
-    "SummarizedExperiment",
-    "ComplexHeatmap",
-    "DESeq2",
-    "edgeR",
-    "S4Vectors",
-    "limma",
-    "biomaRt",
-    "Biobase",
-    "BiocGenerics",
-    "GenomicRanges",
-    "BiocCheck",
-    "Rhtslib",
-    "Gviz"
-  ),
-  `rstudio-local` = c(
-    "MultiAssayExperiment",
-    "SummarizedExperiment",
-    "ComplexHeatmap",
-    "DESeq2",
-    "edgeR",
-    "S4Vectors",
-    "limma",
-    "biomaRt",
-    "Biobase",
-    "BiocGenerics",
-    "GenomicRanges",
-    "BiocCheck",
-    "Rhtslib",
-    "Gviz"
-  )
+  rstudio = shared_pkgs,
+  `rstudio-local` = shared_pkgs
 )
 
 # Get diff of installed and uninstalled packages for

@@ -151,7 +151,10 @@ shared_pkgs <- c(
   "rsvg",
   "ggiraph",
   "rbmi",
-  "ggnewscale"
+  "ggnewscale",
+  "readxl",
+  "bookdown",
+  "patchwork"
 )
 
 cran_pkgs <- list(
