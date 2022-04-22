@@ -32,10 +32,10 @@ jobs:
           token: ${{ secrets.REPO_GITHUB_TOKEN }}
           event-type: scheduled
           client-payload: >
-            '{
+            {
               "distribution": "${{ matrix.image.distro }}",
               "r_version": "${{ matrix.image.r }}",
               "bioc_version": "${{ matrix.image.bioc }}",
               "tag": "",
               "tag_latest": "true"
-            }'
+            }
