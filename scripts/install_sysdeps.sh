@@ -26,7 +26,7 @@ apt-get update -y
 # shellcheck disable=SC2086
 apt-get install -q -y ${pkgs_to_install["${distribution}"]}
 
-if [ ${distribution} == "rstudio-local" ]; then
+if [ "${distribution}" == "rstudio-local" ]; then
   snap install pre-commit --classic; fi
 
 # Install security patches
