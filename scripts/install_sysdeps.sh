@@ -13,7 +13,7 @@ declare -A pkgs_to_install
 pkgs_to_install["rstudio"]="libxml2-dev pandoc libicu-dev libgit2-dev zlib1g-dev libfontconfig1-dev libfreetype6-dev libjpeg-dev libpng-dev libtiff-dev libfribidi-dev libharfbuzz-dev imagemagick libmagick++-dev unixodbc-dev curl qpdf unattended-upgrades ssh libmysqlclient-dev libsodium-dev default-jdk cmake jags"
 
 # Deps for rstudio-local
-pkgs_to_install["rstudio-local"]="libxml2-dev pandoc libicu-dev libgit2-dev zlib1g-dev libfontconfig1-dev libfreetype6-dev libjpeg-dev libpng-dev libtiff-dev libfribidi-dev libharfbuzz-dev imagemagick libmagick++-dev unixodbc-dev curl qpdf unattended-upgrades less ssh libmysqlclient-dev libsodium-dev default-jdk vim cmake xdg-utils"
+pkgs_to_install["rstudio-local"]="libxml2-dev pandoc libicu-dev libgit2-dev zlib1g-dev libfontconfig1-dev libfreetype6-dev libjpeg-dev libpng-dev libtiff-dev libfribidi-dev libharfbuzz-dev imagemagick libmagick++-dev unixodbc-dev curl qpdf unattended-upgrades less ssh libmysqlclient-dev libsodium-dev default-jdk vim cmake xdg-utils snapd"
 
 # Set env vars
 export DEBIAN_FRONTEND=noninteractive
@@ -25,6 +25,9 @@ apt-get update -y
 # expected word splitting - list of packages require it
 # shellcheck disable=SC2086
 apt-get install -q -y ${pkgs_to_install["${distribution}"]}
+
+if [ ${distribution} == "rstudio-local" ]; then
+  snap install pre-commit --classic; fi
 
 # Install security patches
 unattended-upgrade -v
