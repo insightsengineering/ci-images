@@ -20,7 +20,15 @@ LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
 WORKDIR /workspace
 
 # Copy installation scripts
-COPY --chmod=0755 ["scripts/install_sysdeps.sh", "scripts/install_cran_pkgs.R", "scripts/install_bioc.R", "scripts/install_bioc_pkgs.R", "scripts/install_gh_pkgs.R", "./"]
+COPY --chmod=0755 [\
+    "scripts/install_sysdeps.sh", \
+    "scripts/install_cran_pkgs.R", \
+    "scripts/install_bioc.R", \
+    "scripts/install_bioc_pkgs.R", \
+    "scripts/install_gh_pkgs.R", \
+    "scripts/install_pip_pkgs.py", \
+    "./"\
+]
 
 # Install syspdes
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
@@ -30,6 +38,7 @@ RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
     ./install_bioc.R ${BIOC_VERSION} && \
     ./install_bioc_pkgs.R ${DISTRIBUTION} && \
     ./install_gh_pkgs.R ${DISTRIBUTION} && \
+    ./install_pip_pkgs.py ${DISTRIBUTION} && \
     rm -rf *
 
 # Run RStudio
