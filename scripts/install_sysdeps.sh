@@ -34,6 +34,7 @@ libmysqlclient-dev \
 libsodium-dev \
 default-jdk \
 cmake \
+graphviz \
 "
 
 # Deps specific to rstudio

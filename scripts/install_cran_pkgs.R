@@ -154,7 +154,8 @@ shared_pkgs <- c(
   "ggnewscale",
   "readxl",
   "bookdown",
-  "patchwork"
+  "patchwork",
+  "DiagrammeR"
 )
 
 cran_pkgs <- list(
