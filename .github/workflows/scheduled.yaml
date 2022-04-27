@@ -12,12 +12,12 @@ jobs:
     strategy:
       matrix: 
         image:
-          - r: '4.1.2'
-            bioc: '3.14'
-            distro: rstudio
-          - r: '4.1.2'
-            bioc: '3.14'
+          - r: '4.2.0'
+            bioc: '3.15'
             distro: rstudio-local
+          - r: '4.2.0'
+            bioc: '3.15'
+            distro: rstudio
 
     # Trigger steps
     steps:
