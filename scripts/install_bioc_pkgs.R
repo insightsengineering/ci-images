@@ -22,7 +22,7 @@ shared_pkgs <- c(
   "Rhtslib",
   "Gviz",
   "BiocStyle",
-  "BiocBaseUtils"
+  "Bioconductor/BiocBaseUtils"
 )
 
 # Per distro BioC packages to install
