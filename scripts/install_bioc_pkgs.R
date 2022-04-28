@@ -21,7 +21,8 @@ shared_pkgs <- c(
   "BiocCheck",
   "Rhtslib",
   "Gviz",
-  "BiocStyle"
+  "BiocStyle",
+  "BiocBaseUtils"
 )
 
 # Per distro BioC packages to install
