@@ -155,7 +155,9 @@ shared_pkgs <- c(
   "readxl",
   "bookdown",
   "patchwork",
-  "DiagrammeR"
+  "DiagrammeR",
+  "binom",
+  "ggpubr"
 )
 
 cran_pkgs <- list(
