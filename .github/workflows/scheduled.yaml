@@ -39,3 +39,18 @@ jobs:
               "tag": "",
               "tag_latest": "true"
             }
+      - name: Build an image from Dockerfile
+        run: |
+          docker build -t ${{ matrix.image.distro }}:${{ github.sha }} .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ matrix.image.distro }}:${{ github.sha }}'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
