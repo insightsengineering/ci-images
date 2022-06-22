@@ -12,20 +12,43 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        image:
+          - r: '4.2.0'
+            bioc: '3.15'
+            distro: rstudio
     steps:
-      - name: Checkout code
+      - name: Checkout repository 💳
         uses: actions/checkout@v2
 
-      - name: Build an image from Dockerfile
-        run: |
-          docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+        with:
+          install: true
+
+      - name: Build and push image 🏗
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: Dockerfile
+          push: false
+          tags: '${{ matrix.image.distro }}:trivy'
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+          image-ref: '${{ matrix.image.distro }}:trivy'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
