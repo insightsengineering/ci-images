@@ -175,7 +175,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@v0.5
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ steps.build_vars.outputs.FULL_NAMES }}
           format: 'table'
