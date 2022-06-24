@@ -47,14 +47,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build an image from Dockerfile
-        run: |
-          docker build -t ${{ matrix.image.distro }}:${{ github.sha }} .
-
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ matrix.image.distro }}:${{ github.sha }}'
+          image-ref: 'ghcr.io/insightsengineering/rstudio_4.1.2_bioc_3.14:2022.06.16'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
