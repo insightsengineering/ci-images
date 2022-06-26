@@ -12,10 +12,10 @@ jobs:
     strategy:
       matrix: 
         image:
-          - r: '4.2.0'
+          - r: '4.2.1'
             bioc: '3.15'
             distro: rstudio-local
-          - r: '4.2.0'
+          - r: '4.2.1'
             bioc: '3.15'
             distro: rstudio
 
