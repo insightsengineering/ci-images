@@ -68,7 +68,6 @@ new_pkgs <- gh_pkgs[[distribution]][
 if (length(new_pkgs)) {
   devtools::install_github(
     new_pkgs,
-    Ncpus = parallel::detectCores(),
     upgrade = "never"
   )
 }
