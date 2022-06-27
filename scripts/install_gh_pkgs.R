@@ -11,7 +11,6 @@ ie_nest_packages <- c(
   "scda.2021",
   "scda.2022",
   "formatters",
-  "ggplot2.utils",
   "hermes",
   "teal.logger",
   "scda",
@@ -48,13 +47,11 @@ all_nest_packages <- c(
 gh_pkgs <- list(
   rstudio = c(
     "tlverse/sl3@v1.4.4",
-    "r-lib/styler",
     "insightsengineering/nesttemplate",
     "openpharma/staged.dependencies@*release"
   ),
   `rstudio-local` = c(
     "tlverse/sl3@v1.4.4",
-    "r-lib/styler",
     "insightsengineering/nesttemplate",
     "openpharma/staged.dependencies@*release",
     all_nest_packages
@@ -68,5 +65,10 @@ new_pkgs <- gh_pkgs[[distribution]][
 ]
 
 # Install only uninstalled packages
-if (length(new_pkgs))
-  devtools::install_github(new_pkgs, Ncpus = parallel::detectCores())
+if (length(new_pkgs)) {
+  devtools::install_github(
+    new_pkgs,
+    Ncpus = parallel::detectCores(),
+    upgrade = "never"
+  )
+}
