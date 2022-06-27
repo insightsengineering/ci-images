@@ -26,6 +26,7 @@ COPY --chmod=0755 [\
     "scripts/install_bioc.R", \
     "scripts/install_bioc_pkgs.R", \
     "scripts/install_gh_pkgs.R", \
+    "scripts/install_other_pkgs.R", \
     "scripts/install_pip_pkgs.py", \
     "./"\
 ]
@@ -38,6 +39,7 @@ RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
     ./install_bioc.R ${BIOC_VERSION} && \
     ./install_bioc_pkgs.R ${DISTRIBUTION} && \
     ./install_gh_pkgs.R ${DISTRIBUTION} && \
+    ./install_other_pkgs.R ${DISTRIBUTION} && \
     ./install_pip_pkgs.py ${DISTRIBUTION} && \
     rm -rf *
 
