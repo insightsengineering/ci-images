@@ -6,9 +6,6 @@ env:
 on:
   schedule:
     - cron: '44 21 7,21 * *'
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
