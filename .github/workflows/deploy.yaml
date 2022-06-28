@@ -103,7 +103,6 @@ jobs:
         id: buildx
         with:
           install: true
-          version: v0.7.0
 
       - name: Cache Docker layers ♻️
         uses: actions/cache@v2
