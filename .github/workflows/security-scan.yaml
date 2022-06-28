@@ -1,4 +1,4 @@
-name: trivy  ⏲
+name: Security Scan  👮
 
 env:
   REGISTRY: ghcr.io
@@ -32,7 +32,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run Trivy vulnerability scanner
+      - name: Run Trivy vulnerability scanner 🚓
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'ghcr.io/insightsengineering/${{ matrix.image.distro }}_${{ matrix.image.r }}_bioc_${{ matrix.image.bioc }}:latest'
@@ -43,7 +43,7 @@ jobs:
           format: 'sarif'
           output: 'trivy-results.sarif'
 
-      - name: Upload Trivy scan results to GitHub Security tab
+      - name: Upload Trivy scan results to GitHub Security tab ⛽
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
