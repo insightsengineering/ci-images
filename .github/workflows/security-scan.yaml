@@ -37,8 +37,7 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
+          format: 'sarif'
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab ⛽
@@ -46,4 +45,3 @@ jobs:
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
-          github-pat: ${{ secrets.GITHUB_TOKEN }}
