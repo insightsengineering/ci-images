@@ -5,7 +5,7 @@ env:
 
 on:
   schedule:
-    - cron: '44 19 7,21 * *'
+    - cron: '44 21 7,21 * *'
   pull_request:
     branches:
       - main
@@ -18,18 +18,12 @@ jobs:
     strategy:
       matrix:
         image:
-          - r: '4.2.0'
+          - r: '4.2.1'
             bioc: '3.15'
-            distro: rstudio
+            distro: rstudio-local
     steps:
       - name: Checkout repository 💳
         uses: actions/checkout@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-        id: buildx
-        with:
-          install: true
 
       - name: Log in to the Container registry 🗝
         uses: docker/login-action@v1
@@ -39,10 +33,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'ghcr.io/insightsengineering/rstudio_4.1.2_bioc_3.14:latest'
-          #format: 'table'
+          image-ref: 'ghcr.io/insightsengineering/${{ matrix.image.distro }}_${{ matrix.image.r }}_bioc_${{ matrix.image.bioc }}:latest'
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
@@ -56,13 +49,5 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-      - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
-        with:
-          scan-type: 'fs'
-          ignore-unfixed: true
-          #format: 'sarif'
-          format: 'table'
-          severity: 'CRITICAL,HIGH'
 
 
