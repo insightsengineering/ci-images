@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Scan
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -46,3 +46,4 @@ jobs:
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
+          github-pat: ${{ secrets.GITHUB_TOKEN }}
