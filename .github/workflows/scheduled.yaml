@@ -10,7 +10,7 @@ jobs:
     name: Build & Deploy 🚀
     runs-on: ubuntu-latest
     strategy:
-      matrix: 
+      matrix:
         image:
           - r: '4.2.1'
             bioc: '3.15'
