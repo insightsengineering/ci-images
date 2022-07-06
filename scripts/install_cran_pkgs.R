@@ -157,7 +157,8 @@ shared_pkgs <- c(
   "patchwork",
   "DiagrammeR",
   "binom",
-  "ggpubr"
+  "ggpubr",
+  "maditr"
 )
 
 cran_pkgs <- list(
