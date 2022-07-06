@@ -158,7 +158,8 @@ shared_pkgs <- c(
   "DiagrammeR",
   "binom",
   "ggpubr",
-  "maditr"
+  "maditr",
+  "diffdf"
 )
 
 cran_pkgs <- list(
@@ -166,8 +167,7 @@ cran_pkgs <- list(
   `rstudio-local` = c(
     shared_pkgs,
     "diffviewer",
-    "languageserver",
-    "diffdf"
+    "languageserver"
   )
 )
 
