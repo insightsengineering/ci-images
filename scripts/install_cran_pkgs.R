@@ -10,7 +10,7 @@ options(repos = c("https://cloud.r-project.org/"))
 
 # Packages that are already in the image
 # but must be reinstalled to the latest versions
-must_reinstall_with_newer_version <- c(
+reinstall_with_newer_version <- c(
   "Matrix"
 )
 
@@ -159,7 +159,9 @@ shared_pkgs <- c(
   "binom",
   "ggpubr",
   "maditr",
-  "diffdf"
+  "diffdf",
+  "survminer",
+  "quarto"
 )
 
 cran_pkgs <- list(
@@ -172,7 +174,7 @@ cran_pkgs <- list(
 )
 
 # Re-install packages with newer versions
-install.packages(must_reinstall_with_newer_version, type = 'source',
+install.packages(reinstall_with_newer_version, type = "source",
                  Ncpus = parallel::detectCores())
 
 # Get diff of installed and uninstalled packages for
@@ -183,7 +185,7 @@ new_pkgs_from_src <- cran_pkgs_from_src[[distribution]][
 
 # Install "source only" packages from source
 if (length(new_pkgs_from_src))
-  install.packages(new_pkgs_from_src, type = 'source',
+  install.packages(new_pkgs_from_src, type = "source",
                    Ncpus = parallel::detectCores())
 
 
