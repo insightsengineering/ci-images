@@ -35,6 +35,8 @@ libsodium-dev \
 default-jdk \
 cmake \
 graphviz \
+libaio1 \
+alien \
 "
 
 # Deps specific to rstudio
@@ -61,13 +63,20 @@ apt-get update -y
 # shellcheck disable=SC2086
 apt-get install -q -y ${pkgs_to_install["${distribution}"]}
 
+# Install quarto
+ARCH=$(dpkg --print-architecture)
+QUARTO_DL_URL=$(wget -qO- https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest | grep -oP "(?<=\"browser_download_url\":\s\")https.*${ARCH}\.deb")
+wget -q "${QUARTO_DL_URL}" -O quarto-"${ARCH}".deb
+dpkg -i quarto-"${ARCH}".deb
+quarto check install
+
 # Install security patches
 unattended-upgrade -v
 
 # Clean up
 apt-get autoremove -y
 apt-get autoclean -y
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* quarto-"${ARCH}".deb
 
 # Purge and recreate locales
 locale-gen --purge en_US.UTF-8
