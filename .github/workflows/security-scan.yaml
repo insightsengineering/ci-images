@@ -30,13 +30,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Trivy vulnerability scanner 🚓
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.6.0
         with:
-          image-ref: 'ghcr.io/insightsengineering/${{ matrix.image.distro }}_${{ matrix.image.r }}_bioc_${{ matrix.image.bioc }}:latest'
-          exit-code: '1'
+          scan_type: image
+          image-ref: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image.distro }}_${{ matrix.image.r }}_bioc_${{ matrix.image.bioc }}:latest'
+          exit-code: 0
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          severity: 'CRITICAL,HIGH,MEDIUM'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
