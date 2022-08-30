@@ -162,7 +162,6 @@ shared_pkgs <- c(
   "diffdf",
   "survminer",
   "quarto",
-  "webshot2"
 )
 
 cran_pkgs <- list(

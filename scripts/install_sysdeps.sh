@@ -37,7 +37,6 @@ cmake \
 graphviz \
 libaio1 \
 alien \
-chromium-browser \
 "
 
 # Deps specific to rstudio
