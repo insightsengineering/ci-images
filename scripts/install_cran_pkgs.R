@@ -161,7 +161,7 @@ shared_pkgs <- c(
   "maditr",
   "diffdf",
   "survminer",
-  "quarto",
+  "quarto"
 )
 
 cran_pkgs <- list(
