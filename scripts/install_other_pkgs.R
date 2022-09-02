@@ -33,9 +33,16 @@ nest_packages <- c(
   "teal.osprey"
 )
 
+# Statistics packages
+stat_pkgs <- c(
+  "cmdstanr"
+)
+
 # List for packages to be installed in a given distribution
 other_pkgs <- list(
-    rstudio = c(),
+    rstudio = c(
+      stat_pkgs
+    ),
     `rstudio-local` = c(
         nest_packages
     )
@@ -56,10 +63,14 @@ if (length(new_pkgs)) {
         "https://insightsengineering.github.io/depository/",
         nest_release_date
       ),
-      "https://cloud.r-project.org/"
+      "https://cloud.r-project.org/",
+      "https://mc-stan.org/r-packages/"
     ),
     Ncpus = parallel::detectCores(),
     ask = FALSE,
     upgrade = "never"
   )
 }
+
+# Install cmdstan
+cmdstanr::install_cmdstan(cores = parallel::detectCores())

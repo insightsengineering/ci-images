@@ -10,6 +10,10 @@ The [`scripts`](./scripts) directory contains scripts which install the various 
 
 Finally, Github Actions workflows are available in the [`.github/workflows`](.github/workflows) directory which support [on-demand](.github/workflows/deploy.yaml) as well as [scheduled](.github/workflows/scheduled.yaml) image building workflows.
 
+As the packages and system dependencies contained in these images might be far too heavy for general use cases,
+please feel free to fork this repository and build your own images.
+The CI/CD workflows are portable, so they will work on any forked repository as long as it has GitHub Actions enabled on it.
+
 ## Usage
 
 All available images originating from this repository are available [here](https://github.com/orgs/insightsengineering/packages?repo_name=ci-images).
