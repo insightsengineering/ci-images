@@ -37,7 +37,6 @@ cmake \
 graphviz \
 libaio1 \
 alien \
-google-chrome-stable \
 "
 
 # Deps specific to rstudio
@@ -56,10 +55,6 @@ less \
 # Set env vars
 export DEBIAN_FRONTEND=noninteractive
 
-# Add Chrome repo
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-
 # Update
 apt-get update -y
 
@@ -67,6 +62,12 @@ apt-get update -y
 # expected word splitting - list of packages require it
 # shellcheck disable=SC2086
 apt-get install -q -y ${pkgs_to_install["${distribution}"]}
+
+# Add Chrome repo and install Chrome
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+apt-get update -y
+apt-get install -q -y google-chrome-stable
 
 # Install quarto
 ARCH=$(dpkg --print-architecture)
