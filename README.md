@@ -37,3 +37,8 @@ Pull the images by:
     ```
 
 1. Log in to RStudio Server locally by accessing [http://localhost:8787](http://localhost:8787) and using `rstudio` as the username and `test` as the password
+
+
+An example of image usage can be seen in the screenshot below:
+
+![Screenshot with example usage](example.png)
