@@ -210,6 +210,8 @@ if (require("shinytest")) {
 # Conditionally install TinyTex
 if (require("tinytex")) {
   # nolint start
+  # See point 5 in
+  # https://github.com/rbind/yihui/blob/master/content/tinytex/faq.md
   tinytex_installer <- '
 wget -qO- "https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh" | sh -s - --admin --no-path
 mv ~/.TinyTeX /opt/TinyTeX
@@ -224,7 +226,7 @@ tlmgr path add
 chown -R root:staff /opt/TinyTeX
 chmod -R g+w /opt/TinyTeX
 chmod -R g+wx /opt/TinyTeX/bin
-export PATH=/opt/TinyTeX/bin:${PATH}
+export PATH=/opt/TinyTeX/bin/x86_64-linux:${PATH}
 echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 '
   system(permission_update)

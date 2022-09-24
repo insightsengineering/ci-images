@@ -54,6 +54,7 @@ less \
 
 # Set env vars
 export DEBIAN_FRONTEND=noninteractive
+export ACCEPT_EULA=Y
 
 # Update
 apt-get update -y
