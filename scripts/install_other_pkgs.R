@@ -26,11 +26,11 @@ nest_packages <- c(
   "tern.mmrm",
   "teal.transform",
   "teal",
+  "teal.osprey",
   "teal.goshawk",
   "teal.modules.clinical",
   "teal.modules.general",
-  "teal.modules.hermes",
-  "teal.osprey"
+  "teal.modules.hermes"
 )
 
 # Statistics packages
@@ -44,7 +44,7 @@ other_pkgs <- list(
       stat_pkgs
     ),
     `rstudio-local` = c(
-        nest_packages
+      nest_packages
     )
 )
 

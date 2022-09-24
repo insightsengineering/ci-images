@@ -38,6 +38,7 @@ on:
           - "3.13"
           - "3.14"
           - "3.15"
+          - "3.16"
       tag:
         description: |
           Custom Image Tag/Version. Defaults to current date in the `YYYY.MM.DD` format if unspecified.
@@ -98,6 +99,9 @@ jobs:
       - name: Checkout repository 💳
         uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         id: buildx
@@ -157,7 +161,7 @@ jobs:
           fi
 
       - name: Build and push image 🏗
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: ./
           file: Dockerfile
@@ -169,6 +173,7 @@ jobs:
             DISTRIBUTION=${{ needs.normalize-inputs.outputs.distribution }}
             R_VERSION=${{ needs.normalize-inputs.outputs.r_version }}
             BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}
+          platforms: linux/amd64,linux/arm64
 
       - name: Move cache ♻️
         run: |
