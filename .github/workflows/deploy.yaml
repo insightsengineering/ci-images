@@ -173,7 +173,7 @@ jobs:
             DISTRIBUTION=${{ needs.normalize-inputs.outputs.distribution }}
             R_VERSION=${{ needs.normalize-inputs.outputs.r_version }}
             BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
 
       - name: Move cache ♻️
         run: |
