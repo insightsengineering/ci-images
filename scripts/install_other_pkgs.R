@@ -6,7 +6,7 @@ args <- commandArgs(trailing = TRUE)
 distribution <- args[1]
 
 # NEST packages to be installed
-nest_release_date <- "2022_06_09"
+nest_release_date <- "2022_10_13"
 nest_packages <- c(
   "scda.2021",
   "scda.2022",
