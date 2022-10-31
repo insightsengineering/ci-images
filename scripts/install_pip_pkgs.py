@@ -18,7 +18,7 @@ def install(packages=[]):
     """
     if len(packages) > 0:
         subprocess.check_call([
-            sys.executable, "-m", "pip", "install", " ".join(packages)
+            "pip3", "install", " ".join(packages)
         ])
 
 # Shared packages across distributions
