@@ -41,4 +41,5 @@ new_pkgs <- bioc_pkgs[[distribution]][
 if (length(new_pkgs))
   BiocManager::install(new_pkgs,
                        Ncpus = parallel::detectCores(),
-                       upgrade = "never")
+                       upgrade = "never",
+                       force = TRUE)
