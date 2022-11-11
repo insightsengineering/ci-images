@@ -162,7 +162,9 @@ shared_pkgs <- c(
   "diffdf",
   "survminer",
   "quarto",
-  "shinytest2"
+  "shinytest2",
+  "geeasy",
+  "geepack"
 )
 
 cran_pkgs <- list(
