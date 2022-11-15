@@ -164,7 +164,9 @@ shared_pkgs <- c(
   "quarto",
   "shinytest2",
   "geeasy",
-  "geepack"
+  "geepack",
+  "GenSA",
+  "mmrm"
 )
 
 cran_pkgs <- list(
