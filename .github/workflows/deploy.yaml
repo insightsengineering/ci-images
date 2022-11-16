@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       origin:
-        description: Org or username where the base image is located
+        description: DockerHub org or username where the base image is located
         required: true
         type: choice
         default: rstudio
