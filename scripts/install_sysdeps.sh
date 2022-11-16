@@ -39,6 +39,8 @@ graphviz \
 libaio1 \
 alien \
 libxss1 \
+git \
+libssl-dev \
 "
 
 # Shared deps for fedora
@@ -70,6 +72,8 @@ cmake \
 graphviz \
 libxslt-devel \
 chromium-headless \
+openssl-devel \
+git-all \
 "
 
 # Deps specific on the rstudio image
