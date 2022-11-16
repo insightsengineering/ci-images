@@ -157,6 +157,10 @@ then {
     then {
         locale-gen --purge en_US.UTF-8
         echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' > /etc/default/locale
+
+        # Also override the default repository used in the rstudio images
+        echo "options(repos = c(CRAN = 'https://cloud.r-project.org'))" > \
+            /usr/local/lib/R/etc/Rprofile.site
     }
     fi
 }
@@ -186,6 +190,9 @@ if [ -d "/opt/R-devel/bin/" ]
 then {
     ln -s /opt/R-devel/bin/R /usr/bin/R
     ln -s /opt/R-devel/bin/Rscript /usr/bin/Rscript
+    # Also set default CRAN repo
+    echo "options(repos=structure(c(CRAN='https://cloud.r-project.org')))" > \
+        /opt/R-devel/lib64/R/etc/Rprofile.site
 }
 fi
 
@@ -193,6 +200,9 @@ if [ -d "/opt/R-patched/bin/" ]
 then {
     ln -s /opt/R-patched/bin/R /usr/bin/R
     ln -s /opt/R-patched/bin/Rscript /usr/bin/Rscript
+    # Also set default CRAN repo
+    echo "options(repos=structure(c(CRAN='https://cloud.r-project.org')))" > \
+        /opt/R-patched/lib64/R/etc/Rprofile.site
 }
 fi
 
