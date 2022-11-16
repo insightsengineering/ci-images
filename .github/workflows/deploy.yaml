@@ -9,8 +9,16 @@ on:
       - scheduled
   workflow_dispatch:
     inputs:
+      origin:
+        description: Org or username where the base image is located
+        required: true
+        type: choice
+        default: rstudio
+        options:
+          - rstudio
+          - rhub
       distribution:
-        description: Rocker Distro Name. Eg. rstudio
+        description: Rocker/RHub Distro Name. Eg. rstudio or fedora-gcc-devel
         required: true
         type: choice
         default: rstudio
@@ -36,6 +44,7 @@ on:
           - "4.2.0"
           - "4.2.1"
           - "4.2.2"
+          - "latest"
       bioc_version:
         description: BioConductor Release
         required: true
@@ -74,6 +83,7 @@ jobs:
             fi
             echo ${var}
           }
+          ORIGIN=$(normalize ${{ github.event.inputs.origin }} ${{ github.event.client_payload.origin }})
           DISTRIBUTION=$(normalize ${{ github.event.inputs.distribution }} ${{ github.event.client_payload.distribution }})
           R_VERSION=$(normalize ${{ github.event.inputs.r_version }} ${{ github.event.client_payload.r_version }})
           BIOC_VERSION=$(normalize ${{ github.event.inputs.bioc_version }} ${{ github.event.client_payload.bioc_version }})
@@ -86,6 +96,7 @@ jobs:
           echo "::set-output name=TAG_LATEST::$TAG_LATEST"
         shell: bash
     outputs:
+      origin: ${{ steps.normalizer.outputs.ORIGIN }}
       distribution: ${{ steps.normalizer.outputs.DISTRIBUTION }}
       r_version: ${{ steps.normalizer.outputs.R_VERSION }}
       bioc_version: ${{ steps.normalizer.outputs.BIOC_VERSION }}
@@ -183,6 +194,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           build-args: |
+            ORIGIN=${{ needs.normalize-inputs.outputs.origin }}
             DISTRIBUTION=${{ needs.normalize-inputs.outputs.distribution }}
             R_VERSION=${{ needs.normalize-inputs.outputs.r_version }}
             BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}
