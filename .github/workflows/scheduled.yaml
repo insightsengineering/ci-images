@@ -18,6 +18,24 @@ jobs:
           - r: '4.2.2'
             bioc: '3.16'
             distro: rstudio
+          - r: 'na'
+            bioc: 'devel'
+            distro: debian-clang-devel
+          - r: 'na'
+            bioc: 'devel'
+            distro: debian-gcc-devel
+          - r: 'na'
+            bioc: 'devel'
+            distro: fedora-clang-devel
+          - r: 'na'
+            bioc: 'devel'
+            distro: fedora-gcc-devel
+          - r: 'na'
+            bioc: '3.15'
+            distro: debian-gcc-patched
+          - r: 'na'
+            bioc: '3.16'
+            distro: debian-gcc-release
 
     # Trigger steps
     steps:

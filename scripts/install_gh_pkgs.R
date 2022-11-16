@@ -6,17 +6,22 @@ args <- commandArgs(trailing = TRUE)
 distribution <- args[1]
 
 # Packages to install
+# Regular CRAN packages to install
+shared_pkgs <- c(
+  "tlverse/sl3@v1.4.4",
+  "insightsengineering/nesttemplate",
+  "openpharma/staged.dependencies@*release"
+)
+
 gh_pkgs <- list(
-  rstudio = c(
-    "tlverse/sl3@v1.4.4",
-    "insightsengineering/nesttemplate",
-    "openpharma/staged.dependencies@*release"
-  ),
-  `rstudio-local` = c(
-    "tlverse/sl3@v1.4.4",
-    "insightsengineering/nesttemplate",
-    "openpharma/staged.dependencies@*release"
-  )
+  rstudio = shared_pkgs,
+  `rstudio-local` = shared_pkgs,
+  `debian-clang-devel` = shared_pkgs,
+  `debian-gcc-devel` = shared_pkgs,
+  `fedora-clang-devel` = shared_pkgs,
+  `fedora-gcc-devel` = shared_pkgs,
+  `debian-gcc-patched` = shared_pkgs,
+  `debian-gcc-release` = shared_pkgs
 )
 
 # Get diff of installed and uninstalled packages for
