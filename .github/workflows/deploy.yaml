@@ -9,14 +9,28 @@ on:
       - scheduled
   workflow_dispatch:
     inputs:
+      origin:
+        description: DockerHub org or username where the base image is located
+        required: true
+        type: choice
+        default: rocker
+        options:
+          - rocker
+          - rhub
       distribution:
-        description: Rocker Distro Name. Eg. rstudio
+        description: Rocker/RHub Distro Name. Eg. rstudio or fedora-gcc-devel
         required: true
         type: choice
         default: rstudio
         options:
           - rstudio
           - rstudio-local
+          - debian-clang-devel
+          - debian-gcc-devel
+          - fedora-clang-devel
+          - fedora-gcc-devel
+          - debian-gcc-patched
+          - debian-gcc-release
       r_version:
         description: R Version
         required: true
@@ -30,6 +44,7 @@ on:
           - "4.2.0"
           - "4.2.1"
           - "4.2.2"
+          - "latest"
       bioc_version:
         description: BioConductor Release
         required: true
@@ -40,6 +55,7 @@ on:
           - "3.14"
           - "3.15"
           - "3.16"
+          - "devel"
       tag:
         description: |
           Custom Image Tag/Version. Defaults to current date in the `YYYY.MM.DD` format if unspecified.
@@ -67,11 +83,15 @@ jobs:
             fi
             echo ${var}
           }
+          ORIGIN=$(normalize ${{ github.event.inputs.origin }} ${{ github.event.client_payload.origin }})
           DISTRIBUTION=$(normalize ${{ github.event.inputs.distribution }} ${{ github.event.client_payload.distribution }})
+          ORIGIN_DISTRIBUTION=${DISTRIBUTION//"-local"}
           R_VERSION=$(normalize ${{ github.event.inputs.r_version }} ${{ github.event.client_payload.r_version }})
           BIOC_VERSION=$(normalize ${{ github.event.inputs.bioc_version }} ${{ github.event.client_payload.bioc_version }})
           TAG=$(normalize ${{ github.event.inputs.tag }} ${{ github.event.client_payload.tag }})
           TAG_LATEST=$(normalize ${{ github.event.inputs.tag_latest }} ${{ github.event.client_payload.tag_latest }})
+          echo "::set-output name=ORIGIN::$ORIGIN"
+          echo "::set-output name=ORIGIN_DISTRIBUTION::$ORIGIN_DISTRIBUTION"
           echo "::set-output name=DISTRIBUTION::$DISTRIBUTION"
           echo "::set-output name=R_VERSION::$R_VERSION"
           echo "::set-output name=BIOC_VERSION::$BIOC_VERSION"
@@ -79,6 +99,8 @@ jobs:
           echo "::set-output name=TAG_LATEST::$TAG_LATEST"
         shell: bash
     outputs:
+      origin: ${{ steps.normalizer.outputs.ORIGIN }}
+      origin_distribution: ${{ steps.normalizer.outputs.ORIGIN_DISTRIBUTION }}
       distribution: ${{ steps.normalizer.outputs.DISTRIBUTION }}
       r_version: ${{ steps.normalizer.outputs.R_VERSION }}
       bioc_version: ${{ steps.normalizer.outputs.BIOC_VERSION }}
@@ -132,6 +154,11 @@ jobs:
         run: |
           # Set Image name
           image_name="${{ needs.normalize-inputs.outputs.distribution }}_${{ needs.normalize-inputs.outputs.r_version }}_bioc_${{ needs.normalize-inputs.outputs.bioc_version }}"
+          if [[ "${{ needs.normalize-inputs.outputs.distribution }}" =~ ^debian.*|^fedora.* ]]
+          then {
+            image_name="${{ needs.normalize-inputs.outputs.distribution }}"
+          }
+          fi
 
           # Set default tag as 'YYYY.MM.DD' date if it isn't set
           tag="${{ needs.normalize-inputs.outputs.tag }}"
@@ -171,6 +198,8 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
           build-args: |
+            ORIGIN=${{ needs.normalize-inputs.outputs.origin }}
+            ORIGIN_DISTRIBUTION=${{ needs.normalize-inputs.outputs.origin_distribution }}
             DISTRIBUTION=${{ needs.normalize-inputs.outputs.distribution }}
             R_VERSION=${{ needs.normalize-inputs.outputs.r_version }}
             BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}

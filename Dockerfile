@@ -1,14 +1,14 @@
 # Build arguments
 ARG ORIGIN=rocker
 ARG ORIGIN_DISTRIBUTION=rstudio
-ARG R_VERSION=4.2.0
+ARG R_VERSION=4.2.2
 
 # Fetch base image
 FROM ${ORIGIN}/${ORIGIN_DISTRIBUTION}:${R_VERSION}
 
 # Reset args in build context
 ARG DISTRIBUTION=rstudio-local
-ARG BIOC_VERSION=3.15
+ARG BIOC_VERSION=3.16
 
 # Set image metadata
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
@@ -31,7 +31,7 @@ COPY --chmod=0755 [\
     "./"\
 ]
 
-# Install syspdes
+# Install sysdeps
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
 
 # Install R packages
@@ -41,7 +41,13 @@ RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
     ./install_gh_pkgs.R ${DISTRIBUTION} && \
     ./install_other_pkgs.R ${DISTRIBUTION} && \
     ./install_pip_pkgs.py ${DISTRIBUTION} && \
-    rm -rf *
+    rm -f install_sysdeps.sh \
+        install_cran_pkgs.R \
+        install_bioc.R \
+        install_bioc_pkgs.R \
+        install_gh_pkgs.R \
+        install_other_pkgs.R \
+        install_pip_pkgs.py
 
 # Run RStudio
 CMD ["/init"]

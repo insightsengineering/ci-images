@@ -30,6 +30,12 @@ pip_packages = {
     "rstudio-local": shared_packages + [
         "pre-commit",
     ],
+    "debian-clang-devel": [],
+    "debian-gcc-devel": [],
+    "fedora-clang-devel": [],
+    "fedora-gcc-devel": [],
+    "debian-gcc-patched": [],
+    "debian-gcc-release": [],
 }
 
 # Install packages

@@ -175,12 +175,20 @@ cran_pkgs <- list(
     shared_pkgs,
     "diffviewer",
     "languageserver"
-  )
+  ),
+  `debian-clang-devel` = shared_pkgs,
+  `debian-gcc-devel` = shared_pkgs,
+  `fedora-clang-devel` = shared_pkgs[! shared_pkgs %in% c("rjags")],
+  `fedora-gcc-devel` = shared_pkgs[! shared_pkgs %in% c("rjags")],
+  `debian-gcc-patched` = shared_pkgs,
+  `debian-gcc-release` = shared_pkgs
 )
 
 # Re-install packages with newer versions
-install.packages(reinstall_with_newer_version, type = "source",
-                 Ncpus = parallel::detectCores())
+install.packages(reinstall_with_newer_version,
+  type = "source",
+  Ncpus = parallel::detectCores()
+)
 
 # Get diff of installed and uninstalled packages for
 # idempotent package installation
@@ -189,10 +197,21 @@ new_pkgs_from_src <- cran_pkgs_from_src[[distribution]][
 ]
 
 # Install "source only" packages from source
-if (length(new_pkgs_from_src))
-  install.packages(new_pkgs_from_src, type = "source",
-                   Ncpus = parallel::detectCores())
+if (length(new_pkgs_from_src)) {
+  install.packages(new_pkgs_from_src,
+    type = "source",
+    Ncpus = parallel::detectCores()
+  )
+}
 
+# Install rjags with special params for fedora distros
+if (startsWith(distribution, "fedora")) {
+  install.packages("rjags",
+    type = "source",
+    configure.args = "--enable-rpath",
+    Ncpus = parallel::detectCores()
+  )
+}
 
 # Get diff of installed and uninstalled packages for
 # idempotent package installation
@@ -201,9 +220,11 @@ new_pkgs <- cran_pkgs[[distribution]][
 ]
 
 # Install all other packages, only if they are uninstalled on the image
-if (length(new_pkgs))
+if (length(new_pkgs)) {
   install.packages(new_pkgs,
-                   Ncpus = parallel::detectCores())
+    Ncpus = parallel::detectCores()
+  )
+}
 
 # Conditionally install phantonJS
 if (require("shinytest")) {

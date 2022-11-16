@@ -28,7 +28,13 @@ shared_pkgs <- c(
 # Per distro BioC packages to install
 bioc_pkgs <- list(
   rstudio = shared_pkgs,
-  `rstudio-local` = shared_pkgs
+  `rstudio-local` = shared_pkgs,
+  `debian-clang-devel` = shared_pkgs,
+  `debian-gcc-devel` = shared_pkgs,
+  `fedora-clang-devel` = shared_pkgs,
+  `fedora-gcc-devel` = shared_pkgs,
+  `debian-gcc-patched` = shared_pkgs,
+  `debian-gcc-release` = shared_pkgs
 )
 
 # Get diff of installed and uninstalled packages for
@@ -38,8 +44,11 @@ new_pkgs <- bioc_pkgs[[distribution]][
 ]
 
 # Install only uninstalled packages
-if (length(new_pkgs))
+if (length(new_pkgs)) {
   BiocManager::install(new_pkgs,
-                       Ncpus = parallel::detectCores(),
-                       upgrade = "never",
-                       force = TRUE)
+    Ncpus = parallel::detectCores(),
+    force = TRUE,
+    ask = FALSE,
+    update = FALSE
+  )
+}

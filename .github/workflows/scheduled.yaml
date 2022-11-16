@@ -12,12 +12,38 @@ jobs:
     strategy:
       matrix:
         image:
-          - r: '4.2.2'
+          - distro_tag: '4.2.2'
             bioc: '3.16'
             distro: rstudio-local
-          - r: '4.2.2'
+            origin: rocker
+          - distro_tag: '4.2.2'
             bioc: '3.16'
             distro: rstudio
+            origin: rocker
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: debian-clang-devel
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: debian-gcc-devel
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: fedora-clang-devel
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: fedora-gcc-devel
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: '3.15'
+            distro: debian-gcc-patched
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: '3.16'
+            distro: debian-gcc-release
+            origin: rhub
 
     # Trigger steps
     steps:
@@ -33,8 +59,9 @@ jobs:
           event-type: scheduled
           client-payload: >
             {
+              "origin": "${{ matrix.image.origin }}",
               "distribution": "${{ matrix.image.distro }}",
-              "r_version": "${{ matrix.image.r }}",
+              "r_version": "${{ matrix.image.distro_tag }}",
               "bioc_version": "${{ matrix.image.bioc }}",
               "tag": "",
               "tag_latest": "true"

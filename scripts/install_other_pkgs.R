@@ -40,12 +40,18 @@ stat_pkgs <- c(
 
 # List for packages to be installed in a given distribution
 other_pkgs <- list(
-    rstudio = c(
-      stat_pkgs
-    ),
-    `rstudio-local` = c(
-      nest_packages
-    )
+  rstudio = c(
+    stat_pkgs
+  ),
+  `rstudio-local` = c(
+    nest_packages
+  ),
+  `debian-clang-devel` = c(),
+  `debian-gcc-devel` = c(),
+  `fedora-clang-devel` = c(),
+  `fedora-gcc-devel` = c(),
+  `debian-gcc-patched` = c(),
+  `debian-gcc-release` = c()
 )
 
 # Get diff of installed and uninstalled packages for
