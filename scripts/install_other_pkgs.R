@@ -44,14 +44,14 @@ other_pkgs <- list(
     stat_pkgs
   ),
   `rstudio-local` = c(
-    nest_packages
+    nest_packages,stat_pkgs
   ),
-  `debian-clang-devel` = c(),
-  `debian-gcc-devel` = c(),
-  `fedora-clang-devel` = c(),
-  `fedora-gcc-devel` = c(),
-  `debian-gcc-patched` = c(),
-  `debian-gcc-release` = c()
+  `debian-clang-devel` = c(stat_pkgs),
+  `debian-gcc-devel` = c(stat_pkgs),
+  `fedora-clang-devel` = c(stat_pkgs),
+  `fedora-gcc-devel` = c(stat_pkgs),
+  `debian-gcc-patched` = c(stat_pkgs),
+  `debian-gcc-release` = c(stat_pkgs)
 )
 
 # Get diff of installed and uninstalled packages for
