@@ -122,9 +122,6 @@ jobs:
       - name: Checkout repository 💳
         uses: actions/checkout@v3
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         id: buildx
@@ -208,4 +205,8 @@ jobs:
       - name: Move cache ♻️
         run: |
           rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          if [ -f /tmp/.buildx-cache-new ]
+          then {
+            mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          }
+          fi
