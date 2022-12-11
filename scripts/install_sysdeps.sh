@@ -81,6 +81,7 @@ git-all \
 wget \
 lapack-devel \
 librsvg2-devel \
+lbzip2 \
 "
 
 # Deps specific on the rstudio image
