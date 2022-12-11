@@ -71,7 +71,8 @@ libssh-devel \
 openssh \
 mariadb-devel \
 libsodium-devel \
-java-11-openjdk \
+java-latest-openjdk-devel \
+java-latest-openjdk \
 cmake \
 graphviz \
 libxslt-devel \
@@ -200,6 +201,9 @@ then {
     dnf autoremove -y
     dnf clean all
     rm -rf JAGS*
+
+    # Set Java
+    alternatives --set java /usr/lib/jvm/java-17/bin/java
 }
 fi
 
