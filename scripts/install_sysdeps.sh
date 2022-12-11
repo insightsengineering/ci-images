@@ -203,7 +203,8 @@ then {
     rm -rf JAGS*
 
     # Set Java
-    alternatives --set java /usr/lib/jvm/java-17/bin/java
+    OPENJDK_17=$(alternatives --list | grep javac | awk '{print $NF}' | xargs dirname)
+    alternatives --set java ${OPENJDK_17}/java
 }
 fi
 
