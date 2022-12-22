@@ -169,6 +169,7 @@ then {
 
         # Also override the default repository used in the rstudio images
         echo "options(repos = c(CRAN = 'https://cloud.r-project.org'))" > /usr/local/lib/R/etc/Rprofile.site
+        echo "Sys.setenv(OPENSSL_CONF = '/etc/ssl')" >> /usr/local/lib/R/etc/Rprofile.site
     }
     fi
 }
@@ -209,23 +210,18 @@ then {
 fi
 
 # Symlink R if it's in a non-default path
-if [ -d "/opt/R-devel/bin/" ]
-then {
-    ln -s /opt/R-devel/bin/R /usr/bin/R
-    ln -s /opt/R-devel/bin/Rscript /usr/bin/Rscript
-    # Also set default CRAN repo
-    echo "options(repos=c(CRAN='https://cloud.r-project.org'))" > $(find /opt/R-devel -type d -name "etc")/Rprofile.site
+for non_default_path in "devel patched"
+do {
+    if [ -d "/opt/R-${non_default_path}/bin/" ]
+    then {
+        ln -s /opt/R-${non_default_path}/bin/R /usr/bin/R
+        ln -s /opt/R-${non_default_path}/bin/Rscript /usr/bin/Rscript
+        # Also set default CRAN repo
+        echo "options(repos=c(CRAN='https://cloud.r-project.org'))" > $(find /opt/R-${non_default_path} -type d -name "etc")/Rprofile.site
+    }
+    fi
 }
-fi
-
-if [ -d "/opt/R-patched/bin/" ]
-then {
-    ln -s /opt/R-patched/bin/R /usr/bin/R
-    ln -s /opt/R-patched/bin/Rscript /usr/bin/Rscript
-    # Also set default CRAN repo
-    echo "options(repos=c(CRAN='https://cloud.r-project.org'))" > $(find /opt/R-patched -type d -name "etc")/Rprofile.site
-}
-fi
+done
 
 # Set default initializer if unavailable
 if [ ! -f /init ]
