@@ -167,7 +167,8 @@ shared_pkgs <- c(
   "geepack",
   "GenSA",
   "mmrm",
-  "shinyvalidate"
+  "shinyvalidate",
+  "magick"
 )
 
 cran_pkgs <- list(
