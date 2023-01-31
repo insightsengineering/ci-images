@@ -44,7 +44,6 @@ git \
 libssl-dev \
 wget \
 librsvg2-dev \
-libudunits2-dev \
 "
 
 # Shared deps for fedora
@@ -84,7 +83,6 @@ wget \
 lapack-devel \
 librsvg2-devel \
 lbzip2 \
-udunits2-devel \
 "
 
 # Deps specific on the rstudio image
