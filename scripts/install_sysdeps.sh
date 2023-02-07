@@ -212,7 +212,7 @@ then {
 fi
 
 # Symlink R if it's in a non-default path
-for non_default_path in "devel patched"
+for non_default_path in devel patched
 do {
     if [ -d "/opt/R-${non_default_path}/bin/" ]
     then {

@@ -37,7 +37,7 @@ jobs:
             distro: fedora-gcc-devel
             origin: rhub
           - distro_tag: 'latest'
-            bioc: '3.15'
+            bioc: '3.16'
             distro: debian-gcc-patched
             origin: rhub
           - distro_tag: 'latest'
