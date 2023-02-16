@@ -210,7 +210,7 @@ then {
 
     # Set Java
     OPENJDK_17=$(alternatives --list | grep javac | awk '{print $NF}' | xargs dirname)
-    alternatives --set java ${OPENJDK_17}/java
+    alternatives --set java "${OPENJDK_17}"/java
 }
 fi
 
@@ -222,7 +222,8 @@ do {
         ln -s /opt/R-${non_default_path}/bin/R /usr/bin/R
         ln -s /opt/R-${non_default_path}/bin/Rscript /usr/bin/Rscript
         # Also set default CRAN repo
-        echo "options(repos=c(CRAN='https://cloud.r-project.org'))" > $(find /opt/R-${non_default_path} -type d -name "etc")/Rprofile.site
+        RPROFILE_DIRNAME=$(find /opt/R-${non_default_path} -type d -name "etc")
+        echo "options(repos=c(CRAN='https://cloud.r-project.org'))" > "${RPROFILE_DIRNAME}"/Rprofile.site
     }
     fi
 }
