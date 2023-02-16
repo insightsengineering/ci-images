@@ -45,6 +45,7 @@ libssl-dev \
 wget \
 librsvg2-dev \
 libudunits2-dev \
+libv8-dev \
 "
 
 # Shared deps for fedora
@@ -85,6 +86,7 @@ lapack-devel \
 librsvg2-devel \
 lbzip2 \
 udunits2-devel \
+v8-devel \
 "
 
 # Deps specific on the rstudio image
@@ -98,6 +100,7 @@ vim \
 xdg-utils \
 python3-pip \
 less \
+nano \
 "
 
 # Deps specific on the debian-clang-devel image
