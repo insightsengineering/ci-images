@@ -168,7 +168,13 @@ shared_pkgs <- c(
   "GenSA",
   "mmrm",
   "shinyvalidate",
-  "magick"
+  "magick",
+  "V8",
+  "juicyjuice",
+  "bigD",
+  "r2rtf",
+  "huxtable",
+  "gt"
 )
 
 cran_pkgs <- list(
