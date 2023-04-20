@@ -8,7 +8,8 @@ Takes in the image distribution as the first argument.
 import subprocess
 import sys
 
-DISTRO=sys.argv[1]
+DISTRO = sys.argv[1]
+
 
 def install(packages=[]):
     """Installer for pip packages
@@ -17,9 +18,8 @@ def install(packages=[]):
         packages (list(str)): List of package names
     """
     if len(packages) > 0:
-        subprocess.check_call([
-            "pip3", "install", " ".join(packages)
-        ])
+        subprocess.check_call(["pip3", "install", " ".join(packages)])
+
 
 # Shared packages across distributions
 shared_packages = []
@@ -27,7 +27,8 @@ shared_packages = []
 # Packages specific to distribution
 pip_packages = {
     "rstudio": shared_packages + [],
-    "rstudio-local": shared_packages + [
+    "rstudio-local": shared_packages
+    + [
         "pre-commit",
     ],
     "debian-clang-devel": [],

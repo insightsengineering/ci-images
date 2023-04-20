@@ -8,31 +8,29 @@ distribution <- args[1]
 # NEST packages to be installed
 nest_release_date <- "2022_10_13"
 nest_packages <- c(
+  "formatters",
+  "goshawk",
+  "hermes",
+  "osprey",
+  "rtables",
+  "scda",
   "scda.2021",
   "scda.2022",
-  "formatters",
-  "rtables",
-  "rlistings",
-  "nestcolor",
-  "hermes",
-  "teal.logger",
-  "scda",
-  "goshawk",
-  "teal.data",
-  "teal.reporter",
-  "teal.widgets",
-  "tern",
-  "teal.code",
-  "teal.slice",
-  "osprey",
-  "tern.mmrm",
-  "teal.transform",
   "teal",
-  "teal.osprey",
+  "teal.code",
+  "teal.data",
   "teal.goshawk",
+  "teal.logger",
   "teal.modules.clinical",
   "teal.modules.general",
-  "teal.modules.hermes"
+  "teal.modules.hermes",
+  "teal.osprey",
+  "teal.reporter",
+  "teal.slice",
+  "teal.transform",
+  "teal.widgets",
+  "tern",
+  "tern.mmrm"
 )
 
 # Statistics packages
@@ -46,7 +44,7 @@ other_pkgs <- list(
     stat_pkgs
   ),
   `rstudio-local` = c(
-    nest_packages,stat_pkgs
+    nest_packages, stat_pkgs
   ),
   `debian-clang-devel` = c(stat_pkgs),
   `debian-gcc-devel` = c(stat_pkgs),

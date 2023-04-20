@@ -7,22 +7,22 @@ distribution <- args[1]
 
 # Shared BioC packages to install
 shared_pkgs <- c(
-  "MultiAssayExperiment",
-  "SummarizedExperiment",
+  "Biobase",
+  "BiocCheck",
+  "BiocGenerics",
+  "BiocStyle",
+  "Bioconductor/BiocBaseUtils",
   "ComplexHeatmap",
   "DESeq2",
-  "edgeR",
-  "S4Vectors",
-  "limma",
-  "biomaRt",
-  "Biobase",
-  "BiocGenerics",
   "GenomicRanges",
-  "BiocCheck",
-  "Rhtslib",
   "Gviz",
-  "BiocStyle",
-  "Bioconductor/BiocBaseUtils"
+  "MultiAssayExperiment",
+  "Rhtslib",
+  "S4Vectors",
+  "SummarizedExperiment",
+  "biomaRt",
+  "edgeR",
+  "limma"
 )
 
 # Per distro BioC packages to install
