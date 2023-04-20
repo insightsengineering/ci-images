@@ -12,6 +12,8 @@ nest_packages <- c(
   "scda.2022",
   "formatters",
   "rtables",
+  "rlistings",
+  "nestcolor",
   "hermes",
   "teal.logger",
   "scda",
