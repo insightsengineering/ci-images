@@ -195,6 +195,30 @@ jobs:
           fi
           echo "SBOM_OUTPUT_FILENAME=$GITHUB_WORKSPACE/sbom.json" >> $GITHUB_OUTPUT
 
+      - name: Generate image manifest and R package list 🐳
+        run: |
+          docker manifest inspect alpine:latest > manifest.json
+          # TODO parametrize image
+          docker run -v ${PWD}:/app ghcr.io/insightsengineering/rstudio-local_4.2.2_bioc_3.16:2023.04.07 R -e 'write.csv(installed.packages(), file="/app/package_list.csv")'
+
+      - name: Upload image manifest release 🔼
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          file: "manifest.json"
+          asset_name: "image.manifest.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.json"
+          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+          overwrite: true
+
+      - name: Upload R package list 🔼
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          file: "package_list.csv"
+          asset_name: "package.list.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.csv"
+          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+          overwrite: true
+
       - name: Build and push image 🏗
         uses: docker/build-push-action@v3
         with:
@@ -217,13 +241,13 @@ jobs:
         with:
           image: "${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}"
           output-file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
-          upload-artifact: false
+          artifact-name: "sbom.spdx"
 
-      - name: Upload binaries to release 🔼
+      - name: Upload SBOM to release 🔼
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
-          file: "sbom.json"
+          file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
           asset_name: "SBOM for ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.json"
           tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
           overwrite: true
