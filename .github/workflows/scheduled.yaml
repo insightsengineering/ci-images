@@ -3,9 +3,6 @@ name: Scheduled Deployments ⏲
 on:
   schedule:
     - cron: '44 19 7,21 * *'
-  # push:
-  #   branches:
-  #     - main
   workflow_dispatch:
 
 jobs:
