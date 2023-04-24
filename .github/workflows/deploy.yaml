@@ -217,6 +217,7 @@ jobs:
         with:
           image: "${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}"
           output-file: "${{ steps.build_vars.outputs.SYFT_OUTPUT_FILENAME }}"
+          upload-artifact: false
 
       - name: Upload binaries to release 🔼
         uses: svenstaro/upload-release-action@v2
