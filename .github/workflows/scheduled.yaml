@@ -1,6 +1,9 @@
 name: Scheduled Deployments ⏲
 
 on:
+  push:
+    branches:
+      - sbom-for-image-release
   schedule:
     - cron: '44 19 7,21 * *'
   workflow_dispatch:
