@@ -52,6 +52,22 @@ jobs:
         with:
           ref: main
 
+      - name: Generate release body 📜
+        id: release-body
+        run: |
+          printf "Release $(date +"%Y.%m.%d")\n\n"\
+          "You may view the artifacts in this release for more information "\
+          "about the images that were published." > RELEASE_BODY.txt
+          echo "release-tag=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
+
+      - name: Create release 🌟
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: RELEASE_BODY.txt
+          token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          generate_release_notes: true
+          tag_name: ${{ steps.release-body.outputs.release-tag }}
+
       - name: Trigger all builds ▶️
         uses: peter-evans/repository-dispatch@v2
         with:
@@ -64,5 +80,6 @@ jobs:
               "r_version": "${{ matrix.image.distro_tag }}",
               "bioc_version": "${{ matrix.image.bioc }}",
               "tag": "",
-              "tag_latest": "true"
+              "tag_latest": "true",
+              "release_tag": "${{ steps.release-body.outputs.release-tag }}"
             }

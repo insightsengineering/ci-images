@@ -65,6 +65,11 @@ on:
         description: Tag image as `latest`
         default: false
         type: boolean
+      release_tag:
+        description: |
+          Release tag to which SBOM generated for image should be attached.
+        required: false
+        default: ""
 
 jobs:
   normalize-inputs:
@@ -90,6 +95,7 @@ jobs:
           BIOC_VERSION=$(normalize ${{ github.event.inputs.bioc_version }} ${{ github.event.client_payload.bioc_version }})
           TAG=$(normalize ${{ github.event.inputs.tag }} ${{ github.event.client_payload.tag }})
           TAG_LATEST=$(normalize ${{ github.event.inputs.tag_latest }} ${{ github.event.client_payload.tag_latest }})
+          RELEASE_TAG=$(normalize ${{ github.event.inputs.release_tag }} ${{ github.event.client_payload.release_tag }})
           echo "ORIGIN=$ORIGIN" >> $GITHUB_OUTPUT
           echo "ORIGIN_DISTRIBUTION=$ORIGIN_DISTRIBUTION" >> $GITHUB_OUTPUT
           echo "DISTRIBUTION=$DISTRIBUTION" >> $GITHUB_OUTPUT
@@ -97,6 +103,7 @@ jobs:
           echo "BIOC_VERSION=$BIOC_VERSION" >> $GITHUB_OUTPUT
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
           echo "TAG_LATEST=$TAG_LATEST" >> $GITHUB_OUTPUT
+          echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_OUTPUT
         shell: bash
     outputs:
       origin: ${{ steps.normalizer.outputs.ORIGIN }}
@@ -106,6 +113,7 @@ jobs:
       bioc_version: ${{ steps.normalizer.outputs.BIOC_VERSION }}
       tag: ${{ steps.normalizer.outputs.TAG }}
       tag_latest: ${{ steps.normalizer.outputs.TAG_LATEST }}
+      release_tag: ${{ steps.normalizer.outputs.RELEASE_TAG }}
 
   build:
     runs-on: ubuntu-latest
@@ -169,6 +177,7 @@ jobs:
 
           # Set full image name
           full_names="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
+          echo "OUTPUT_IMAGE_NAME=${full_names}" >> $GITHUB_OUTPUT
           if [ "${tag_latest}" == "true" ]
           then
             full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
@@ -184,6 +193,7 @@ jobs:
             echo "DOCKER_PUSH=false" >> $GITHUB_OUTPUT
             echo "DOCKER_PUSH = false"
           fi
+          echo "SBOM_OUTPUT_FILENAME=$GITHUB_WORKSPACE/sbom.json" >> $GITHUB_OUTPUT
 
       - name: Build and push image 🏗
         uses: docker/build-push-action@v3
@@ -201,6 +211,46 @@ jobs:
             R_VERSION=${{ needs.normalize-inputs.outputs.r_version }}
             BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}
           platforms: linux/amd64
+
+      - name: Generate image manifest and R package list 🐳
+        run: |
+          docker manifest inspect ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }} > manifest.json
+          docker run -v ${PWD}:/app ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }} \
+            R -e 'write.csv(installed.packages(), file="/app/package_list.csv")'
+
+      - name: Generate SBOM 📃
+        uses: anchore/sbom-action@v0
+        with:
+          image: "${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}"
+          output-file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
+          artifact-name: "sbom.spdx"
+
+      - name: Upload image manifest release 🔼
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          file: "manifest.json"
+          asset_name: "image.manifest.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.json"
+          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+          overwrite: true
+
+      - name: Upload R package list 🔼
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          file: "package_list.csv"
+          asset_name: "package.list.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.csv"
+          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+          overwrite: true
+
+      - name: Upload SBOM to release 🔼
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
+          asset_name: "SBOM for ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.spdx.json"
+          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+          overwrite: true
 
       - name: Move cache ♻️
         run: |
