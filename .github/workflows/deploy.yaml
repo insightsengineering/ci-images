@@ -7,10 +7,6 @@ on:
   repository_dispatch:
     types:
       - scheduled
-  push:
-    branches:
-      - sbom-for-image-release
-
   workflow_dispatch:
     inputs:
       origin:
@@ -73,8 +69,7 @@ on:
         description: |
           Release tag to which SBOM generated for image should be attached.
         required: false
-        # TODO change default to empty
-        default: "2023.04.25"
+        default: ""
 
 jobs:
   normalize-inputs:
@@ -183,11 +178,10 @@ jobs:
           # Set full image name
           full_names="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
           echo "OUTPUT_IMAGE_NAME=${full_names}" >> $GITHUB_OUTPUT
-          # TODO uncomment
-          # if [ "${tag_latest}" == "true" ]
-          # then
-          #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
-          # fi
+          if [ "${tag_latest}" == "true" ]
+          then
+            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
+          fi
           echo "FULL_NAMES=${full_names}" >> $GITHUB_OUTPUT
 
           echo "github.ref = ${{ github.ref }}"
