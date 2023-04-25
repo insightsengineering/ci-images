@@ -2,7 +2,7 @@ name: Scheduled Deployments ⏲
 
 on:
   schedule:
-    - cron: '44 19 7,21,26 * *'
+    - cron: '44 19 7,21 * *'
   workflow_dispatch:
 
 jobs:
