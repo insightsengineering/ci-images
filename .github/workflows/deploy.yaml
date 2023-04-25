@@ -178,25 +178,21 @@ jobs:
           # Set full image name
           full_names="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
           echo "OUTPUT_IMAGE_NAME=${full_names}" >> $GITHUB_OUTPUT
-          # TODO uncomment
-          # if [ "${tag_latest}" == "true" ]
-          # then
-          #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
-          # fi
+          if [ "${tag_latest}" == "true" ]
+          then
+            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
+          fi
           echo "FULL_NAMES=${full_names}" >> $GITHUB_OUTPUT
 
           echo "github.ref = ${{ github.ref }}"
           # Set push if branch is main
-          # TODO uncomment
-          # if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
-          #   echo "DOCKER_PUSH=true" >> $GITHUB_OUTPUT
-          #   echo "DOCKER_PUSH = true"
-          # else
-          #   echo "DOCKER_PUSH=false" >> $GITHUB_OUTPUT
-          #   echo "DOCKER_PUSH = false"
-          # fi
-          # TODO remove
-          echo "DOCKER_PUSH=true" >> $GITHUB_OUTPUT
+          if [ "${{ github.ref }}" == 'refs/heads/main' ]; then
+            echo "DOCKER_PUSH=true" >> $GITHUB_OUTPUT
+            echo "DOCKER_PUSH = true"
+          else
+            echo "DOCKER_PUSH=false" >> $GITHUB_OUTPUT
+            echo "DOCKER_PUSH = false"
+          fi
           echo "SBOM_OUTPUT_FILENAME=$GITHUB_WORKSPACE/sbom.json" >> $GITHUB_OUTPUT
 
       - name: Build and push image 🏗
