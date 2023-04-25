@@ -20,30 +20,30 @@ jobs:
             bioc: '3.16'
             distro: rstudio
             origin: rocker
-          - distro_tag: 'latest'
-            bioc: 'devel'
-            distro: debian-clang-devel
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: 'devel'
-            distro: debian-gcc-devel
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: 'devel'
-            distro: fedora-clang-devel
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: 'devel'
-            distro: fedora-gcc-devel
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: '3.16'
-            distro: debian-gcc-patched
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: '3.16'
-            distro: debian-gcc-release
-            origin: rhub
+          # - distro_tag: 'latest'
+          #   bioc: 'devel'
+          #   distro: debian-clang-devel
+          #   origin: rhub
+          # - distro_tag: 'latest'
+          #   bioc: 'devel'
+          #   distro: debian-gcc-devel
+          #   origin: rhub
+          # - distro_tag: 'latest'
+          #   bioc: 'devel'
+          #   distro: fedora-clang-devel
+          #   origin: rhub
+          # - distro_tag: 'latest'
+          #   bioc: 'devel'
+          #   distro: fedora-gcc-devel
+          #   origin: rhub
+          # - distro_tag: 'latest'
+          #   bioc: '3.16'
+          #   distro: debian-gcc-patched
+          #   origin: rhub
+          # - distro_tag: 'latest'
+          #   bioc: '3.16'
+          #   distro: debian-gcc-release
+          #   origin: rhub
 
     # Trigger steps
     steps:
@@ -73,6 +73,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_GITHUB_TOKEN }}
           event-type: scheduled
+          # TODO change tag_latest to true
           client-payload: >
             {
               "origin": "${{ matrix.image.origin }}",
@@ -80,6 +81,6 @@ jobs:
               "r_version": "${{ matrix.image.distro_tag }}",
               "bioc_version": "${{ matrix.image.bioc }}",
               "tag": "",
-              "tag_latest": "true",
+              "tag_latest": "false",
               "release_tag": "${{ steps.release-body.outputs.release-tag }}"
             }
