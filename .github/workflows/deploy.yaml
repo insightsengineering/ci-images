@@ -178,10 +178,11 @@ jobs:
           # Set full image name
           full_names="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
           echo "OUTPUT_IMAGE_NAME=${full_names}" >> $GITHUB_OUTPUT
-          if [ "${tag_latest}" == "true" ]
-          then
-            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
-          fi
+          # TODO uncomment
+          # if [ "${tag_latest}" == "true" ]
+          # then
+          #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
+          # fi
           echo "FULL_NAMES=${full_names}" >> $GITHUB_OUTPUT
 
           echo "github.ref = ${{ github.ref }}"
