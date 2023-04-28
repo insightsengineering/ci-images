@@ -127,6 +127,16 @@ jobs:
 
     # Build steps
     steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: false
+
       - name: Checkout repository 💳
         uses: actions/checkout@v3
 
