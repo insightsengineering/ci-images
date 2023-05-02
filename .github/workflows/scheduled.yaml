@@ -36,12 +36,12 @@ jobs:
     strategy:
       matrix:
         image:
-          - distro_tag: '4.2.2'
-            bioc: '3.16'
+          - distro_tag: '4.3.0'
+            bioc: '3.17'
             distro: rstudio-local
             origin: rocker
-          - distro_tag: '4.2.2'
-            bioc: '3.16'
+          - distro_tag: '4.3.0'
+            bioc: '3.17'
             distro: rstudio
             origin: rocker
           - distro_tag: 'latest'
@@ -61,11 +61,11 @@ jobs:
             distro: fedora-gcc-devel
             origin: rhub
           - distro_tag: 'latest'
-            bioc: '3.16'
+            bioc: '3.17'
             distro: debian-gcc-patched
             origin: rhub
           - distro_tag: 'latest'
-            bioc: '3.16'
+            bioc: '3.17'
             distro: debian-gcc-release
             origin: rhub
 

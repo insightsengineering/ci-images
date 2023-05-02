@@ -35,7 +35,7 @@ on:
         description: R Version
         required: true
         type: choice
-        default: "4.2.2"
+        default: "4.3.0"
         options:
           - "4.1.0"
           - "4.1.1"
@@ -44,17 +44,19 @@ on:
           - "4.2.0"
           - "4.2.1"
           - "4.2.2"
+          - "4.3.0"
           - "latest"
       bioc_version:
         description: BioConductor Release
         required: true
         type: choice
-        default: "3.16"
+        default: "3.17"
         options:
           - "3.13"
           - "3.14"
           - "3.15"
           - "3.16"
+          - "3.17"
           - "devel"
       tag:
         description: |
