@@ -46,6 +46,7 @@ wget \
 librsvg2-dev \
 libudunits2-dev \
 libv8-dev \
+libpq-dev \
 "
 
 # Shared deps for fedora
