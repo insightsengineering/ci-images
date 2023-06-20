@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - r: '4.3.0'
+          - r: '4.3.1'
             bioc: '3.17'
             distro: rstudio-local
     steps:
@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Trivy vulnerability scanner 🚓
-        uses: aquasecurity/trivy-action@0.7.1
+        uses: aquasecurity/trivy-action@0.11.2
         with:
           scan-type: image
           image-ref: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image.distro }}_${{ matrix.image.r }}_bioc_${{ matrix.image.bioc }}:latest
