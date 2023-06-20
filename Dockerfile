@@ -1,7 +1,7 @@
 # Build arguments
 ARG ORIGIN=rocker
 ARG ORIGIN_DISTRIBUTION=rstudio
-ARG R_VERSION=4.3.0
+ARG R_VERSION=4.3.1
 
 # Fetch base image
 FROM ${ORIGIN}/${ORIGIN_DISTRIBUTION}:${R_VERSION}
