@@ -130,15 +130,16 @@ jobs:
 
     # Build steps
     steps:
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
+      - name: Reclaim Disk Space 🚮
+        uses: insightsengineering/disk-space-reclaimer@v1
         with:
-          tool-cache: false
+          tools-cache: false
           android: true
           dotnet: true
           haskell: true
           large-packages: true
           swap-storage: false
+          docker-images: true
 
       - name: Checkout repository 💳
         uses: actions/checkout@v3
