@@ -47,6 +47,7 @@ librsvg2-dev \
 libudunits2-dev \
 libv8-dev \
 libpq-dev \
+tidy \
 "
 
 # Shared deps for fedora
@@ -88,6 +89,7 @@ librsvg2-devel \
 lbzip2 \
 udunits2-devel \
 v8-devel \
+tidy \
 "
 
 # Deps specific on the rstudio image
