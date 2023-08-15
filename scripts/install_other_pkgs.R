@@ -6,7 +6,6 @@ args <- commandArgs(trailing = TRUE)
 distribution <- args[1]
 
 # NEST packages to be installed
-nest_release_date <- "2022_10_13"
 nest_packages <- c(
   "formatters",
   "goshawk",
@@ -14,8 +13,8 @@ nest_packages <- c(
   "osprey",
   "rtables",
   "scda",
-  "scda.2021",
   "scda.2022",
+  "nestcolor",
   "teal",
   "teal.code",
   "teal.data",
@@ -30,7 +29,8 @@ nest_packages <- c(
   "teal.transform",
   "teal.widgets",
   "tern",
-  "tern.mmrm"
+  "tern.mmrm",
+  "tern.rbmi"
 )
 
 # Statistics packages
@@ -65,10 +65,7 @@ if (length(new_pkgs)) {
   install.packages(
     new_pkgs,
     repos = c(
-      paste0(
-        "https://insightsengineering.github.io/depository/",
-        nest_release_date
-      ),
+      "https://insightsengineering.r-universe.dev",
       "https://cloud.r-project.org/",
       "https://mc-stan.org/r-packages/"
     ),
