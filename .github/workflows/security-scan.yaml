@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Security Scan 🚔
     runs-on: ubuntu-latest
     strategy:
       matrix:
