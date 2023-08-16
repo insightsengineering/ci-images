@@ -10,7 +10,9 @@ distribution <- args[1]
 shared_pkgs <- c(
   "tlverse/sl3@v1.4.4",
   "insightsengineering/nesttemplate",
-  "openpharma/staged.dependencies@*release"
+  "openpharma/staged.dependencies@*release",
+  "openpharma/roxylint",
+  "openpharma/roxytypes"
 )
 
 gh_pkgs <- list(
