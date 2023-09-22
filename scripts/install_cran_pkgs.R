@@ -129,6 +129,7 @@ shared_pkgs <- c(
   "purrr",
   "quarto",
   "r2rtf",
+  "randomForest",
   "rJava",
   "rbmi",
   "rcmdcheck",
@@ -179,8 +180,6 @@ shared_pkgs <- c(
   "xml2",
   "yaml"
 )
-
-install.packages("https://cran.r-project.org/src/contrib/Archive/imputeMissings/imputeMissings_0.0.3.tar.gz")
 
 cran_pkgs <- list(
   rstudio = shared_pkgs,
@@ -279,3 +278,5 @@ tryCatch(
     print(e)
   }
 )
+
+install.packages("https://cran.r-project.org/src/contrib/Archive/imputeMissings/imputeMissings_0.0.3.tar.gz")
