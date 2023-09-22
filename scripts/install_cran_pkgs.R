@@ -129,6 +129,7 @@ shared_pkgs <- c(
   "purrr",
   "quarto",
   "r2rtf",
+  "randomForest",
   "rJava",
   "rbmi",
   "rcmdcheck",
