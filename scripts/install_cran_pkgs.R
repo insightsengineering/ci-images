@@ -180,8 +180,6 @@ shared_pkgs <- c(
   "yaml"
 )
 
-install.packages("https://cran.r-project.org/src/contrib/Archive/imputeMissings/imputeMissings_0.0.3.tar.gz")
-
 cran_pkgs <- list(
   rstudio = shared_pkgs,
   `rstudio-local` = c(
@@ -279,3 +277,5 @@ tryCatch(
     print(e)
   }
 )
+
+install.packages("https://cran.r-project.org/src/contrib/Archive/imputeMissings/imputeMissings_0.0.3.tar.gz")
