@@ -196,6 +196,14 @@ jobs:
           then
             full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
           fi
+          if [ "${image_name}" == "rstudio_4.3.1_bioc_3.17" ]
+          then
+            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/rstudio_latest_bioc_latest:latest"
+          fi
+          if [ "${image_name}" == "rstudio-local_4.3.1_bioc_3.17" ]
+          then
+            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/rstudio-local_latest_bioc_latest:latest"
+          fi
           echo "FULL_NAMES=${full_names}" >> $GITHUB_OUTPUT
 
           echo "github.ref = ${{ github.ref }}"
