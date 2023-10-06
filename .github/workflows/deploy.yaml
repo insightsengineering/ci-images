@@ -7,6 +7,9 @@ on:
   repository_dispatch:
     types:
       - scheduled
+  push:
+    branches:
+      - tag-rstudio-images-as-latest
   workflow_dispatch:
     inputs:
       origin:
@@ -35,7 +38,7 @@ on:
         description: R Version
         required: true
         type: choice
-        default: "4.3.0"
+        default: "4.3.1"
         options:
           - "4.1.0"
           - "4.1.1"
@@ -66,7 +69,7 @@ on:
         default: ""
       tag_latest:
         description: Tag image as `latest`
-        default: false
+        default: true
         type: boolean
       release_tag:
         description: |
