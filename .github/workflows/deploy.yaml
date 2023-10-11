@@ -47,6 +47,11 @@ on:
           - "4.3.0"
           - "4.3.1"
           - "latest"
+      latest_r_version:
+        description: R Version to be used as latest
+        required: false
+        type: string
+        default: "4.3.1"
       bioc_version:
         description: BioConductor Release
         required: true
@@ -59,6 +64,11 @@ on:
           - "3.16"
           - "3.17"
           - "devel"
+      latest_bioc_version:
+        description: BioC version to be used as latest
+        required: false
+        type: string
+        default: "3.17"
       tag:
         description: |
           Custom Image Tag/Version. Defaults to current date in the `YYYY.MM.DD` format if unspecified.
@@ -96,6 +106,8 @@ jobs:
           ORIGIN_DISTRIBUTION=${DISTRIBUTION//"-local"}
           R_VERSION=$(normalize ${{ github.event.inputs.r_version }} ${{ github.event.client_payload.r_version }})
           BIOC_VERSION=$(normalize ${{ github.event.inputs.bioc_version }} ${{ github.event.client_payload.bioc_version }})
+          LATEST_R_VERSION=$(normalize ${{ github.event.inputs.latest_r_version }} ${{ github.event.client_payload.latest_r_version }})
+          LATEST_BIOC_VERSION=$(normalize ${{ github.event.inputs.latest_bioc_version }} ${{ github.event.client_payload.latest_bioc_version }})
           TAG=$(normalize ${{ github.event.inputs.tag }} ${{ github.event.client_payload.tag }})
           TAG_LATEST=$(normalize ${{ github.event.inputs.tag_latest }} ${{ github.event.client_payload.tag_latest }})
           RELEASE_TAG=$(normalize ${{ github.event.inputs.release_tag }} ${{ github.event.client_payload.release_tag }})
@@ -104,6 +116,8 @@ jobs:
           echo "DISTRIBUTION=$DISTRIBUTION" >> $GITHUB_OUTPUT
           echo "R_VERSION=$R_VERSION" >> $GITHUB_OUTPUT
           echo "BIOC_VERSION=$BIOC_VERSION" >> $GITHUB_OUTPUT
+          echo "LATEST_R_VERSION=$LATEST_R_VERSION" >> $GITHUB_OUTPUT
+          echo "LATEST_BIOC_VERSION=$LATEST_BIOC_VERSION" >> $GITHUB_OUTPUT
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
           echo "TAG_LATEST=$TAG_LATEST" >> $GITHUB_OUTPUT
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_OUTPUT
@@ -114,6 +128,8 @@ jobs:
       distribution: ${{ steps.normalizer.outputs.DISTRIBUTION }}
       r_version: ${{ steps.normalizer.outputs.R_VERSION }}
       bioc_version: ${{ steps.normalizer.outputs.BIOC_VERSION }}
+      latest_r_version: ${{ steps.normalizer.outputs.LATEST_R_VERSION }}
+      latest_bioc_version: ${{ steps.normalizer.outputs.LATEST_BIOC_VERSION }}
       tag: ${{ steps.normalizer.outputs.TAG }}
       tag_latest: ${{ steps.normalizer.outputs.TAG_LATEST }}
       release_tag: ${{ steps.normalizer.outputs.RELEASE_TAG }}
@@ -195,6 +211,12 @@ jobs:
           if [ "${tag_latest}" == "true" ]
           then
             full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
+          fi
+          if [ "${image_name}" == "rstudio-local_${{ needs.normalize-inputs.outputs.latest_r_version }}_bioc_${{ needs.normalize-inputs.outputs.latest_bioc_version }}" ] \
+            || [ "${image_name}" == "rstudio_${{ needs.normalize-inputs.outputs.latest_r_version }}_bioc_${{ needs.normalize-inputs.outputs.latest_bioc_version }}" ]
+          then
+            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:latest"
+            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:${tag}"
           fi
           echo "FULL_NAMES=${full_names}" >> $GITHUB_OUTPUT
 
