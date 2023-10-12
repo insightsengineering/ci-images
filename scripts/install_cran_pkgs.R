@@ -8,6 +8,13 @@ distribution <- args[1]
 # Set official mirror for CRAN
 options(repos = c("https://cloud.r-project.org/"))
 
+# Packages that have been archived
+# by CRAN
+archived_packages <- c(
+  "https://cran.r-project.org/src/contrib/Archive/imputeMissings/imputeMissings_0.0.3.tar.gz"
+)
+
+
 # Packages that are already in the image
 # but must be reinstalled to the latest versions
 reinstall_with_newer_version <- c(
@@ -29,51 +36,57 @@ cran_pkgs_from_src <- list(
 # Regular CRAN packages to install
 shared_pkgs <- c(
   "admiral",
-  "admiraldev",
   "admiral.test",
+  "admiraldev",
   "admiralonco",
   "admiralophtha",
-  "callr",
-  "DBI",
-  "DT",
-  "DescTools",
-  "DiagrammeR",
-  "EnvStats",
-  "GGally",
-  "GenSA",
-  "R6",
-  "RJDBC",
-  "Rcpp",
-  "Rdpack",
-  "V8",
   "assertthat",
+  "bayesplot",
+  "BayesPPD",
+  "bbmle",
+  "bdsmatrix",
   "bigD",
   "binom",
   "bookdown",
   "broom",
+  "broom.helpers",
+  "callr",
   "car",
   "checkmate",
+  "chk",
   "circlize",
   "cli",
+  "cobalt",
   "colourpicker",
   "covr",
   "cowplot",
   "crayon",
+  "DBI",
+  "DescTools",
+  "deSolve",
   "devtools",
   "dfoptim",
+  "DiagrammeR",
   "diffdf",
   "digest",
   "dm",
   "dplyr",
+  "DT",
   "emmeans",
+  "EnvStats",
+  "fastGHQuad",
+  "flexsurv",
   "flextable",
   "forcats",
   "formatters",
   "fs",
+  "gbm",
   "gdtools",
   "geeasy",
   "geepack",
+  "GenSA",
   "gert",
+  "GGally",
   "ggExtra",
   "ggfortify",
   "ggiraph",
@@ -92,6 +105,7 @@ shared_pkgs <- c(
   "gridExtra",
   "gt",
   "gtable",
+  "gtsummary",
   "here",
   "htmltools",
   "httr",
@@ -111,9 +125,13 @@ shared_pkgs <- c(
   "magick",
   "magrittr",
   "markdown",
+  "MatchIt",
+  "matrixcalc",
   "mcr",
   "mmrm",
   "mockery",
+  "mstate",
+  "muhaz",
   "nloptr",
   "nomnoml",
   "nortest",
@@ -129,39 +147,48 @@ shared_pkgs <- c(
   "purrr",
   "quarto",
   "r2rtf",
+  "R6",
   "randomForest",
-  "rJava",
   "rbmi",
   "rcmdcheck",
+  "Rcpp",
+  "RcppNumerical",
+  "RcppProgress",
+  "Rdpack",
   "readr",
   "readxl",
   "remotes",
   "renv",
   "reticulate",
   "rjags",
+  "rJava",
+  "RJDBC",
   "rlang",
   "rlistings",
   "rmarkdown",
   "rstan",
   "rstantools",
+  "rstpm2",
   "rsvg",
   "rtables",
   "rvest",
   "scales",
   "shiny",
-  "shinyRadioMatrix",
-  "shinyTree",
-  "shinyWidgets",
   "shinyjs",
+  "shinyRadioMatrix",
   "shinytest",
   "shinytest2",
+  "shinyTree",
   "shinyvalidate",
+  "shinyWidgets",
+  "simsurv",
   "sparkline",
   "spelling",
   "statmod",
   "stringi",
   "styler",
   "survminer",
+  "table1",
   "testthat",
   "tibble",
   "tidyr",
@@ -170,11 +197,13 @@ shared_pkgs <- c(
   "tinytex",
   "tzdb",
   "uuid",
+  "V8",
   "vdiffr",
   "viridisLite",
   "vistime",
   "vroom",
   "webshot",
+  "WeightIt",
   "withr",
   "xfun",
   "xml2",
@@ -197,7 +226,8 @@ cran_pkgs <- list(
 )
 
 # Re-install packages with newer versions
-install.packages(reinstall_with_newer_version,
+install.packages(
+  reinstall_with_newer_version,
   type = "source",
   Ncpus = parallel::detectCores()
 )
@@ -210,15 +240,25 @@ new_pkgs_from_src <- cran_pkgs_from_src[[distribution]][
 
 # Install "source only" packages from source
 if (length(new_pkgs_from_src)) {
-  install.packages(new_pkgs_from_src,
+  install.packages(
+    new_pkgs_from_src,
     type = "source",
+    Ncpus = parallel::detectCores()
+  )
+}
+
+# Install previously archived R packages
+if (length(archived_packages)) {
+  install.packages(
+    archived_packages,
     Ncpus = parallel::detectCores()
   )
 }
 
 # Install rjags with special params for fedora distros
 if (startsWith(distribution, "fedora")) {
-  install.packages("rjags",
+  install.packages(
+    "rjags",
     type = "source",
     configure.args = "--enable-rpath",
     Ncpus = parallel::detectCores()
@@ -278,5 +318,3 @@ tryCatch(
     print(e)
   }
 )
-
-install.packages("https://cran.r-project.org/src/contrib/Archive/imputeMissings/imputeMissings_0.0.3.tar.gz")
