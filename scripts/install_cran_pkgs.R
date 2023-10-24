@@ -8,13 +8,6 @@ distribution <- args[1]
 # Set official mirror for CRAN
 options(repos = c("https://cloud.r-project.org/"))
 
-# Packages that have been archived
-# by CRAN
-archived_packages <- c(
-  "https://cran.r-project.org/src/contrib/Archive/imputeMissings/imputeMissings_0.0.3.tar.gz"
-)
-
-
 # Packages that are already in the image
 # but must be reinstalled to the latest versions
 reinstall_with_newer_version <- c(
@@ -243,14 +236,6 @@ if (length(new_pkgs_from_src)) {
   install.packages(
     new_pkgs_from_src,
     type = "source",
-    Ncpus = parallel::detectCores()
-  )
-}
-
-# Install previously archived R packages
-if (length(archived_packages)) {
-  install.packages(
-    archived_packages,
     Ncpus = parallel::detectCores()
   )
 }

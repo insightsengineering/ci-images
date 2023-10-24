@@ -8,7 +8,6 @@ distribution <- args[1]
 # Packages to install
 # Regular CRAN packages to install
 shared_pkgs <- c(
-  "tlverse/sl3@v1.4.4",
   "insightsengineering/nesttemplate",
   "openpharma/staged.dependencies@*release",
   "openpharma/roxylint",
