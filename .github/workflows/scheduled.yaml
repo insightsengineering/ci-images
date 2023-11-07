@@ -36,12 +36,12 @@ jobs:
     strategy:
       matrix:
         image:
-          - distro_tag: '4.3.1'
-            bioc: '3.17'
+          - distro_tag: '4.3.2'
+            bioc: '3.18'
             distro: rstudio-local
             origin: rocker
-          - distro_tag: '4.3.1'
-            bioc: '3.17'
+          - distro_tag: '4.3.2'
+            bioc: '3.18'
             distro: rstudio
             origin: rocker
           - distro_tag: 'latest'
@@ -61,18 +61,18 @@ jobs:
             distro: fedora-gcc-devel
             origin: rhub
           - distro_tag: 'latest'
-            bioc: '3.17'
+            bioc: '3.18'
             distro: debian-gcc-patched
             origin: rhub
           - distro_tag: 'latest'
-            bioc: '3.17'
+            bioc: '3.18'
             distro: debian-gcc-release
             origin: rhub
 
     # Trigger steps
     steps:
       - name: Checkout repository 💳
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
 

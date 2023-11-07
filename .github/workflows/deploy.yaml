@@ -46,12 +46,13 @@ on:
           - "4.2.2"
           - "4.3.0"
           - "4.3.1"
+          - "4.3.2"
           - "latest"
       latest_r_version:
         description: R Version to be used as latest
         required: false
         type: string
-        default: "4.3.1"
+        default: "4.3.2"
       bioc_version:
         description: BioConductor Release
         required: true
@@ -63,12 +64,13 @@ on:
           - "3.15"
           - "3.16"
           - "3.17"
+          - "3.18"
           - "devel"
       latest_bioc_version:
         description: BioC version to be used as latest
         required: false
         type: string
-        default: "3.17"
+        default: "3.18"
       tag:
         description: |
           Custom Image Tag/Version. Defaults to current date in the `YYYY.MM.DD` format if unspecified.
