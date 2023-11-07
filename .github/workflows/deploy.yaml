@@ -57,7 +57,7 @@ on:
         description: BioConductor Release
         required: true
         type: choice
-        default: "3.17"
+        default: "3.18"
         options:
           - "3.13"
           - "3.14"

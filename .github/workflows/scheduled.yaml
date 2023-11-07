@@ -87,8 +87,8 @@ jobs:
               "distribution": "${{ matrix.image.distro }}",
               "r_version": "${{ matrix.image.distro_tag }}",
               "bioc_version": "${{ matrix.image.bioc }}",
-              "latest_r_version": "4.3.1",
-              "latest_bioc_version": "3.17",
+              "latest_r_version": "4.3.2",
+              "latest_bioc_version": "3.18",
               "tag": "",
               "tag_latest": "true",
               "release_tag": "${{ needs.create-release.outputs.release_tag }}"
