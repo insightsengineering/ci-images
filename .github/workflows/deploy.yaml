@@ -184,7 +184,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.REPO_GITHUB_TOKEN }}
 
       - name: Set build variables 📐
         id: build_vars
