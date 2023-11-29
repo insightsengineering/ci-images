@@ -49,5 +49,7 @@ RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
         install_other_pkgs.R \
         install_pip_pkgs.py
 
+RUN pdflatex --version
+
 # Run RStudio
 CMD ["/init"]
