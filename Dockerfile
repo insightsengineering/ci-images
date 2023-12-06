@@ -36,6 +36,7 @@ RUN ./install_sysdeps.sh ${DISTRIBUTION}
 
 RUN R --version
 RUN java -version
+RUN python3 --version
 
 # Install R packages
 # RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
