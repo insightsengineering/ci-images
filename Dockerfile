@@ -49,6 +49,7 @@ RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
         install_other_pkgs.R \
         install_pip_pkgs.py
 
+# Prevent pushing of the image without pdflatex installed.
 RUN pdflatex --version
 
 # Run RStudio
