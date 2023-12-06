@@ -282,12 +282,10 @@ tlmgr install makeindex metafont mfware inconsolata tex ae parskip listings xcol
 tlmgr path add
 '
   # nolint end
-  exit_status <- system2("bash", args = c("-c", shQuote(tinytex_installer)), stdout = TRUE, stderr = TRUE)
-  if ("status" %in% names(attributes(exit_status))) {
-    cat("TinyTex installer exited with code =", attr(exit_status, "status"), "\n")
-    quit(status = attr(exit_status, "status"))
-  } else {
-    cat("TinyTex installer output:\n", exit_status, "\n")
+  exit_status <- system(tinytex_installer)
+  cat("TinyTex installer exited with code =", exit_status, "\n")
+  if (exit_status != 0) {
+    quit(status = exit_status)
   }
   tinytex::r_texmf()
   permission_update <- '
@@ -297,12 +295,10 @@ chmod -R g+wx /opt/TinyTeX/bin
 export PATH=/opt/TinyTeX/bin/x86_64-linux:${PATH}
 echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 '
-  exit_status <- system2("bash", args = c("-c", shQuote(permission_update)), stdout = TRUE, stderr = TRUE)
-  if ("status" %in% names(attributes(exit_status))) {
-    cat("TinyTex permission update exited with code =", attr(exit_status, "status"), "\n")
-    quit(status = attr(exit_status, "status"))
-  } else {
-    cat("TinyTex permission update output:\n", exit_status, "\n")
+  exit_status <- system(permission_update)
+  cat("TinyTex installer exited with code =", exit_status, "\n")
+  if (exit_status != 0) {
+    quit(status = exit_status)
   }
 }
 
