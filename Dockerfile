@@ -39,22 +39,22 @@ RUN java -version
 RUN python3 --version
 
 # Install R packages
-# RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
-#     ./install_bioc.R ${BIOC_VERSION} && \
-#     ./install_bioc_pkgs.R ${DISTRIBUTION} && \
-#     ./install_gh_pkgs.R ${DISTRIBUTION} && \
-#     ./install_other_pkgs.R ${DISTRIBUTION} && \
-#     ./install_pip_pkgs.py ${DISTRIBUTION} && \
-#     rm -f install_sysdeps.sh \
-#         install_cran_pkgs.R \
-#         install_bioc.R \
-#         install_bioc_pkgs.R \
-#         install_gh_pkgs.R \
-#         install_other_pkgs.R \
-#         install_pip_pkgs.py
+RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
+    ./install_bioc.R ${BIOC_VERSION} && \
+    ./install_bioc_pkgs.R ${DISTRIBUTION} && \
+    ./install_gh_pkgs.R ${DISTRIBUTION} && \
+    ./install_other_pkgs.R ${DISTRIBUTION} && \
+    ./install_pip_pkgs.py ${DISTRIBUTION} && \
+    rm -f install_sysdeps.sh \
+        install_cran_pkgs.R \
+        install_bioc.R \
+        install_bioc_pkgs.R \
+        install_gh_pkgs.R \
+        install_other_pkgs.R \
+        install_pip_pkgs.py
 
 # Prevent pushing of the image without pdflatex installed.
-# RUN pdflatex --version
+RUN pdflatex --version
 
 # Run RStudio
 CMD ["/init"]
