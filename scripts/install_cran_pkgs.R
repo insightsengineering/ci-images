@@ -283,7 +283,7 @@ tlmgr path add
 '
   # nolint end
   exit_status <- system(tinytex_installer)
-  cat("TinyTex installer exited with code =", exit_status, "\n")
+  cat("TinyTeX installer exited with code =", exit_status, "\n")
   if (exit_status != 0) {
     quit(status = exit_status)
   }
@@ -296,7 +296,7 @@ export PATH=/opt/TinyTeX/bin/x86_64-linux:${PATH}
 echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 '
   exit_status <- system(permission_update)
-  cat("TinyTex permission update exited with code =", exit_status, "\n")
+  cat("TinyTeX permission update exited with code =", exit_status, "\n")
   if (exit_status != 0) {
     quit(status = exit_status)
   }
