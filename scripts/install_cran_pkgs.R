@@ -296,7 +296,7 @@ export PATH=/opt/TinyTeX/bin/x86_64-linux:${PATH}
 echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 '
   exit_status <- system(permission_update)
-  cat("TinyTex installer exited with code =", exit_status, "\n")
+  cat("TinyTex permission update exited with code =", exit_status, "\n")
   if (exit_status != 0) {
     quit(status = exit_status)
   }
