@@ -280,7 +280,6 @@ mv ~/.TinyTeX /opt/TinyTeX
 /opt/TinyTeX/bin/*/tlmgr path add
 tlmgr install makeindex metafont mfware inconsolata tex ae parskip listings xcolor epstopdf-pkg pdftexcmds kvoptions texlive-scripts grfext soul todonotes koma-script subfig bookmark babel-english caption
 tlmgr path add
-exit 1
 '
   # nolint end
   exit_status <- system(tinytex_installer)
