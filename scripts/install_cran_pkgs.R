@@ -286,6 +286,8 @@ tlmgr path add
   if ("status" %in% names(attributes(exit_status))) {
     cat("TinyTex installer exited with code =", attr(exit_status, "status"), "\n")
     quit(status = attr(exit_status, "status"))
+  } else {
+    cat("TinyTex installer output:\n", exit_status, "\n")
   }
   tinytex::r_texmf()
   permission_update <- '
@@ -299,6 +301,8 @@ echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
   if ("status" %in% names(attributes(exit_status))) {
     cat("TinyTex permission update exited with code =", attr(exit_status, "status"), "\n")
     quit(status = attr(exit_status, "status"))
+  } else {
+    cat("TinyTex permission update output:\n", exit_status, "\n")
   }
 }
 
