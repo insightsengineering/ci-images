@@ -282,7 +282,11 @@ tlmgr install makeindex metafont mfware inconsolata tex ae parskip listings xcol
 tlmgr path add
 '
   # nolint end
-  system(tinytex_installer)
+  exit_status <- system(tinytex_installer)
+  cat("TinyTeX installer exited with code =", exit_status, "\n")
+  if (exit_status != 0) {
+    quit(status = exit_status)
+  }
   tinytex::r_texmf()
   permission_update <- '
 chown -R root:staff /opt/TinyTeX
@@ -291,7 +295,11 @@ chmod -R g+wx /opt/TinyTeX/bin
 export PATH=/opt/TinyTeX/bin/x86_64-linux:${PATH}
 echo "PATH=${PATH}" >> ${R_HOME}/etc/Renviron
 '
-  system(permission_update)
+  exit_status <- system(permission_update)
+  cat("TinyTeX permission update exited with code =", exit_status, "\n")
+  if (exit_status != 0) {
+    quit(status = exit_status)
+  }
 }
 
 # Update all packages
