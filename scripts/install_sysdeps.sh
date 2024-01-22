@@ -163,6 +163,8 @@ then {
 
     # Install security patches
     # unattended-upgrade -v
+    apt update
+    apt upgrade -y
 
     # Clean up
     apt-get autoremove -y
