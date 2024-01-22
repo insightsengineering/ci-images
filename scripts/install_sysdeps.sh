@@ -162,7 +162,7 @@ then {
     quarto check install
 
     # Install security patches
-    unattended-upgrade -v
+    # unattended-upgrade -v
 
     # Clean up
     apt-get autoremove -y
