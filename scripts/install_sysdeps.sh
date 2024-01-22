@@ -163,8 +163,9 @@ then {
 
     # Install security patches
     # unattended-upgrade -v
+    export DEBIAN_FRONTEND=noninteractive
     apt update
-    apt upgrade -y
+    DEBIAN_FRONTEND=noninteractive apt upgrade -y
 
     # Clean up
     apt-get autoremove -y
