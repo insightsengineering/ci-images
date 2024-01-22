@@ -238,7 +238,7 @@ jobs:
         with:
           context: ./
           file: Dockerfile
-          push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
+          push: true
           tags: ${{ steps.build_vars.outputs.FULL_NAMES }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
