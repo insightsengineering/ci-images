@@ -22,7 +22,8 @@ shared_pkgs <- c(
   "SummarizedExperiment",
   "biomaRt",
   "edgeR",
-  "limma"
+  "limma",
+  "hermes"
 )
 
 # Per distro BioC packages to install

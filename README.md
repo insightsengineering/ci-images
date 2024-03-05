@@ -25,15 +25,15 @@ Pull the images by:
 1. Pulling an image from GHCR by running:
 
     ```bash
-    # In this example, we're pulling the latest rstudio-local image with R 4.2.1 and BioConductor 3.15
-    docker pull ghcr.io/insightsengineering/rstudio_4.2.1_bioc_3.15:latest
+    # In this example, we're pulling the latest rstudio-local image with R 4.2.2 and BioConductor 3.18
+    docker pull ghcr.io/insightsengineering/rstudio_4.2.2_bioc_3.18:latest
     ```
 
 1. Start a container by running and initiate an RStudio Server session from the container:
 
     ```bash
-    # In this example, we're pulling the latest rstudio-local image with R 4.2.1 and BioConductor 3.15
-    docker run --rm -p 8787:8787 -e PASSWORD=test ghcr.io/insightsengineering/rstudio-local_4.2.1_bioc_3.15:latest
+    # In this example, we're pulling the latest rstudio-local image with R 4.2.2 and BioConductor 3.18
+    docker run --rm -p 8787:8787 -e PASSWORD=test ghcr.io/insightsengineering/rstudio-local_4.2.2_bioc_3.18:latest
     ```
 
 1. Log in to RStudio Server locally by accessing [http://localhost:8787](http://localhost:8787) and using `rstudio` as the username and `test` as the password

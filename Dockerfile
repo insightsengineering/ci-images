@@ -1,7 +1,7 @@
 # Build arguments
 ARG ORIGIN=rocker
 ARG ORIGIN_DISTRIBUTION=rstudio
-ARG R_VERSION=4.3.2
+ARG R_VERSION=4.3.3
 
 # Fetch base image
 FROM ${ORIGIN}/${ORIGIN_DISTRIBUTION}:${R_VERSION}
@@ -28,15 +28,12 @@ COPY --chmod=0755 [\
     "scripts/install_gh_pkgs.R", \
     "scripts/install_other_pkgs.R", \
     "scripts/install_pip_pkgs.py", \
+    "scripts/test_installations.sh", \
     "./"\
 ]
 
 # Install sysdeps
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
-
-RUN R --version && \
-    java -version && \
-    python3 --version
 
 # Install R packages
 RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
@@ -45,16 +42,15 @@ RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
     ./install_gh_pkgs.R ${DISTRIBUTION} && \
     ./install_other_pkgs.R ${DISTRIBUTION} && \
     ./install_pip_pkgs.py ${DISTRIBUTION} && \
+    ./test_installations.sh && \
     rm -f install_sysdeps.sh \
         install_cran_pkgs.R \
         install_bioc.R \
         install_bioc_pkgs.R \
         install_gh_pkgs.R \
         install_other_pkgs.R \
-        install_pip_pkgs.py
-
-# Prevent pushing of the image without pdflatex installed.
-RUN pdflatex --version
+        install_pip_pkgs.py \
+        test_installations.sh
 
 # Run RStudio
 CMD ["/init"]

@@ -36,11 +36,11 @@ jobs:
     strategy:
       matrix:
         image:
-          - distro_tag: '4.3.2'
+          - distro_tag: '4.3.3'
             bioc: '3.18'
             distro: rstudio-local
             origin: rocker
-          - distro_tag: '4.3.2'
+          - distro_tag: '4.3.3'
             bioc: '3.18'
             distro: rstudio
             origin: rocker
@@ -77,7 +77,7 @@ jobs:
           ref: main
 
       - name: Trigger all builds ▶️
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.REPO_GITHUB_TOKEN }}
           event-type: scheduled
@@ -87,7 +87,7 @@ jobs:
               "distribution": "${{ matrix.image.distro }}",
               "r_version": "${{ matrix.image.distro_tag }}",
               "bioc_version": "${{ matrix.image.bioc }}",
-              "latest_r_version": "4.3.2",
+              "latest_r_version": "4.3.3",
               "latest_bioc_version": "3.18",
               "tag": "",
               "tag_latest": "true",

@@ -2,6 +2,7 @@ name: Deploy image to GHCR 🪂
 
 env:
   REGISTRY: ghcr.io
+  PLATFORMS: linux/amd64,linux/arm64
 
 on:
   repository_dispatch:
@@ -35,7 +36,7 @@ on:
         description: R Version
         required: true
         type: choice
-        default: "4.3.2"
+        default: "4.3.3"
         options:
           - "4.1.0"
           - "4.1.1"
@@ -47,12 +48,13 @@ on:
           - "4.3.0"
           - "4.3.1"
           - "4.3.2"
+          - "4.3.3"
           - "latest"
       latest_r_version:
         description: "R Version to be aliased as the 'latest' tag"
         required: false
         type: string
-        default: "4.3.2"
+        default: "4.3.3"
       bioc_version:
         description: BioConductor Release
         required: true
@@ -165,10 +167,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
         id: buildx
         with:
           install: true
+
+      - name: Set up QEMU
+        id: qemu
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ env.PLATFORMS }}
 
       - name: Cache Docker layers ♻️
         uses: actions/cache@v4
@@ -182,7 +190,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Log in to the Container registry 🗝
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -236,7 +244,7 @@ jobs:
           echo "SBOM_OUTPUT_FILENAME=$GITHUB_WORKSPACE/sbom.json" >> $GITHUB_OUTPUT
 
       - name: Build and push image 🏗
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: ./
           file: Dockerfile
@@ -250,7 +258,7 @@ jobs:
             DISTRIBUTION=${{ needs.normalize-inputs.outputs.distribution }}
             R_VERSION=${{ needs.normalize-inputs.outputs.r_version }}
             BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}
-          platforms: linux/amd64
+          platforms: ${{ env.PLATFORMS }}
 
       - name: Generate image manifest and R package list 🐳
         run: |

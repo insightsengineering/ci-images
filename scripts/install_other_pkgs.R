@@ -5,31 +5,16 @@
 args <- commandArgs(trailing = TRUE)
 distribution <- args[1]
 
-# NEST packages to be installed
-nest_packages <- c(
-  "formatters",
-  "goshawk",
-  "hermes",
-  "osprey",
-  "rtables",
+# Pharmaverse packages to be installed
+pharmaverse_packages <- c(
   "scda",
   "scda.2022",
-  "nestcolor",
-  "teal",
-  "teal.code",
-  "teal.data",
+  "goshawk",
   "teal.goshawk",
-  "teal.logger",
-  "teal.modules.clinical",
-  "teal.modules.general",
-  "teal.modules.hermes",
+  "osprey",
   "teal.osprey",
-  "teal.reporter",
-  "teal.slice",
-  "teal.transform",
-  "teal.widgets",
-  "tern",
   "tern.mmrm",
+  "teal.modules.hermes",
   "tern.rbmi"
 )
 
@@ -44,7 +29,8 @@ other_pkgs <- list(
     stat_pkgs
   ),
   `rstudio-local` = c(
-    nest_packages, stat_pkgs
+    pharmaverse_packages,
+    stat_pkgs
   ),
   `debian-clang-devel` = c(stat_pkgs),
   `debian-gcc-devel` = c(stat_pkgs),

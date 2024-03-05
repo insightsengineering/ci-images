@@ -26,13 +26,33 @@ cran_pkgs_from_src <- list(
   `rstudio-local` = shared_pkgs_install_from_src
 )
 
-# Regular CRAN packages to install
-shared_pkgs <- c(
+# Pharmaverse R packages
+pharmaverse_pkgs <- c(
   "admiral",
   "admiral.test",
   "admiraldev",
   "admiralonco",
   "admiralophtha",
+  "formatters",
+  "rtables",
+  "rlistings",
+  "nestcolor",
+  "teal",
+  "teal.code",
+  "teal.data",
+  "teal.logger",
+  "teal.modules.clinical",
+  "teal.modules.general",
+  "teal.reporter",
+  "teal.slice",
+  "teal.transform",
+  "teal.widgets",
+  "tern",
+  "mmrm"
+)
+
+# Regular CRAN packages to install
+shared_pkgs <- c(
   "assertthat",
   "bayesplot",
   "BayesPPD",
@@ -121,7 +141,6 @@ shared_pkgs <- c(
   "MatchIt",
   "matrixcalc",
   "mcr",
-  "mmrm",
   "mockery",
   "mstate",
   "muhaz",
@@ -157,13 +176,11 @@ shared_pkgs <- c(
   "rJava",
   "RJDBC",
   "rlang",
-  "rlistings",
   "rmarkdown",
   "rstan",
   "rstantools",
   "rstpm2",
   "rsvg",
-  "rtables",
   "rvest",
   "scales",
   "shiny",
@@ -203,12 +220,22 @@ shared_pkgs <- c(
   "yaml"
 )
 
+# Local development helper packages
+local_dev_packages <- c(
+  "diffviewer",
+  "languageserver"
+)
+
+# Collate all packages
 cran_pkgs <- list(
-  rstudio = shared_pkgs,
+  rstudio = c(
+    shared_pkgs,
+    pharmaverse_pkgs
+  ),
   `rstudio-local` = c(
     shared_pkgs,
-    "diffviewer",
-    "languageserver"
+    pharmaverse_pkgs,
+    local_dev_packages
   ),
   `debian-clang-devel` = shared_pkgs,
   `debian-gcc-devel` = shared_pkgs,
@@ -271,16 +298,39 @@ if (require("shinytest")) {
 
 # Conditionally install TinyTex
 if (require("tinytex")) {
+  tlmgr_packages <- c(
+    "makeindex",
+    "metafont",
+    "mfware",
+    "inconsolata",
+    "tex",
+    "ae",
+    "parskip",
+    "listings",
+    "xcolor",
+    "epstopdf-pkg",
+    "pdftexcmds",
+    "kvoptions",
+    "texlive-scripts",
+    "grfext",
+    "soul",
+    "todonotes",
+    "koma-script",
+    "subfig",
+    "bookmark",
+    "babel-english",
+    "caption"
+  )
   # nolint start
   # See point 5 in
   # https://github.com/rbind/yihui/blob/master/content/tinytex/faq.md
-  tinytex_installer <- '
+  tinytex_installer <- paste0('
 wget -qO- "https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh" | sh -s - --admin --no-path
 mv ~/.TinyTeX /opt/TinyTeX
 /opt/TinyTeX/bin/*/tlmgr path add
-tlmgr install makeindex metafont mfware inconsolata tex ae parskip listings xcolor epstopdf-pkg pdftexcmds kvoptions texlive-scripts grfext soul todonotes koma-script subfig bookmark babel-english caption
+tlmgr install ', paste(tlmgr_packages, collapse = " "), "
 tlmgr path add
-'
+")
   # nolint end
   exit_status <- system(tinytex_installer)
   cat("TinyTeX installer exited with code =", exit_status, "\n")
