@@ -48,6 +48,7 @@ libudunits2-dev \
 libv8-dev \
 libpq-dev \
 tidy \
+libglpk-dev \
 "
 
 # Shared deps for fedora
@@ -90,6 +91,7 @@ lbzip2 \
 udunits2-devel \
 v8-devel \
 tidy \
+glpk-devel \
 "
 
 # Deps specific on the rstudio image
@@ -188,7 +190,7 @@ then {
     # Update
     dnf update -y
 
-    # Ugrade
+    # Upgrade
     dnf upgrade --refresh -y
 
     # Install packages
