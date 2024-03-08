@@ -21,6 +21,11 @@ declare -A bins=(
     [LaTeX]="pdflatex"
 )
 
-for bin in "${!bins[@]}"; do
-    check_installation "${bins[$bin]}"
-done
+# for bin in "${!bins[@]}"; do
+#     check_installation "${bins[$bin]}"
+# done
+
+R --version
+java -version
+python3 --version
+pdflatex --version
