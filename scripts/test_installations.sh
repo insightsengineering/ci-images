@@ -5,7 +5,7 @@ set -eo pipefail
 echo "🔎 Checking installations..."
 
 function check_installation() {
-    if command -v "$1" &> /dev/null
+    if type "$1" &> /dev/null
     then
         echo "✅ $1 is installed."
     else
