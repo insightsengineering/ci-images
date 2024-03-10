@@ -15,7 +15,7 @@ function check_installation() {
 }
 
 declare -A bins=(
-    [Python]="python"
+    [Python]="python3"
     [Java]="java"
     [R]="R"
     [LaTeX]="pdflatex"
