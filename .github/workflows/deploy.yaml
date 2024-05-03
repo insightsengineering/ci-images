@@ -38,7 +38,7 @@ on:
         description: R Version
         required: true
         type: choice
-        default: "4.3.3"
+        default: "4.4.0"
         options:
           - "4.1.0"
           - "4.1.1"
@@ -51,17 +51,18 @@ on:
           - "4.3.1"
           - "4.3.2"
           - "4.3.3"
+          - "4.4.0"
           - "latest"
       latest_r_version:
         description: "R Version to be aliased as the 'latest' tag"
         required: false
         type: string
-        default: "4.3.3"
+        default: "4.4.0"
       bioc_version:
         description: BioConductor Release
         required: true
         type: choice
-        default: "3.18"
+        default: "3.19"
         options:
           - "3.13"
           - "3.14"
@@ -69,12 +70,13 @@ on:
           - "3.16"
           - "3.17"
           - "3.18"
+          - "3.19"
           - "devel"
       latest_bioc_version:
         description: "BioC Version to be aliased as the 'latest' tag"
         required: false
         type: string
-        default: "3.18"
+        default: "3.19"
       tag:
         description: |
           Custom Image Tag/Version. Defaults to current date in the `YYYY.MM.DD` format if unspecified.

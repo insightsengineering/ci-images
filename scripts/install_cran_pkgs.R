@@ -191,6 +191,7 @@ shared_pkgs <- c(
   "shinyTree",
   "shinyvalidate",
   "shinyWidgets",
+  "shinylive",
   "simsurv",
   "sparkline",
   "spelling",
