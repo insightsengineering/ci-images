@@ -49,6 +49,7 @@ libv8-dev \
 libpq-dev \
 tidy \
 libglpk-dev \
+libarchive-dev \
 "
 
 # Shared deps for fedora
@@ -92,6 +93,7 @@ udunits2-devel \
 v8-devel \
 tidy \
 glpk-devel \
+libarchive-devel \
 "
 
 # Deps specific on the rstudio image
