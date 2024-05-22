@@ -50,6 +50,7 @@ libpq-dev \
 tidy \
 libglpk-dev \
 libarchive-dev \
+libssh-dev \
 "
 
 # Shared deps for fedora
@@ -94,6 +95,7 @@ v8-devel \
 tidy \
 glpk-devel \
 libarchive-devel \
+libssh-devel \
 "
 
 # Deps specific on the rstudio image
