@@ -195,6 +195,7 @@ shared_pkgs <- c(
   "simsurv",
   "sparkline",
   "spelling",
+  "ssh",
   "statmod",
   "stringi",
   "styler",
