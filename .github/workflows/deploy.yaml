@@ -34,6 +34,7 @@ on:
           - fedora-gcc-devel
           - debian-gcc-patched
           - debian-gcc-release
+          - gcc13
       r_version:
         description: R Version
         required: true

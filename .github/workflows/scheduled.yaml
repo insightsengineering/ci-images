@@ -58,8 +58,7 @@ jobs:
             origin: rhub
           - distro_tag: 'latest'
             bioc: 'devel'
-            # https://hub.docker.com/r/rhub/gcc13
-            distro: gcc13
+            distro: fedora-gcc-devel
             origin: rhub
           - distro_tag: 'latest'
             bioc: '3.19'
