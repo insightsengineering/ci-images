@@ -138,6 +138,9 @@ pkgs_to_install_fedora["fedora-gcc-devel"]="${shared_deps_fedora}"
 # Deps specific on the fedora-clang-devel image
 pkgs_to_install_fedora["fedora-clang-devel"]="${shared_deps_fedora}"
 
+# Deps specific to the gcc rhub image.
+pkgs_to_install_fedora["gcc13"]="${shared_deps_fedora}"
+
 # Perform installations for debian distros
 if [[ "$distribution" =~ ^rstudio.*|^debian.* ]]
 then {
