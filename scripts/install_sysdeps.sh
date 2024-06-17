@@ -190,7 +190,7 @@ then {
 }
 fi
 
-if [[ "$distribution" =~ ^fedora.* ]]
+if [[ "$distribution" =~ ^fedora.*|^gcc.* ]]
 then {
     # Update
     dnf update -y
