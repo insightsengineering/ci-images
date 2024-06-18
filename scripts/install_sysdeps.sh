@@ -112,34 +112,9 @@ less \
 nano \
 "
 
-# Deps specific on the debian-clang-devel image
-pkgs_to_install_debian["debian-clang-devel"]="${shared_deps_debian} \
-jags \
-"
-
-# Deps specific on the debian-gcc-devel image
-pkgs_to_install_debian["debian-gcc-devel"]="${shared_deps_debian} \
-jags \
-"
-
-# Deps specific on the debian-gcc-patched image
-pkgs_to_install_debian["debian-gcc-patched"]="${shared_deps_debian} \
-jags \
-"
-
-# Deps specific on the debian-gcc-release image
-pkgs_to_install_debian["debian-gcc-release"]="${shared_deps_debian} \
-jags \
-"
-
-# Deps specific on the fedora-gcc-devel image
-pkgs_to_install_fedora["fedora-gcc-devel"]="${shared_deps_fedora}"
-
-# Deps specific on the fedora-clang-devel image
-pkgs_to_install_fedora["fedora-clang-devel"]="${shared_deps_fedora}"
-
 # Deps specific to the gcc rhub image.
 pkgs_to_install_fedora["gcc13"]="${shared_deps_fedora}"
+pkgs_to_install_fedora["gcc14"]="${shared_deps_fedora}"
 
 # Perform installations for debian distros
 if [[ "$distribution" =~ ^rstudio.*|^debian.* ]]
@@ -193,7 +168,7 @@ then {
 }
 fi
 
-if [[ "$distribution" =~ ^fedora.*|^gcc.* ]]
+if [[ "$distribution" =~ ^gcc.* ]]
 then {
     # Update
     dnf update -y
