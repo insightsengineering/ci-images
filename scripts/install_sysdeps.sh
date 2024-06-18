@@ -117,7 +117,7 @@ pkgs_to_install_fedora["gcc13"]="${shared_deps_fedora}"
 pkgs_to_install_fedora["gcc14"]="${shared_deps_fedora}"
 
 # Perform installations for debian distros
-if [[ "$distribution" =~ ^rstudio.*|^debian.* ]]
+if [[ "$distribution" =~ ^rstudio.* ]]
 then {
     # Set env vars
     export DEBIAN_FRONTEND=noninteractive

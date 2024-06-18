@@ -32,12 +32,8 @@ other_pkgs <- list(
     pharmaverse_packages,
     stat_pkgs
   ),
-  `debian-clang-devel` = c(stat_pkgs),
-  `debian-gcc-devel` = c(stat_pkgs),
-  `fedora-clang-devel` = c(stat_pkgs),
-  `fedora-gcc-devel` = c(stat_pkgs),
-  `debian-gcc-patched` = c(stat_pkgs),
-  `debian-gcc-release` = c(stat_pkgs)
+  `gcc13` = c(stat_pkgs),
+  `gcc14` = c(stat_pkgs)
 )
 
 # Get diff of installed and uninstalled packages for

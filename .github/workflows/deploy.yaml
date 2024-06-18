@@ -21,7 +21,7 @@ on:
           - rocker
           - rhub
       distribution:
-        description: Rocker/RHub Distro Name. Eg. rstudio or fedora-gcc-devel
+        description: Rocker/RHub Distro Name. Eg. rstudio or gcc13
         required: true
         type: choice
         default: rstudio
@@ -201,7 +201,8 @@ jobs:
         run: |
           # Set Image name
           image_name="${{ needs.normalize-inputs.outputs.distribution }}_${{ needs.normalize-inputs.outputs.r_version }}_bioc_${{ needs.normalize-inputs.outputs.bioc_version }}"
-          if [[ "${{ needs.normalize-inputs.outputs.distribution }}" =~ ^debian.*|^fedora.* ]]
+          # For Fedora (gcc13 and gcc14) rhub images.
+          if [[ "${{ needs.normalize-inputs.outputs.distribution }}" =~ ^gcc.* ]]
           then {
             image_name="${{ needs.normalize-inputs.outputs.distribution }}"
           }

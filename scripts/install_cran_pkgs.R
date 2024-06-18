@@ -266,7 +266,7 @@ if (length(new_pkgs_from_src)) {
 }
 
 # Install rjags with special params for fedora distros
-if (startsWith(distribution, "fedora") || startsWith(distribution, "gcc")) {
+if (startsWith(distribution, "gcc")) {
   install.packages(
     "rjags",
     type = "source",
