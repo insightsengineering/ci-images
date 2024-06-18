@@ -243,6 +243,7 @@ cran_pkgs <- list(
   `debian-gcc-devel` = shared_pkgs,
   `fedora-clang-devel` = shared_pkgs[!shared_pkgs %in% c("rjags")],
   `fedora-gcc-devel` = shared_pkgs[!shared_pkgs %in% c("rjags")],
+  `gcc13` = shared_pkgs[!shared_pkgs %in% c("rjags")],
   `debian-gcc-patched` = shared_pkgs,
   `debian-gcc-release` = shared_pkgs
 )
@@ -270,7 +271,7 @@ if (length(new_pkgs_from_src)) {
 }
 
 # Install rjags with special params for fedora distros
-if (startsWith(distribution, "fedora")) {
+if (startsWith(distribution, "fedora") || startsWith(distribution, "gcc13")) {
   install.packages(
     "rjags",
     type = "source",

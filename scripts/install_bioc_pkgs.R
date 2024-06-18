@@ -44,6 +44,13 @@ new_pkgs <- bioc_pkgs[[distribution]][
   !(bioc_pkgs[[distribution]] %in% installed.packages()[, "Package"])
 ]
 
+install.packages(
+  "cmdstanr",
+  repos='https://stan-dev.r-universe.dev'
+)
+
+cmdstanr::install_cmdstan()
+
 # Install only uninstalled packages
 if (length(new_pkgs)) {
   BiocManager::install(new_pkgs,
