@@ -36,37 +36,21 @@ jobs:
     strategy:
       matrix:
         image:
-          - distro_tag: '4.4.0'
-            bioc: '3.19'
-            distro: rstudio-local
-            origin: rocker
-          - distro_tag: '4.4.0'
-            bioc: '3.19'
-            distro: rstudio
-            origin: rocker
+          # - distro_tag: '4.4.0'
+          #   bioc: '3.19'
+          #   distro: rstudio-local
+          #   origin: rocker
+          # - distro_tag: '4.4.0'
+          #   bioc: '3.19'
+          #   distro: rstudio
+          #   origin: rocker
           - distro_tag: 'latest'
             bioc: 'devel'
-            distro: debian-clang-devel
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: 'devel'
-            distro: debian-gcc-devel
+            distro: gcc13
             origin: rhub
           - distro_tag: 'latest'
             bioc: 'devel'
-            distro: fedora-clang-devel
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: 'devel'
-            distro: fedora-gcc-devel
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: '3.19'
-            distro: debian-gcc-patched
-            origin: rhub
-          - distro_tag: 'latest'
-            bioc: '3.19'
-            distro: debian-gcc-release
+            distro: gcc14
             origin: rhub
 
     # Trigger steps
