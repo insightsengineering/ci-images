@@ -35,6 +35,7 @@ on:
           - debian-gcc-patched
           - debian-gcc-release
           - gcc13
+          - gcc14
       r_version:
         description: R Version
         required: true
