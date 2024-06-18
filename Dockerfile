@@ -42,7 +42,7 @@ RUN ./install_bioc_pkgs.R ${DISTRIBUTION}
 RUN ./install_gh_pkgs.R ${DISTRIBUTION}
 RUN ./install_other_pkgs.R ${DISTRIBUTION}
 RUN ./install_pip_pkgs.py ${DISTRIBUTION}
-    # ./test_installations.sh && \
+RUN ./test_installations.sh
     # rm -f install_sysdeps.sh \
     #     install_cran_pkgs.R \
     #     install_bioc.R \

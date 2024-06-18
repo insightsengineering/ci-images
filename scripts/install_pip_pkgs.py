@@ -31,12 +31,8 @@ pip_packages = {
     + [
         "pre-commit",
     ],
-    "debian-clang-devel": [],
-    "debian-gcc-devel": [],
-    "fedora-clang-devel": [],
-    "fedora-gcc-devel": [],
-    "debian-gcc-patched": [],
-    "debian-gcc-release": [],
+    "gcc13": [],
+    "gcc14": [],
 }
 
 # Install packages
