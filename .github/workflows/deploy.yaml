@@ -21,7 +21,7 @@ on:
           - rocker
           - rhub
       distribution:
-        description: Rocker/RHub Distro Name. Eg. rstudio or gcc13
+        description: Rocker/RHub Distro Name.
         required: true
         type: choice
         default: rstudio
@@ -32,7 +32,7 @@ on:
           - gcc14
       r_version:
         description: |
-          R version (also used as a tag to pull the origin image).
+          R version (also used as the tag to pull the origin image).
         required: true
         type: choice
         default: "4.4.0"
