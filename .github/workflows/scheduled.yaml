@@ -36,14 +36,14 @@ jobs:
     strategy:
       matrix:
         image:
-          # - distro_tag: '4.4.0'
-          #   bioc: '3.19'
-          #   distro: rstudio-local
-          #   origin: rocker
-          # - distro_tag: '4.4.0'
-          #   bioc: '3.19'
-          #   distro: rstudio
-          #   origin: rocker
+          - distro_tag: '4.4.0'
+            bioc: '3.19'
+            distro: rstudio-local
+            origin: rocker
+          - distro_tag: '4.4.0'
+            bioc: '3.19'
+            distro: rstudio
+            origin: rocker
           - distro_tag: 'latest'
             bioc: 'devel'
             distro: gcc13
