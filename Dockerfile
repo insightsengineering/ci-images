@@ -32,21 +32,24 @@ COPY --chmod=0755 [\
     "./"\
 ]
 
-# In order to have predictable results from TinyTex installer, set the CTAN mirror.
-# This variable is used by https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh.
+# In order to have predictable results from TinyTex installer, set a reliable CTAN mirror.
+# This variable is used by:
+# https://yihui.org/gh/tinytex/tools/install-base.sh
+# which is in turn used by:
+# https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh.
 ENV CTAN_REPO https://mirrors.mit.edu/CTAN/systems/texlive/tlnet
 
 # Install sysdeps
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
 
 # Install R packages
-RUN ./install_cran_pkgs.R ${DISTRIBUTION}
-RUN ./install_bioc.R ${BIOC_VERSION}
-RUN ./install_bioc_pkgs.R ${DISTRIBUTION}
-RUN ./install_gh_pkgs.R ${DISTRIBUTION}
-RUN ./install_other_pkgs.R ${DISTRIBUTION}
-RUN ./install_pip_pkgs.py ${DISTRIBUTION}
-RUN ./test_installations.sh && \
+RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
+    ./install_bioc.R ${BIOC_VERSION} && \
+    ./install_bioc_pkgs.R ${DISTRIBUTION} && \
+    ./install_gh_pkgs.R ${DISTRIBUTION} && \
+    ./install_other_pkgs.R ${DISTRIBUTION} && \
+    ./install_pip_pkgs.py ${DISTRIBUTION} && \
+    ./test_installations.sh && \
     rm -f install_sysdeps.sh \
         install_cran_pkgs.R \
         install_bioc.R \
