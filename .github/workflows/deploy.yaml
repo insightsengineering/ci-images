@@ -31,7 +31,8 @@ on:
           - gcc13
           - gcc14
       r_version:
-        description: R Version
+        description: |
+          R version (also used as a tag to pull the origin image).
         required: true
         type: choice
         default: "4.4.0"
@@ -50,7 +51,9 @@ on:
           - "4.4.0"
           - "latest"
       latest_r_version:
-        description: "R Version to be aliased as the 'latest' tag"
+        description: |
+          R Version to be aliased as the 'latest' tag".
+          (Only relevant for rocker images).
         required: false
         type: string
         default: "4.4.0"
@@ -69,7 +72,9 @@ on:
           - "3.19"
           - "devel"
       latest_bioc_version:
-        description: "BioC Version to be aliased as the 'latest' tag"
+        description: |
+          BioC Version to be aliased as the 'latest' tag".
+          (Only relevant for rocker images).
         required: false
         type: string
         default: "3.19"
