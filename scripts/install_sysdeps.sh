@@ -112,7 +112,7 @@ less \
 nano \
 "
 
-# Deps specific to the gcc rhub image.
+# Deps specific to the Fedora-based rhub image.
 pkgs_to_install_fedora["gcc13"]="${shared_deps_fedora}"
 pkgs_to_install_fedora["gcc14"]="${shared_deps_fedora}"
 pkgs_to_install_fedora["atlas"]="${shared_deps_fedora}"
