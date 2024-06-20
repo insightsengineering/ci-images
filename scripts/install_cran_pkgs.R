@@ -240,7 +240,12 @@ cran_pkgs <- list(
     local_dev_packages
   ),
   `gcc13` = shared_pkgs[!shared_pkgs %in% c("rjags")],
-  `gcc14` = shared_pkgs[!shared_pkgs %in% c("rjags")]
+  `gcc14` = shared_pkgs[!shared_pkgs %in% c("rjags")],
+  `atlas` = shared_pkgs[!shared_pkgs %in% c("rjags")],
+  `valgrind` = shared_pkgs[!shared_pkgs %in% c("rjags")],
+  `intel` = shared_pkgs[!shared_pkgs %in% c("rjags")],
+  `nosuggests` = shared_pkgs[!shared_pkgs %in% c("rjags")],
+  `mkl` = shared_pkgs[!shared_pkgs %in% c("rjags")]
 )
 
 # Re-install packages with newer versions
@@ -266,7 +271,7 @@ if (length(new_pkgs_from_src)) {
 }
 
 # Install rjags with special params for fedora distros
-if (startsWith(distribution, "gcc")) {
+if (startsWith(distribution, "gcc") || distribution == "atlas" || distribution == "valgrind" || distribution == "intel" || distribution == "nosuggests" || distribution == "mkl") {
   install.packages(
     "rjags",
     type = "source",

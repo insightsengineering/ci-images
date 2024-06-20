@@ -52,6 +52,26 @@ jobs:
             bioc: 'devel'
             distro: gcc14
             origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: atlas
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: valgrind
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: intel
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: nosuggests
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: mkl
+            origin: rhub
 
     # Trigger steps
     steps:

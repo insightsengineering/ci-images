@@ -30,6 +30,11 @@ on:
           - rstudio-local
           - gcc13
           - gcc14
+          - atlas
+          - valgrind
+          - intel
+          - nosuggests
+          - mkl
       r_version:
         description: |
           R version (also used as the tag to pull the origin image).
@@ -206,8 +211,8 @@ jobs:
         run: |
           # Set Image name
           image_name="${{ needs.normalize-inputs.outputs.distribution }}_${{ needs.normalize-inputs.outputs.r_version }}_bioc_${{ needs.normalize-inputs.outputs.bioc_version }}"
-          # For Fedora (gcc13 and gcc14) rhub images.
-          if [[ "${{ needs.normalize-inputs.outputs.distribution }}" =~ ^gcc.* ]]
+          # For Fedora-based rhub images.
+          if [[ "${{ needs.normalize-inputs.outputs.distribution }}" =~ ^gcc.*|^atlas$|^valgrind$|^intel$|^nosuggests$|^mkl$ ]]
           then {
             image_name="${{ needs.normalize-inputs.outputs.distribution }}"
           }

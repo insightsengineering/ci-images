@@ -33,7 +33,12 @@ other_pkgs <- list(
     stat_pkgs
   ),
   `gcc13` = c(stat_pkgs),
-  `gcc14` = c(stat_pkgs)
+  `gcc14` = c(stat_pkgs),
+  `atlas` = c(stat_pkgs),
+  `valgrind` = c(stat_pkgs),
+  `intel` = c(stat_pkgs),
+  `nosuggests` = c(stat_pkgs),
+  `mkl` = c(stat_pkgs)
 )
 
 # Get diff of installed and uninstalled packages for

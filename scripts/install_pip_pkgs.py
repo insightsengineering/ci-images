@@ -33,6 +33,11 @@ pip_packages = {
     ],
     "gcc13": [],
     "gcc14": [],
+    "atlas": [],
+    "valgrind": [],
+    "intel": [],
+    "nosuggests": [],
+    "mkl": [],
 }
 
 # Install packages

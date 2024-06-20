@@ -115,6 +115,11 @@ nano \
 # Deps specific to the gcc rhub image.
 pkgs_to_install_fedora["gcc13"]="${shared_deps_fedora}"
 pkgs_to_install_fedora["gcc14"]="${shared_deps_fedora}"
+pkgs_to_install_fedora["atlas"]="${shared_deps_fedora}"
+pkgs_to_install_fedora["valgrind"]="${shared_deps_fedora}"
+pkgs_to_install_fedora["intel"]="${shared_deps_fedora}"
+pkgs_to_install_fedora["nosuggests"]="${shared_deps_fedora}"
+pkgs_to_install_fedora["mkl"]="${shared_deps_fedora}"
 
 # Perform installations for debian distros
 if [[ "$distribution" =~ ^rstudio.* ]]
@@ -168,7 +173,7 @@ then {
 }
 fi
 
-if [[ "$distribution" =~ ^gcc.* ]]
+if [[ "$distribution" =~ ^gcc.*|^atlas$|^valgrind$|^intel$|^nosuggests$|^mkl$ ]]
 then {
     # Update
     dnf update -y

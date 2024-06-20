@@ -18,7 +18,12 @@ gh_pkgs <- list(
   rstudio = shared_pkgs,
   `rstudio-local` = shared_pkgs,
   `gcc13` = shared_pkgs,
-  `gcc14` = shared_pkgs
+  `gcc14` = shared_pkgs,
+  `atlas` = shared_pkgs,
+  `valgrind` = shared_pkgs,
+  `intel` = shared_pkgs,
+  `nosuggests` = shared_pkgs,
+  `mkl` = shared_pkgs
 )
 
 # Get diff of installed and uninstalled packages for
