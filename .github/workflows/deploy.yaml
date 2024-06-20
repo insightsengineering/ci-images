@@ -21,21 +21,23 @@ on:
           - rocker
           - rhub
       distribution:
-        description: Rocker/RHub Distro Name. Eg. rstudio or fedora-gcc-devel
+        description: Rocker/RHub Distro Name.
         required: true
         type: choice
         default: rstudio
         options:
           - rstudio
           - rstudio-local
-          - debian-clang-devel
-          - debian-gcc-devel
-          - fedora-clang-devel
-          - fedora-gcc-devel
-          - debian-gcc-patched
-          - debian-gcc-release
+          - gcc13
+          - gcc14
+          - atlas
+          - valgrind
+          - intel
+          - nosuggests
+          - mkl
       r_version:
-        description: R Version
+        description: |
+          R version (also used as the tag to pull the origin image).
         required: true
         type: choice
         default: "4.4.0"
@@ -54,7 +56,9 @@ on:
           - "4.4.0"
           - "latest"
       latest_r_version:
-        description: "R Version to be aliased as the 'latest' tag"
+        description: |
+          R Version to be aliased as the 'latest' tag".
+          (Only relevant for rocker images).
         required: false
         type: string
         default: "4.4.0"
@@ -73,7 +77,9 @@ on:
           - "3.19"
           - "devel"
       latest_bioc_version:
-        description: "BioC Version to be aliased as the 'latest' tag"
+        description: |
+          BioC Version to be aliased as the 'latest' tag".
+          (Only relevant for rocker images).
         required: false
         type: string
         default: "3.19"
@@ -205,7 +211,8 @@ jobs:
         run: |
           # Set Image name
           image_name="${{ needs.normalize-inputs.outputs.distribution }}_${{ needs.normalize-inputs.outputs.r_version }}_bioc_${{ needs.normalize-inputs.outputs.bioc_version }}"
-          if [[ "${{ needs.normalize-inputs.outputs.distribution }}" =~ ^debian.*|^fedora.* ]]
+          # For Fedora-based rhub images.
+          if [[ "${{ needs.normalize-inputs.outputs.distribution }}" =~ ^gcc.*|^atlas$|^valgrind$|^intel$|^nosuggests$|^mkl$ ]]
           then {
             image_name="${{ needs.normalize-inputs.outputs.distribution }}"
           }

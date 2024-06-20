@@ -32,6 +32,13 @@ COPY --chmod=0755 [\
     "./"\
 ]
 
+# In order to have predictable results from TinyTex installer, set a reliable CTAN mirror.
+# This variable is used by:
+# https://yihui.org/gh/tinytex/tools/install-base.sh
+# which is in turn used by:
+# https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh.
+ENV CTAN_REPO https://mirrors.mit.edu/CTAN/systems/texlive/tlnet
+
 # Install sysdeps
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
 

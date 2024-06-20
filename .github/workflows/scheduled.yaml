@@ -46,27 +46,31 @@ jobs:
             origin: rocker
           - distro_tag: 'latest'
             bioc: 'devel'
-            distro: debian-clang-devel
+            distro: gcc13
             origin: rhub
           - distro_tag: 'latest'
             bioc: 'devel'
-            distro: debian-gcc-devel
+            distro: gcc14
             origin: rhub
           - distro_tag: 'latest'
             bioc: 'devel'
-            distro: fedora-clang-devel
+            distro: atlas
             origin: rhub
           - distro_tag: 'latest'
             bioc: 'devel'
-            distro: fedora-gcc-devel
+            distro: valgrind
             origin: rhub
           - distro_tag: 'latest'
-            bioc: '3.19'
-            distro: debian-gcc-patched
+            bioc: 'devel'
+            distro: intel
             origin: rhub
           - distro_tag: 'latest'
-            bioc: '3.19'
-            distro: debian-gcc-release
+            bioc: 'devel'
+            distro: nosuggests
+            origin: rhub
+          - distro_tag: 'latest'
+            bioc: 'devel'
+            distro: mkl
             origin: rhub
 
     # Trigger steps

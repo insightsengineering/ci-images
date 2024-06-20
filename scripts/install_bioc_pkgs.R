@@ -30,12 +30,13 @@ shared_pkgs <- c(
 bioc_pkgs <- list(
   rstudio = shared_pkgs,
   `rstudio-local` = shared_pkgs,
-  `debian-clang-devel` = shared_pkgs,
-  `debian-gcc-devel` = shared_pkgs,
-  `fedora-clang-devel` = shared_pkgs,
-  `fedora-gcc-devel` = shared_pkgs,
-  `debian-gcc-patched` = shared_pkgs,
-  `debian-gcc-release` = shared_pkgs
+  `gcc13` = shared_pkgs,
+  `gcc14` = shared_pkgs,
+  `atlas` = shared_pkgs,
+  `valgrind` = shared_pkgs,
+  `intel` = shared_pkgs,
+  `nosuggests` = shared_pkgs,
+  `mkl` = shared_pkgs
 )
 
 # Get diff of installed and uninstalled packages for
@@ -43,6 +44,14 @@ bioc_pkgs <- list(
 new_pkgs <- bioc_pkgs[[distribution]][
   !(bioc_pkgs[[distribution]] %in% installed.packages()[, "Package"])
 ]
+
+# cmdstanr is available on r-universe.dev.
+install.packages(
+  "cmdstanr",
+  repos='https://stan-dev.r-universe.dev'
+)
+
+cmdstanr::install_cmdstan()
 
 # Install only uninstalled packages
 if (length(new_pkgs)) {
