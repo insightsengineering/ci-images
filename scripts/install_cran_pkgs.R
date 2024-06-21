@@ -207,6 +207,7 @@ shared_pkgs <- c(
   "tidyselect",
   "tinytest",
   "tinytex",
+  "trfmt",
   "tzdb",
   "uuid",
   "V8",
