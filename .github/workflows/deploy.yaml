@@ -127,6 +127,7 @@ jobs:
           TAG=$(normalize ${{ github.event.inputs.tag }} ${{ github.event.client_payload.tag }})
           TAG_LATEST=$(normalize ${{ github.event.inputs.tag_latest }} ${{ github.event.client_payload.tag_latest }})
           RELEASE_TAG=$(normalize ${{ github.event.inputs.release_tag }} ${{ github.event.client_payload.release_tag }})
+          RELEASE_TAG=$(normalize ${RELEASE_TAG} $(date +%Y%m%d))
           echo "ORIGIN=$ORIGIN" >> $GITHUB_OUTPUT
           echo "ORIGIN_DISTRIBUTION=$ORIGIN_DISTRIBUTION" >> $GITHUB_OUTPUT
           echo "DISTRIBUTION=$DISTRIBUTION" >> $GITHUB_OUTPUT
