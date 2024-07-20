@@ -40,7 +40,7 @@ on:
           R version (also used as the tag to pull the origin image).
         required: true
         type: choice
-        default: "4.4.0"
+        default: "4.4.1"
         options:
           - "4.1.0"
           - "4.1.1"
@@ -54,6 +54,7 @@ on:
           - "4.3.2"
           - "4.3.3"
           - "4.4.0"
+          - "4.4.1"
           - "latest"
       latest_r_version:
         description: |
@@ -61,7 +62,7 @@ on:
           (Only relevant for rocker images).
         required: false
         type: string
-        default: "4.4.0"
+        default: "4.4.1"
       bioc_version:
         description: BioConductor Release
         required: true
