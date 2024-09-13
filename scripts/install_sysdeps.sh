@@ -51,6 +51,7 @@ tidy \
 libglpk-dev \
 libarchive-dev \
 libssh-dev \
+libcurl4-openssl-dev \
 "
 
 # Shared deps for fedora
