@@ -307,6 +307,7 @@ jobs:
           subject-name: ${{ steps.build_vars.outputs.ATTESTATION_IMAGE_NAME }}
           subject-digest: ${{ steps.push-image.outputs.digest }}
           push-to-registry: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate SBOM attestation
         uses: actions/attest-sbom@v1
@@ -315,6 +316,7 @@ jobs:
           subject-digest: ${{ steps.push-image.outputs.digest }}
           sbom-path: ${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}
           push-to-registry: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload image manifest to release 🔼
         uses: svenstaro/upload-release-action@v2

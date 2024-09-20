@@ -42,22 +42,24 @@ ENV CTAN_REPO https://mirrors.mit.edu/CTAN/systems/texlive/tlnet
 # Install sysdeps
 RUN ./install_sysdeps.sh ${DISTRIBUTION}
 
+RUN ./install_cran_pkgs.R ${DISTRIBUTION}
+
 # Install R packages
-RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
-    ./install_bioc.R ${BIOC_VERSION} && \
-    ./install_bioc_pkgs.R ${DISTRIBUTION} && \
-    ./install_gh_pkgs.R ${DISTRIBUTION} && \
-    ./install_other_pkgs.R ${DISTRIBUTION} && \
-    ./install_pip_pkgs.py ${DISTRIBUTION} && \
-    ./test_installations.sh && \
-    rm -f install_sysdeps.sh \
-        install_cran_pkgs.R \
-        install_bioc.R \
-        install_bioc_pkgs.R \
-        install_gh_pkgs.R \
-        install_other_pkgs.R \
-        install_pip_pkgs.py \
-        test_installations.sh
+# RUN ./install_cran_pkgs.R ${DISTRIBUTION} && \
+#     ./install_bioc.R ${BIOC_VERSION} && \
+#     ./install_bioc_pkgs.R ${DISTRIBUTION} && \
+#     ./install_gh_pkgs.R ${DISTRIBUTION} && \
+#     ./install_other_pkgs.R ${DISTRIBUTION} && \
+#     ./install_pip_pkgs.py ${DISTRIBUTION} && \
+#     ./test_installations.sh && \
+#     rm -f install_sysdeps.sh \
+#         install_cran_pkgs.R \
+#         install_bioc.R \
+#         install_bioc_pkgs.R \
+#         install_gh_pkgs.R \
+#         install_other_pkgs.R \
+#         install_pip_pkgs.py \
+#         test_installations.sh
 
 # Run RStudio
 CMD ["/init"]
