@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - r: '4.4.0'
+          - r: '4.4.1'
             bioc: '3.19'
             distro: rstudio
     steps:
