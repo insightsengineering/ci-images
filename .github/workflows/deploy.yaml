@@ -294,13 +294,13 @@ jobs:
           artifact-name: "sbom.cyclonedx"
           format: "cyclonedx-json"
 
-      # - name: Generate artifact attestation
-      #   uses: actions/attest-build-provenance@v1
-      #   with:
-      #     subject-name: ${{ steps.build_vars.outputs.ATTESTATION_IMAGE_NAME }}
-      #     subject-digest: ${{ steps.push-image.outputs.digest }}
-      #     push-to-registry: true
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ steps.build_vars.outputs.ATTESTATION_IMAGE_NAME }}
+          subject-digest: ${{ steps.push-image.outputs.digest }}
+          push-to-registry: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate SBOM attestation
         uses: actions/attest-sbom@v1
