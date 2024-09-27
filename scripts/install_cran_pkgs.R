@@ -155,6 +155,7 @@ shared_pkgs <- c(
   "operator.tools",
   "optimx",
   "oysteR",
+  "pak",
   "parglm",
   "patchwork",
   "pbkrtest",
