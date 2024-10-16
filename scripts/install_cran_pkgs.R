@@ -183,6 +183,8 @@ shared_pkgs <- c(
   "RJDBC",
   "rlang",
   "rmarkdown",
+  "roxylint",
+  "roxytypes",
   "rstan",
   "rstantools",
   "rstpm2",
