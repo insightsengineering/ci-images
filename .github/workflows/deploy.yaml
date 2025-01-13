@@ -40,7 +40,7 @@ on:
           R version (also used as the tag to pull the origin image).
         required: true
         type: choice
-        default: "4.4.1"
+        default: "4.4.2"
         options:
           - "4.1.0"
           - "4.1.1"
@@ -55,6 +55,7 @@ on:
           - "4.3.3"
           - "4.4.0"
           - "4.4.1"
+          - "4.4.2"
           - "latest"
       latest_r_version:
         description: |
@@ -62,12 +63,12 @@ on:
           (Only relevant for rocker images).
         required: false
         type: string
-        default: "4.4.1"
+        default: "4.4.2"
       bioc_version:
         description: BioConductor Release
         required: true
         type: choice
-        default: "3.19"
+        default: "3.20"
         options:
           - "3.13"
           - "3.14"
@@ -76,6 +77,7 @@ on:
           - "3.17"
           - "3.18"
           - "3.19"
+          - "3.20"
           - "devel"
       latest_bioc_version:
         description: |
@@ -83,7 +85,7 @@ on:
           (Only relevant for rocker images).
         required: false
         type: string
-        default: "3.19"
+        default: "3.20"
       tag:
         description: |
           Custom Image Tag/Version. Defaults to current date in the `YYYY.MM.DD` format if unspecified.
