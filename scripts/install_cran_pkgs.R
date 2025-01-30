@@ -65,6 +65,8 @@ shared_pkgs <- c(
   "broom.helpers",
   "callr",
   "car",
+  "cards",
+  "cardx",
   "checkmate",
   "chk",
   "circlize",

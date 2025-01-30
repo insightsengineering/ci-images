@@ -7,8 +7,6 @@ distribution <- args[1]
 
 # Pharmaverse packages to be installed
 pharmaverse_packages <- c(
-  "scda",
-  "scda.2022",
   "goshawk",
   "teal.goshawk",
   "osprey",
