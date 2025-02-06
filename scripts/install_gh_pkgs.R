@@ -33,7 +33,6 @@ new_pkgs <- gh_pkgs[[distribution]][
 # Install only uninstalled packages
 if (length(new_pkgs)) {
   devtools::install_github(
-    new_pkgs,
-    upgrade = "never"
+    new_pkgs
   )
 }
