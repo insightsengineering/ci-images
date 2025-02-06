@@ -9,7 +9,7 @@ distribution <- args[1]
 # Regular CRAN packages to install
 shared_pkgs <- c(
   "insightsengineering/nesttemplate",
-  "openpharma/staged.dependencies@*release",
+  "openpharma/staged.dependencies@*release"
 )
 
 gh_pkgs <- list(
@@ -33,6 +33,7 @@ new_pkgs <- gh_pkgs[[distribution]][
 # Install only uninstalled packages
 if (length(new_pkgs)) {
   devtools::install_github(
-    new_pkgs
+    new_pkgs,
+    upgrade = "never"
   )
 }
