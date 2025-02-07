@@ -37,6 +37,7 @@ libsodium-dev \
 default-jdk \
 cmake \
 graphviz \
+libaio1t64 \
 alien \
 libxss1 \
 git \
