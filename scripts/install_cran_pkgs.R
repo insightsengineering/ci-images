@@ -76,6 +76,7 @@ shared_pkgs <- c(
   "covr",
   "cowplot",
   "crayon",
+  "cyclocomp",
   "DBI",
   "DescTools",
   "deSolve",
