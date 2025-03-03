@@ -245,6 +245,7 @@ jobs:
           #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:latest"
           #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:${tag}"
           # fi
+          echo "FULL_NAMES=${full_names}"
           echo "FULL_NAMES=${full_names}" >> $GITHUB_OUTPUT
 
           echo "github.ref = ${{ github.ref }}"
@@ -264,7 +265,7 @@ jobs:
           context: ./
           file: Dockerfile
           # push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
-          push: false
+          push: true
           tags: ${{ steps.build_vars.outputs.FULL_NAMES }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
