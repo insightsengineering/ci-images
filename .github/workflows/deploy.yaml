@@ -233,18 +233,18 @@ jobs:
           tag_latest="${{ needs.normalize-inputs.outputs.tag_latest }}"
 
           # Set full image name
-          full_names="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:${tag}"
+          full_names="${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:not-slim"
           echo "OUTPUT_IMAGE_NAME=${full_names}" >> $GITHUB_OUTPUT
-          if [ "${tag_latest}" == "true" ]
-          then
-            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
-          fi
-          if [ "${image_name}" == "rstudio-local_${{ needs.normalize-inputs.outputs.latest_r_version }}_bioc_${{ needs.normalize-inputs.outputs.latest_bioc_version }}" ] \
-            || [ "${image_name}" == "rstudio_${{ needs.normalize-inputs.outputs.latest_r_version }}_bioc_${{ needs.normalize-inputs.outputs.latest_bioc_version }}" ]
-          then
-            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:latest"
-            full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:${tag}"
-          fi
+          # if [ "${tag_latest}" == "true" ]
+          # then
+          #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${image_name}:latest"
+          # fi
+          # if [ "${image_name}" == "rstudio-local_${{ needs.normalize-inputs.outputs.latest_r_version }}_bioc_${{ needs.normalize-inputs.outputs.latest_bioc_version }}" ] \
+          #   || [ "${image_name}" == "rstudio_${{ needs.normalize-inputs.outputs.latest_r_version }}_bioc_${{ needs.normalize-inputs.outputs.latest_bioc_version }}" ]
+          # then
+          #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:latest"
+          #   full_names="$full_names,${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ needs.normalize-inputs.outputs.distribution }}:${tag}"
+          # fi
           echo "FULL_NAMES=${full_names}" >> $GITHUB_OUTPUT
 
           echo "github.ref = ${{ github.ref }}"
@@ -263,7 +263,8 @@ jobs:
         with:
           context: ./
           file: Dockerfile
-          push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
+          # push: ${{ steps.build_vars.outputs.DOCKER_PUSH }}
+          push: false
           tags: ${{ steps.build_vars.outputs.FULL_NAMES }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
@@ -275,65 +276,72 @@ jobs:
             BIOC_VERSION=${{ needs.normalize-inputs.outputs.bioc_version }}
           platforms: ${{ env.PLATFORMS }}
 
-      - name: Generate image manifest and R package list 🐳
-        run: |
-          docker manifest inspect ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }} > manifest.json
-          docker run -v ${PWD}:/app ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }} \
-            R -e 'write.csv(installed.packages(), file="/app/package_list.csv")'
-
-      - name: Reclaim Disk Space for SBOM Generation 🚮
-        uses: insightsengineering/disk-space-reclaimer@v1
+      - uses: kitabisa/docker-slim-action@v1
+        env:
+          DSLIM_HTTP_PROBE: false
         with:
-          tools-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          swap-storage: false
-          docker-images: true
+          target: ${{ steps.build_vars.outputs.FULL_NAMES }}
+          tag: "slim"
 
-      - name: Generate SBOM 📃
-        uses: anchore/sbom-action@v0
-        with:
-          image: "${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}"
-          output-file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
-          artifact-name: "sbom.spdx"
+      # - name: Generate image manifest and R package list 🐳
+      #   run: |
+      #     docker manifest inspect ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }} > manifest.json
+      #     docker run -v ${PWD}:/app ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }} \
+      #       R -e 'write.csv(installed.packages(), file="/app/package_list.csv")'
 
-      - name: Upload image manifest to release 🔼
-        uses: svenstaro/upload-release-action@v2
-        if: "${{ needs.normalize-inputs.outputs.release_tag }} != ''"
-        with:
-          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
-          file: "manifest.json"
-          asset_name: "image.manifest.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.json"
-          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
-          overwrite: true
+      # - name: Reclaim Disk Space for SBOM Generation 🚮
+      #   uses: insightsengineering/disk-space-reclaimer@v1
+      #   with:
+      #     tools-cache: false
+      #     android: true
+      #     dotnet: true
+      #     haskell: true
+      #     large-packages: true
+      #     swap-storage: false
+      #     docker-images: true
 
-      - name: Upload R package list to release 🔼
-        uses: svenstaro/upload-release-action@v2
-        if: "${{ needs.normalize-inputs.outputs.release_tag }} != ''"
-        with:
-          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
-          file: "package_list.csv"
-          asset_name: "package.list.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.csv"
-          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
-          overwrite: true
+      # - name: Generate SBOM 📃
+      #   uses: anchore/sbom-action@v0
+      #   with:
+      #     image: "${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}"
+      #     output-file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
+      #     artifact-name: "sbom.spdx"
 
-      - name: Upload SBOM to release 🔼
-        uses: svenstaro/upload-release-action@v2
-        if: "${{ needs.normalize-inputs.outputs.release_tag }} != ''"
-        with:
-          repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
-          file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
-          asset_name: "SBOM for ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.spdx.json"
-          tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
-          overwrite: true
+      # - name: Upload image manifest to release 🔼
+      #   uses: svenstaro/upload-release-action@v2
+      #   if: "${{ needs.normalize-inputs.outputs.release_tag }} != ''"
+      #   with:
+      #     repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+      #     file: "manifest.json"
+      #     asset_name: "image.manifest.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.json"
+      #     tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+      #     overwrite: true
 
-      - name: Move cache ♻️
-        run: |
-          rm -rf /tmp/.buildx-cache
-          if [ -f /tmp/.buildx-cache-new ]
-          then {
-            mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-          }
-          fi
+      # - name: Upload R package list to release 🔼
+      #   uses: svenstaro/upload-release-action@v2
+      #   if: "${{ needs.normalize-inputs.outputs.release_tag }} != ''"
+      #   with:
+      #     repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+      #     file: "package_list.csv"
+      #     asset_name: "package.list.${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.csv"
+      #     tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+      #     overwrite: true
+
+      # - name: Upload SBOM to release 🔼
+      #   uses: svenstaro/upload-release-action@v2
+      #   if: "${{ needs.normalize-inputs.outputs.release_tag }} != ''"
+      #   with:
+      #     repo_token: ${{ secrets.REPO_GITHUB_TOKEN }}
+      #     file: "${{ steps.build_vars.outputs.SBOM_OUTPUT_FILENAME }}"
+      #     asset_name: "SBOM for ${{ steps.build_vars.outputs.OUTPUT_IMAGE_NAME }}.spdx.json"
+      #     tag: "${{ needs.normalize-inputs.outputs.release_tag }}"
+      #     overwrite: true
+
+      # - name: Move cache ♻️
+      #   run: |
+      #     rm -rf /tmp/.buildx-cache
+      #     if [ -f /tmp/.buildx-cache-new ]
+      #     then {
+      #       mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      #     }
+      #     fi
