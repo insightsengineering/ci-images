@@ -52,6 +52,7 @@ libglpk-dev \
 libarchive-dev \
 libssh-dev \
 libcurl4-openssl-dev \
+libreoffice-common \
 "
 
 # Shared deps for fedora

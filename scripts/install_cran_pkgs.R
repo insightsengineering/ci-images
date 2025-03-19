@@ -86,6 +86,7 @@ shared_pkgs <- c(
   "diffdf",
   "digest",
   "dm",
+  "doconv",
   "dplyr",
   "duckdb",
   "DT",
