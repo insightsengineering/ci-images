@@ -98,6 +98,7 @@ tidy \
 glpk-devel \
 libarchive-devel \
 libssh-devel \
+libreoffice \
 "
 
 # Deps specific on the rstudio image
