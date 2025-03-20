@@ -52,6 +52,7 @@ libglpk-dev \
 libarchive-dev \
 libssh-dev \
 libcurl4-openssl-dev \
+libreoffice-common \
 "
 
 # Shared deps for fedora
@@ -97,6 +98,7 @@ tidy \
 glpk-devel \
 libarchive-devel \
 libssh-devel \
+libreoffice \
 "
 
 # Deps specific on the rstudio image
