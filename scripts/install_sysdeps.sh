@@ -53,6 +53,7 @@ libarchive-dev \
 libssh-dev \
 libcurl4-openssl-dev \
 libreoffice-common \
+libpoppler-cpp-dev \
 "
 
 # Shared deps for fedora
@@ -99,6 +100,7 @@ glpk-devel \
 libarchive-devel \
 libssh-devel \
 libreoffice \
+poppler-cpp-devel \
 "
 
 # Deps specific on the rstudio image

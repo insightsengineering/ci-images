@@ -163,6 +163,7 @@ shared_pkgs <- c(
   "parglm",
   "patchwork",
   "pbkrtest",
+  "pdftools",
   "pillar",
   "pkgdown",
   "png",
