@@ -48,7 +48,11 @@ pharmaverse_pkgs <- c(
   "teal.transform",
   "teal.widgets",
   "tern",
-  "mmrm"
+  "mmrm",
+  "pharmaversesdtm",
+  "pharmaverseadam",
+  "autoslider.core",
+  "random.cdisc.data"
 )
 
 # Regular CRAN packages to install
@@ -93,6 +97,7 @@ shared_pkgs <- c(
   "emmeans",
   "EnvStats",
   "fastGHQuad",
+  "filters",
   "flexsurv",
   "flextable",
   "forcats",
@@ -194,6 +199,7 @@ shared_pkgs <- c(
   "rstantools",
   "rstpm2",
   "rsvg",
+  "rvg",
   "rvest",
   "scales",
   "shiny",
