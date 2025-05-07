@@ -36,12 +36,12 @@ jobs:
     strategy:
       matrix:
         image:
-          - distro_tag: '4.4.2'
-            bioc: '3.20'
+          - distro_tag: '4.5.0'
+            bioc: '3.21'
             distro: rstudio-local
             origin: rocker
-          - distro_tag: '4.4.2'
-            bioc: '3.20'
+          - distro_tag: '4.5.0'
+            bioc: '3.21'
             distro: rstudio
             origin: rocker
           - distro_tag: 'latest'
@@ -91,8 +91,8 @@ jobs:
               "distribution": "${{ matrix.image.distro }}",
               "r_version": "${{ matrix.image.distro_tag }}",
               "bioc_version": "${{ matrix.image.bioc }}",
-              "latest_r_version": "4.4.2",
-              "latest_bioc_version": "3.20",
+              "latest_r_version": "4.5.0",
+              "latest_bioc_version": "3.21",
               "tag": "",
               "tag_latest": "true",
               "release_tag": "${{ needs.create-release.outputs.release_tag }}"
