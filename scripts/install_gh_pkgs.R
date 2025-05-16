@@ -9,7 +9,8 @@ distribution <- args[1]
 # Regular CRAN packages to install
 shared_pkgs <- c(
   "insightsengineering/nesttemplate",
-  "openpharma/staged.dependencies@*release"
+  "openpharma/staged.dependencies@*release",
+  "tidyverse/ellmer"
 )
 
 gh_pkgs <- list(
