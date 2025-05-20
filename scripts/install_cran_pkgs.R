@@ -94,6 +94,7 @@ shared_pkgs <- c(
   "dplyr",
   "duckdb",
   "DT",
+  "ellmer",
   "emmeans",
   "EnvStats",
   "fastGHQuad",
