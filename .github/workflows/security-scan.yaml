@@ -15,8 +15,8 @@ jobs:
     strategy:
       matrix:
         image:
-          - r: '4.5.0'
-            bioc: '3.21'
+          - r: '4.5.2'
+            bioc: '3.22'
             distro: rstudio
     steps:
       - name: Log in to the Container registry 🗝
