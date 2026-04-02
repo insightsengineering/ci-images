@@ -19,7 +19,7 @@ jobs:
           echo "release-tag=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
 
       - name: Create release 🌟
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
           body_path: RELEASE_BODY.txt
           token: ${{ secrets.REPO_GITHUB_TOKEN }}
@@ -76,12 +76,12 @@ jobs:
     # Trigger steps
     steps:
       - name: Checkout repository 💳
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           ref: main
 
       - name: Trigger all builds ▶️
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3
         with:
           token: ${{ secrets.REPO_GITHUB_TOKEN }}
           event-type: scheduled
