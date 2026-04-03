@@ -12,12 +12,12 @@ jobs:
 
     steps:
       - name: Checkout repo 🛎
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
 
       - name: Lint Code Base 🧶
-        uses: super-linter/super-linter/slim@v6
+        uses: super-linter/super-linter/slim@1fa6ba58a88783e9714725cf89ac26d53e80c148 # v6
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
