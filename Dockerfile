@@ -1,14 +1,14 @@
 # Build arguments
 ARG ORIGIN=rocker
 ARG ORIGIN_DISTRIBUTION=rstudio
-ARG R_VERSION=4.5.2
+ARG R_VERSION=4.6.1
 
 # Fetch base image
 FROM ${ORIGIN}/${ORIGIN_DISTRIBUTION}:${R_VERSION}
 
 # Reset args in build context
 ARG DISTRIBUTION=rstudio-local
-ARG BIOC_VERSION=3.22
+ARG BIOC_VERSION=3.23
 
 # Set image metadata
 LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
@@ -32,12 +32,20 @@ COPY --chmod=0755 [\
     "./"\
 ]
 
-# In order to have predictable results from TinyTex installer, set a reliable CTAN mirror.
+# In order to have predictable results from the TinyTeX installer, pin a single
+# TeX Live repository. It must be a single host rather than the mirror.ctan.org
+# redirector: the repository is contacted several times during the install (base
+# install, `tlmgr option repository`, then `tlmgr install`), and the redirector
+# hands out differently-synced mirrors per request, which causes tlmgr cross
+# release errors.
+# We use TinyTeX's own tlnet mirror, which is the installer's default, is
+# kept in sync for TinyTeX specifically, and is CDN-backed rather than a
+# single host.
 # This variable is used by:
-# https://yihui.org/gh/tinytex/tools/install-base.sh
+# https://tinytex.yihui.org/install-base.sh
 # which is in turn used by:
 # https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh.
-ENV CTAN_REPO https://mirrors.mit.edu/CTAN/systems/texlive/tlnet
+ENV CTAN_REPO https://tlnet.yihui.org
 
 # Install sysdeps
 RUN ./install_sysdeps.sh ${DISTRIBUTION}

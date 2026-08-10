@@ -348,7 +348,14 @@ if (require("tinytex")) {
   # nolint start
   # See point 5 in
   # https://github.com/rbind/yihui/blob/master/content/tinytex/faq.md
+  # `set -e` stops the script at the first failing step. Without it the exit
+  # status is that of the last command, so a failed base install followed by a
+  # successful `tlmgr path add` would look like success and leave the image with
+  # a partial TinyTeX. The leading `rm -rf` makes the script idempotent so it
+  # can be retried: otherwise `mv` nests a second install in /opt/TinyTeX.
   tinytex_installer <- paste0('
+set -e
+rm -rf /opt/TinyTeX ~/.TinyTeX
 wget -qO- "https://raw.githubusercontent.com/yihui/tinytex/master/tools/install-unx.sh" | sh -s - --admin --no-path
 mv ~/.TinyTeX /opt/TinyTeX
 /opt/TinyTeX/bin/*/tlmgr path add
@@ -356,8 +363,23 @@ tlmgr install ', paste(tlmgr_packages, collapse = " "), "
 tlmgr path add
 ")
   # nolint end
-  exit_status <- system(tinytex_installer)
-  cat("TinyTeX installer exited with code =", exit_status, "\n")
+  # The installer pulls from a single remote repository, so a transient
+  # network failure can abort a build that is already an hour in. Retry
+  # a few times before giving up.
+  max_attempts <- 3
+  for (attempt in seq_len(max_attempts)) {
+    exit_status <- system(tinytex_installer)
+    cat(
+      "TinyTeX installer attempt", attempt, "of", max_attempts,
+      "exited with code =", exit_status, "\n"
+    )
+    if (exit_status == 0) {
+      break
+    }
+    if (attempt < max_attempts) {
+      Sys.sleep(30)
+    }
+  }
   if (exit_status != 0) {
     quit(status = exit_status)
   }
